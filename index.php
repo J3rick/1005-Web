@@ -83,11 +83,17 @@
                 What is MemorialMap?
                 <i class="fas fa-plus"></i>
             </div>
+            <div class="faq-answer">
+                MemorialMap is a service that helps users create and manage digital memorials for their loved ones.
+            </div>
         </div>
         <div class="faq-item">
             <div class="faq-question">
                 How do I search for a resting place?
                 <i class="fas fa-plus"></i>
+            </div>
+            <div class="faq-answer">
+                You can search for a resting place via the search boxes located at the top of the page.
             </div>
         </div>
         <div class="faq-item">
@@ -95,17 +101,26 @@
                 Is MemorialMap free to use?
                 <i class="fas fa-plus"></i>
             </div>
+            <div class="faq-answer">
+                Yes. It is free to use. This is a Singapore Government service partnered with LifeSG.
+            </div>
         </div>
         <div class="faq-item">
             <div class="faq-question">
                 Can I create a memorial page for a loved one?
                 <i class="fas fa-plus"></i>
             </div>
+            <div class="faq-answer">
+                Please submit an email to admin@sgcaskets.com for further enquiries.
+            </div>
         </div>
         <div class="faq-item">
             <div class="faq-question">
                 Can I report incorrect information on a post?
                 <i class="fas fa-plus"></i>
+            </div>
+            <div class="faq-answer">
+                Please submit an email to admin@sgcaskets.com for further enquiries.
             </div>
         </div>
     </section>
@@ -129,6 +144,6 @@
     <?php
       include "inc/footer.inc.php"
     ?>
-
+<script src="js/main.js"></script>
 </body>
 </html>

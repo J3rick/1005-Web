@@ -1,6 +1,6 @@
 <header>
     <div class="logo-container">
-        <img src="assets/Logo.jpg" alt="MemorialMap Logo">
+    <img src="assets/Logo.jpg" alt="MemorialMap Logo" style="width: 75px; height: auto;">
         <h1>MemorialMap</h1>
     </div>
     <nav>

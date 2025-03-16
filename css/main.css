@@ -234,6 +234,20 @@
             cursor: pointer;
             font-weight: bold;
         }
+
+        .faq-answer {
+            display: none;
+            /* Add any additional styles you'd like for the answer, such as padding or margin */
+            padding: 15px 20px;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(45deg);
+        }
         
         .contact {
             padding: 40px 50px;
