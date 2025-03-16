@@ -2,7 +2,7 @@
     <img src="assets/Logo.jpg" alt="MemorialMap Logo" style="width: 75px; height: auto;">
     <div class="logo-container">
         <h1>MemorialMap</h1>
-        <p>by SGCaskets</p>
+        <p style="color:tomato;">by SGCaskets</p>
     </div>
     <nav>
         <ul>
