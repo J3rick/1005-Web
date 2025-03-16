@@ -1,18 +1,14 @@
-//Add javascript here
+// Add this to your main.js file
+
 document.addEventListener('DOMContentLoaded', function() {
-    // Select all FAQ questions
+    // Existing FAQ functionality
     const faqQuestions = document.querySelectorAll('.faq-question');
     
-    // Add click event listener to each question
     faqQuestions.forEach(question => {
         question.addEventListener('click', () => {
-            // Get the parent faq-item
             const parent = question.parentElement;
-            
-            // Toggle active class
             parent.classList.toggle('active');
             
-            // Optional: Close other items when one is opened
             faqQuestions.forEach(otherQuestion => {
                 const otherParent = otherQuestion.parentElement;
                 if (otherParent !== parent) {
@@ -20,5 +16,42 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         });
+    });
+    
+    // Mobile menu functionality
+    const createMobileMenu = () => {
+        // Create hamburger menu button
+        const hamburger = document.createElement('div');
+        hamburger.classList.add('hamburger-menu');
+        hamburger.innerHTML = '<div class="bar"></div><div class="bar"></div><div class="bar"></div>';
+        
+        // Add hamburger to header
+        const header = document.querySelector('header');
+        const nav = document.querySelector('nav');
+        
+        header.insertBefore(hamburger, nav);
+        
+        // Add event listener to hamburger
+        hamburger.addEventListener('click', () => {
+            nav.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+    };
+    
+    // Only create mobile menu if screen width is below 768px
+    if (window.innerWidth < 768) {
+        createMobileMenu();
+    }
+    
+    // Handle resize events
+    window.addEventListener('resize', () => {
+        const hamburger = document.querySelector('.hamburger-menu');
+        
+        if (window.innerWidth < 768 && !hamburger) {
+            createMobileMenu();
+        } else if (window.innerWidth >= 768 && hamburger) {
+            hamburger.remove();
+            document.querySelector('nav').classList.remove('active');
+        }
     });
 });

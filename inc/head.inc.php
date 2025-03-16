@@ -1,7 +1,8 @@
 <header>
-    <div class="logo-container">
     <img src="assets/Logo.jpg" alt="MemorialMap Logo" style="width: 75px; height: auto;">
+    <div class="logo-container">
         <h1>MemorialMap</h1>
+        <p>by SGCaskets</p>
     </div>
     <nav>
         <ul>
