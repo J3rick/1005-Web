@@ -16,7 +16,7 @@
 <body>
     <section class="hero">
         <div class="hero-content">
-            <h2>Find your loved ones today...</h2>
+            <h2>Find your loved ones today.</h2>
             <form class="search-form">
                 <input type="text" placeholder="Name">
                 <input type="text" placeholder="Place">
