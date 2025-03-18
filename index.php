@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MemorialMap</title>
-    
+
     <?php
-      include "inc/head.inc.php"
-    ?>
+    include "inc/head.inc.php"
+        ?>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="css/main.css">
@@ -17,28 +18,59 @@
     <section class="hero">
         <div class="hero-content">
             <h2>Find your loved ones today.</h2>
-            <form class="search-form">
-                <input type="text" placeholder="Name">
-                <input type="text" placeholder="Place">
-                <select>
-                    <option value="">Religion</option>
-                    <option value="christianity">Christianity</option>
-                    <option value="islam">Islam</option>
-                    <option value="judaism">Judaism</option>
-                    <option value="hinduism">Hinduism</option>
-                    <option value="buddhism">Buddhism</option>
-                    <option value="other">Other</option>
-                </select>
-                <select>
-                    <option value="">Cemetery/Grave</option>
-                    <option value="cemetery1">Cemetery 1</option>
-                    <option value="cemetery2">Cemetery 2</option>
-                    <option value="cemetery3">Cemetery 3</option>
-                </select>
-                <button type="submit"><i class="fas fa-search"></i></button>
+
+            <form class="cemetery-search-form" action="search.php" method="GET">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" placeholder="Enter name">
+                </div>
+
+                <div class="form-group">
+                    <label for="dob_from">Date of Birth:</label>
+                    <input type="date" id="dob_from" name="dob_from">
+                    <label for="dob_to">to:</label>
+                    <input type="date" id="dob_to" name="dob_to">
+                </div>
+
+                <div class="form-group">
+                    <label for="dop_from">Date of Passing:</label>
+                    <input type="date" id="dop_from" name="dop_from">
+                    <label for="dop_to">to:</label>
+                    <input type="date" id="dop_to" name="dop_to">
+                </div>
+
+                <div class="form-group">
+                    <label for="religion">Religion:</label>
+                    <select id="religion" name="religion">
+                        <option value="">All Religions</option>
+                        <option value="Christianity">Christianity</option>
+                        <option value="Judaism">Judaism</option>
+                        <option value="Islam">Islam</option>
+                        <option value="Buddhism">Buddhism</option>
+                        <option value="Hinduism">Hinduism</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="resting_type">Resting Type:</label>
+                    <select id="resting_type" name="resting_type">
+                        <option value="">All Types</option>
+                        <option value="Burial">Burial</option>
+                        <option value="Cremation">Cremation</option>
+                        <option value="Mausoleum">Mausoleum</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="search-actions">
+                    <button type="submit" class="search-btn">Search Records</button>
+                    <button type="reset" class="reset-btn">Reset</button>
+                </div>
             </form>
         </div>
     </section>
+
 
     <section class="memorials">
         <div class="section-header">
@@ -142,8 +174,9 @@
     </section>
 
     <?php
-      include "inc/footer.inc.php"
-    ?>
-<script src="js/main.js"></script>
+    include "inc/footer.inc.php"
+        ?>
+    <script src="js/main.js"></script>
 </body>
+
 </html>
