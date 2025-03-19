@@ -158,7 +158,7 @@
     </section>
 
     <section class="contact">
-        <h3>Contact Us</h3>
+        <h3>Contact Us Now</h3>
         <form class="contact-form" method="POST" action="submit_feedback.php">
             <div class="form-group">
                 <input type="text" name="name" placeholder="Name" required>
