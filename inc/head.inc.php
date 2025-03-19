@@ -7,9 +7,7 @@
     <nav>
         <ul>
             <li><a href="#">About</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">Contact us</a></li>
-            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Announcements</a></li>
         </ul>
     </nav>
     <div class="language-controls">
