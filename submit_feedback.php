@@ -110,8 +110,6 @@ function saveFeedbackToDB() {
 </head>
 <body>
 
-<?php include "inc/nav.inc.php"; ?>
-
 <div class="container text-center mt-5">
     <?php if ($success): ?>
         <h2 class="text-success">Your feedback has been successfully submitted!</h2>
