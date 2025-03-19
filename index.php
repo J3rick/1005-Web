@@ -167,7 +167,7 @@
                 <input type="email" name="email" placeholder="Email" required>
             </div>
             <div class="form-group">
-                <textarea name="message" placeholder="Message" required></textarea>
+                <textarea class="form-control" id="feedback" name="feedback" placeholder="Message" rows="4" required></textarea>
             </div>
             <button type="submit" class="submit-btn">Submit</button>
         </form>
