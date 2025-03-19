@@ -1,15 +1,14 @@
 <?php
-session_start();
+// session_start();
+ $success = true;
 
 // Generate CSRF token
 if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 
-$username_err = $password_err = $login_err = "";
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Verify CSRF token
+    // // Verify CSRF token
     if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
         die("CSRF token validation failed");
     }
@@ -27,51 +26,91 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $password = trim($_POST["password"]);
     }
-    
-    if(empty($username_err) && empty($password_err)){
-        // Database connection details
-        $servername = "localhost";
-        $dbUsername = "your_db_username";
-        $dbPassword = "your_db_password";
-        $dbName = "your_db_name";
 
-        try { // 
-            $conn = new PDO("mysql:host=$servername;dbname=$dbName", $dbUsername, $dbPassword);
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    if ($success){
+        include "head.inc.php";
+        echo "<div class='warning-mesage'>";
+        echo"<article class='col-sm'>";
+        echo "<hr/>"; //divider
+        echo "<h1>Login Successful!</b></h1>";
+        //echo "<p>Email" . $email;
+        echo "<h4>Welcome Back, " . $fname . " " . $lname . "</h4>";
+        echo"<a href='index.php' class='btn btn-success' role='button' aria-pressed='true'>Return to Home</a>";
+        echo"</article>";
+        echo "</div><br/>";
+        include "footer.inc.php";
+    }
+    else{
+        include "head.inc.php";
+        echo "<div class='warning-mesage'>";
+        echo"<article class='col-sm'>";
+        echo "<hr/>"; //divider
+        echo "<h1>Oops!</h1>";
+        echo "<h4>The following errors were detected:</h4>";
+        echo "<p>" . $errorMsg . "</p>";
+        echo"<a href='register.php' class='btn btn-danger' role='button' aria-pressed='true'>Return to Sign Up</a>";
+        echo"</article>";
+        echo "</div><br/>";
+        include "footer.inc.php";
+    }
 
-            $sql = "SELECT id, username, password FROM users WHERE username = :username";
-            
-            if($stmt = $conn->prepare($sql)){
-                $stmt->bindParam(":username", $param_username, PDO::PARAM_STR);
-                $param_username = $username;
-                
-                if($stmt->execute()){
-                    if($stmt->rowCount() == 1){
-                        if($row = $stmt->fetch()){
-                            $id = $row["id"];
-                            $username = $row["username"];
-                            $hashed_password = $row["password"];
-                            if(password_verify($password, $hashed_password)){
-                                $_SESSION["loggedin"] = true;
-                                $_SESSION["id"] = $id;
-                                $_SESSION["username"] = $username;
-                                header("location: admin-dashboard.php");
-                            } else {
-                                $login_err = "Invalid username or password.";
-                            }
-                        }
-                    } else {
-                        $login_err = "Invalid username or password.";
-                    }
-                } else {
-                    echo "Oops! Something went wrong. Please try again later.";
-                }
-                unset($stmt);
-            }
-        } catch(PDOException $e) {
-            echo "Connection failed: " . $e->getMessage();
+    //Helper function that checks input for malicious or unwanted content.
+    function sanitize_input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+
+    function authenticateUser(){
+        global $username, $pwd_hashed, $errorMsg, $success;
+
+        $config = parse_ini_file('/var/www/private/db-config.ini');
+        if (!$config)
+        {
+            $errorMsg = "Failed to read database config file.";
+            $success = false;
         }
-        unset($conn);
+        else {
+            $conn = mysqli(
+            $config['servername'],
+            $config['username'],
+            $config['password'],
+            $config['dbname']
+            );
+        }
+
+        // Check connection
+        if ($conn->connect_error)
+        {
+            $errorMsg = "Connection failed: " . $conn->connect_error;
+            $success = false;
+        }
+        else {
+            $stmt = $conn->prepare("SELECT * FROM Memorial_Map_Admins WHERE Admin_Username=?");
+            $stmt->bind_param("s", $username);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $pwd_hashed = $row["password"];
+                // Check if the password matches:
+                if (!password_verify($_POST["pwd"], $pwd_hashed))
+                {
+                    $errorMsg = "Email not found or password doesn't match...";
+                    $success = false;
+                }
+                else {
+                    $errorMsg = "Email not found or password doesn't match...";
+                    $success = false;
+                }
+
+                $stmt->close();
+            }
+            $conn->close();
+        }
+    
     }
 }
 ?>
