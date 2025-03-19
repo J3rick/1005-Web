@@ -81,7 +81,7 @@ function saveFeedbackToDB() {
     }
 
     // Prepare SQL statement using prepared statements
-    $stmt = $conn->prepare("INSERT INTO feedback (name, email, feedback) VALUES (?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO Feedback (Feedback_Name, Feedback_Email, Feedback_Msg, Submitted_At) VALUES (?, ?, ?, NOW())");
     if (!$stmt) {
         $errorMsg = "Prepare failed: (" . $conn->errno . ") " . $conn->error;
         $success = false;
