@@ -588,3 +588,33 @@ footer {
         display: inline-block;
     }
 }
+
+.services {
+    height: 1500px;
+}
+
+.services .section-header {
+    justify-content: center;
+    margin-bottom: 0px;
+}
+
+.services .row {
+    display: flex;
+    width: 100%;
+}
+
+.services .row:last-child {
+    margin-bottom: 0;
+}
+
+.services .row .column-small {
+    width: 40%;
+    padding: 15px;
+    background-color: #f0f0f0;
+}
+
+.services .row .column-large {
+    width: 60%;
+    padding: 15px;
+    background-color: #e0e0e0;
+}

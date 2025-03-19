@@ -8,6 +8,7 @@
         <ul>
             <li><a href="#">About</a></li>
             <li><a href="#">Announcements</a></li>
+            <li><a href="services.php">Services</a></li>
         </ul>
     </nav>
     <div class="language-controls">
