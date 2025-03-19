@@ -159,15 +159,15 @@
 
     <section class="contact">
         <h3>Contact Us</h3>
-        <form class="contact-form">
+        <form class="contact-form" method="POST" action="submit_feedback.php">
             <div class="form-group">
-                <input type="text" placeholder="Name" required>
+                <input type="text" name="name" placeholder="Name" required>
             </div>
             <div class="form-group">
-                <input type="email" placeholder="Email" required>
+                <input type="email" name="email" placeholder="Email" required>
             </div>
             <div class="form-group">
-                <textarea placeholder="Message" required></textarea>
+                <textarea name="message" placeholder="Message" required></textarea>
             </div>
             <button type="submit" class="submit-btn">Submit</button>
         </form>
