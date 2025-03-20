@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $submitted_at = date('Y-m-d H:i:s');  // Format: YYYY-MM-DD HH:MM:SS
     
     // Prepare and bind
-    $stmt = $conn->prepare("INSERT INTO feedback (Feedback_Name, Feedback_Email, Feedback_Msg, Submitted_At) VALUES (?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO Feedback (Feedback_Name, Feedback_Email, Feedback_Msg, Submitted_At) VALUES (?, ?, ?, ?)");
     $stmt->bind_param("ssss", $name, $email, $message, $submitted_at);
     
     // Execute the statement
