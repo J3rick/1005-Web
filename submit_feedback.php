@@ -1,9 +1,9 @@
 <?php
 // Database connection settings
 $servername = "localhost";  // Change this to your database host, e.g., localhost or IP address
-$username = "root";         // Your database username
-$password = "";             // Your database password
-$dbname = "your_database";  // Your database name
+$username = "inf1005-sqldev";         // Your database username
+$password = "P@ssw0rd123";             // Your database password
+$dbname = "Memorial_Map";  // Your database name
 
 // Create a connection
 $conn = new mysqli($servername, $username, $password, $dbname);
