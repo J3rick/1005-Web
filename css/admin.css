@@ -1,0 +1,81 @@
+       /* Ensure the header stays on top */
+    header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+        background-color: white;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .content {
+        margin-top: 100px; /* Header height */
+        margin-left: 0; /* Start with no sidebar */
+        padding: 20px;
+        transition: margin-left 0.3s ease; /* Smooth transition */
+        height: calc(100vh - 140px); /* Full height minus header and padding */
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Main Content Layout */
+    .main-content {
+        display: flex;
+        flex-direction: column;
+        gap: 20px; /* Space between rectangles */
+        flex: 1; /* Take up remaining space */
+    }
+
+    /* Large Rectangle (Top) */
+    .large-rectangle {
+        display: flex;
+        background-color: #f8f8f8;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        height: 50vh; /* Extend to half of the screen height */
+    }
+
+    /* Pie Chart Section */
+    .pie-chart {
+        flex: 1;
+        max-width: 300px;
+        background-color: #e0e0e0;
+        border-radius: 8px;
+        padding: 20px;
+        text-align: center;
+    }
+
+    /* Stats Section */
+    .stats {
+        flex: 2;
+        padding: 20px;
+    }
+
+    .stats h3 {
+        margin-bottom: 10px;
+    }
+
+    .stats p {
+        margin: 5px 0;
+    }
+
+    /* Smaller Rectangles (Bottom) */
+    .small-rectangles {
+        display: flex;
+        gap: 20px; /* Space between smaller rectangles */
+        flex: 1; /* Take up remaining space */
+    }
+
+    .small-rectangle {
+        flex: 1;
+        background-color: #f8f8f8;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .small-rectangle h3 {
+        margin-bottom: 10px;
+    }
