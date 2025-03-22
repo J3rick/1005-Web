@@ -1,5 +1,7 @@
 <header>
-    <img src="assets/Logo.jpg" alt="MemorialMap Logo" style="width: 75px; height: auto;">
+    <a href="index.php">
+        <img src="assets/Logo.jpg" alt="MemorialMap Logo" style="width: 75px; height: auto;">
+    </a>
     <div class="logo-container">
         <h1>MemorialMap</h1>
         <p style="color:tomato;">by SGCaskets</p>
@@ -7,7 +9,8 @@
     <nav>
         <ul>
             <li><a href="#">About</a></li>
-            <li><a href="#">Announcements</a></li>
+            <li><a href="annoucements.php">Announcements</a></li>
+            <li><a href="services.php">Services</a></li>
         </ul>
     </nav>
     <div class="language-controls">
