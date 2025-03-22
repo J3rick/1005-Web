@@ -1,5 +1,101 @@
 // Add this to your main.js file
 
+// main.js - Add this code to your existing main.js file
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Memorial Cards Carousel
+    const memorialCardsContainer = document.querySelector('.memorial-cards');
+    const cards = document.querySelectorAll('.memorial-card');
+    
+    // Create navigation arrows
+    const createCarouselControls = () => {
+        // Create container for the controls
+        const controlsContainer = document.createElement('div');
+        controlsContainer.className = 'carousel-controls';
+        
+        // Create left arrow
+        const leftArrow = document.createElement('button');
+        leftArrow.className = 'carousel-control carousel-prev';
+        leftArrow.innerHTML = '<i class="fas fa-chevron-left"></i>';
+        leftArrow.setAttribute('aria-label', 'Previous memorial');
+        
+        // Create right arrow
+        const rightArrow = document.createElement('button');
+        rightArrow.className = 'carousel-control carousel-next';
+        rightArrow.innerHTML = '<i class="fas fa-chevron-right"></i>';
+        rightArrow.setAttribute('aria-label', 'Next memorial');
+        
+        // Add arrows to container
+        controlsContainer.appendChild(leftArrow);
+        controlsContainer.appendChild(rightArrow);
+        
+        // Insert controls after the memorial-cards container
+        memorialCardsContainer.parentNode.insertBefore(controlsContainer, memorialCardsContainer.nextSibling);
+        
+        return { leftArrow, rightArrow };
+    };
+    
+    // Only create carousel if there are multiple cards
+    if (cards.length > 1) {
+        // Set up carousel
+        let currentIndex = 0;
+        memorialCardsContainer.classList.add('carousel-container');
+        
+        // Hide all cards except the first one
+        cards.forEach((card, index) => {
+            card.classList.add('carousel-item');
+            if (index !== currentIndex) {
+                card.style.display = 'none';
+            }
+        });
+        
+        // Create and setup navigation arrows
+        const { leftArrow, rightArrow } = createCarouselControls();
+        
+        // Function to show card at specific index
+        const showCard = (index) => {
+            cards.forEach(card => card.style.display = 'none');
+            cards[index].style.display = 'block';
+            
+            // Add animation class
+            cards[index].classList.add('fade-in');
+            setTimeout(() => {
+                cards[index].classList.remove('fade-in');
+            }, 500);
+        };
+        
+        // Previous button click handler
+        leftArrow.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+            showCard(currentIndex);
+        });
+        
+        // Next button click handler
+        rightArrow.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % cards.length;
+            showCard(currentIndex);
+        });
+        
+        // Optional: Auto-rotate the carousel
+        let carouselInterval = setInterval(() => {
+            currentIndex = (currentIndex + 1) % cards.length;
+            showCard(currentIndex);
+        }, 5000); // Change slide every 5 seconds
+        
+        // Pause auto-rotation when hovering over carousel
+        memorialCardsContainer.addEventListener('mouseenter', () => {
+            clearInterval(carouselInterval);
+        });
+        
+        memorialCardsContainer.addEventListener('mouseleave', () => {
+            carouselInterval = setInterval(() => {
+                currentIndex = (currentIndex + 1) % cards.length;
+                showCard(currentIndex);
+            }, 5000);
+        });
+    }
+});
+
 document.addEventListener('DOMContentLoaded', function() {
     // Existing FAQ functionality
     const faqQuestions = document.querySelectorAll('.faq-question');

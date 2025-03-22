@@ -81,7 +81,7 @@
             <div class="memorial-card">
                 <img src="" alt="Image1" class="memorial-img">
                 <div class="memorial-info">
-                    <div class="memorial-name">Name 1</div>
+                    <div class="memorial-name">John</div>
                     <div class="memorial-dates">07/07/1950 - 10/09/2024</div>
                     <div class="memorial-location">Location</div>
                     <div class="memorial-age">Age: 80</div>

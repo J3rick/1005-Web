@@ -588,3 +588,71 @@ footer {
         display: inline-block;
     }
 }
+
+/* Add this to your main.css file */
+
+/* Carousel container */
+.carousel-container {
+    position: relative;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+/* Carousel items */
+.carousel-item {
+    width: 100%;
+    transition: opacity 0.3s ease;
+}
+
+/* Carousel navigation controls */
+.carousel-controls {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 300px;
+    margin: 20px auto 0;
+}
+
+.carousel-control {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.carousel-control:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.carousel-control i {
+    font-size: 16px;
+}
+
+/* Animation for sliding */
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .carousel-controls {
+        margin-top: 15px;
+    }
+    
+    .carousel-control {
+        width: 35px;
+        height: 35px;
+    }
+}
