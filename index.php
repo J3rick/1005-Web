@@ -77,11 +77,12 @@
             <h3>Latest memorials</h3>
             <a href="#">Explore more »</a>
         </div>
+        <div class="carousel-container">
         <div class="memorial-cards">
             <div class="memorial-card">
                 <img src="" alt="Image1" class="memorial-img">
                 <div class="memorial-info">
-                    <div class="memorial-name">Name 1</div>
+                    <div class="memorial-name">John</div>
                     <div class="memorial-dates">07/07/1950 - 10/09/2024</div>
                     <div class="memorial-location">Location</div>
                     <div class="memorial-age">Age: 80</div>
@@ -105,8 +106,40 @@
                     <div class="memorial-age">Age: 80</div>
                 </div>
             </div>
+            <div class="memorial-card">
+                <img src="" alt="Image3" class="memorial-img">
+                <div class="memorial-info">
+                    <div class="memorial-name">Name 4</div>
+                    <div class="memorial-dates">01/01/1950 - 10/09/2024</div>
+                    <div class="memorial-location">Location</div>
+                    <div class="memorial-age">Age: 80</div>
+                </div>
+            </div>
+            <div class="memorial-card">
+                <img src="" alt="Image3" class="memorial-img">
+                <div class="memorial-info">
+                    <div class="memorial-name">Name 5</div>
+                    <div class="memorial-dates">01/01/1950 - 10/09/2024</div>
+                    <div class="memorial-location">Location</div>
+                    <div class="memorial-age">Age: 80</div>
+                </div>
+            </div>
+            <div class="memorial-card">
+                <img src="" alt="Image3" class="memorial-img">
+                <div class="memorial-info">
+                    <div class="memorial-name">Name 6</div>
+                    <div class="memorial-dates">01/01/1950 - 10/09/2024</div>
+                    <div class="memorial-location">Location</div>
+                    <div class="memorial-age">Age: 80</div>
+                </div>
+            </div>
         </div>
-    </section>
+            <div class="carousel-controls">
+                    <button class="carousel-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
+                    <button class="carousel-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            </div>
+        </section>
 
     <section class="faq">
         <h3>Frequently Asked Questions</h3>
@@ -148,7 +181,7 @@
         </div>
         <div class="faq-item">
             <div class="faq-question">
-                Can I report incorrect information on a post? Test
+                Can I report incorrect information on a post? Test hello
                 <i class="fas fa-plus"></i>
             </div>
             <div class="faq-answer">
@@ -158,7 +191,7 @@
     </section>
 
     <section class="contact">
-        <h3>Contact Us</h3>
+        <h3>Contact Us Now Please!!</h3>
         <form class="contact-form" method="POST" action="submit_feedback.php">
             <div class="form-group">
                 <input type="text" name="name" placeholder="Name" required>
@@ -167,7 +200,7 @@
                 <input type="email" name="email" placeholder="Email" required>
             </div>
             <div class="form-group">
-                <textarea name="message" placeholder="Message" required></textarea>
+                <textarea class="form-control" id="feedback" name="feedback" placeholder="Message" rows="4" required></textarea>
             </div>
             <button type="submit" class="submit-btn">Submit</button>
         </form>
