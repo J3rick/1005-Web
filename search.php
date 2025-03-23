@@ -54,7 +54,7 @@ if (!empty($religion)) {
 
 // Add resting type filter
 if (!empty($resting_type) && is_array($resting_type)) {
-    $escapedTypes = array_map(function($type) use ($conn) {
+    $escapedTypes = array_map(function ($type) use ($conn) {
         return "'" . $conn->real_escape_string($type) . "'";
     }, $resting_type);
     $sql .= " AND RestingType IN (" . implode(',', $escapedTypes) . ")";
@@ -112,7 +112,7 @@ $result = $conn->query($sql);
 
     <?php
     include "inc/head.inc.php"
-    ?>
+        ?>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -275,23 +275,23 @@ $result = $conn->query($sql);
                         <div class="filter-title">Resting Place Type</div>
                         <div class="filter-group">
                             <div class="checkbox-group">
-                                <label><input type="checkbox" name="resting_type[]" value="Burial" <?php echo in_array('Burial', (array)$resting_type) ? 'checked' : ''; ?>>
+                                <label><input type="checkbox" name="resting_type[]" value="Burial" <?php echo in_array('Burial', (array) $resting_type) ? 'checked' : ''; ?>>
                                     Burial</label>
                             </div>
                             <div class="checkbox-group">
-                                <label><input type="checkbox" name="resting_type[]" value="Cremation" <?php echo in_array('Cremation', (array)$resting_type) ? 'checked' : ''; ?>>
+                                <label><input type="checkbox" name="resting_type[]" value="Cremation" <?php echo in_array('Cremation', (array) $resting_type) ? 'checked' : ''; ?>>
                                     Cremation</label>
                             </div>
                             <div class="checkbox-group">
-                                <label><input type="checkbox" name="resting_type[]" value="Mausoleum" <?php echo in_array('Mausoleum', (array)$resting_type) ? 'checked' : ''; ?>>
+                                <label><input type="checkbox" name="resting_type[]" value="Mausoleum" <?php echo in_array('Mausoleum', (array) $resting_type) ? 'checked' : ''; ?>>
                                     Mausoleum</label>
                             </div>
                             <div class="checkbox-group">
-                                <label><input type="checkbox" name="resting_type[]" value="Memorial Garden" <?php echo in_array('Memorial Garden', (array)$resting_type) ? 'checked' : ''; ?>> 
+                                <label><input type="checkbox" name="resting_type[]" value="Memorial Garden" <?php echo in_array('Memorial Garden', (array) $resting_type) ? 'checked' : ''; ?>>
                                     Memorial Garden</label>
                             </div>
                             <div class="checkbox-group">
-                                <label><input type="checkbox" name="resting_type[]" value="Sea Burial" <?php echo in_array('Sea Burial', (array)$resting_type) ? 'checked' : ''; ?>> 
+                                <label><input type="checkbox" name="resting_type[]" value="Sea Burial" <?php echo in_array('Sea Burial', (array) $resting_type) ? 'checked' : ''; ?>>
                                     Sea Burial</label>
                             </div>
                         </div>
@@ -302,11 +302,16 @@ $result = $conn->query($sql);
                         <div class="filter-group">
                             <select class="form-control" name="location">
                                 <option value="">All Locations</option>
-                                <option value="north" <?php echo $location == 'north' ? 'selected' : ''; ?>>North Region</option>
-                                <option value="south" <?php echo $location == 'south' ? 'selected' : ''; ?>>South Region</option>
-                                <option value="east" <?php echo $location == 'east' ? 'selected' : ''; ?>>East Region</option>
-                                <option value="west" <?php echo $location == 'west' ? 'selected' : ''; ?>>West Region</option>
-                                <option value="central" <?php echo $location == 'central' ? 'selected' : ''; ?>>Central Region</option>
+                                <option value="north" <?php echo $location == 'north' ? 'selected' : ''; ?>>North Region
+                                </option>
+                                <option value="south" <?php echo $location == 'south' ? 'selected' : ''; ?>>South Region
+                                </option>
+                                <option value="east" <?php echo $location == 'east' ? 'selected' : ''; ?>>East Region
+                                </option>
+                                <option value="west" <?php echo $location == 'west' ? 'selected' : ''; ?>>West Region
+                                </option>
+                                <option value="central" <?php echo $location == 'central' ? 'selected' : ''; ?>>Central
+                                    Region</option>
                             </select>
                         </div>
                     </div>
@@ -330,12 +335,18 @@ $result = $conn->query($sql);
                     <h2>Search Results</h2>
                     <div class="form-group">
                         <select class="form-control" id="sortResults">
-                            <option value="name_asc" <?php echo $sort == 'name_asc' ? 'selected' : ''; ?>>Sort by: Name (A-Z)</option>
-                            <option value="name_desc" <?php echo $sort == 'name_desc' ? 'selected' : ''; ?>>Name (Z-A)</option>
-                            <option value="dob_asc" <?php echo $sort == 'dob_asc' ? 'selected' : ''; ?>>Birth Date (Oldest First)</option>
-                            <option value="dob_desc" <?php echo $sort == 'dob_desc' ? 'selected' : ''; ?>>Birth Date (Newest First)</option>
-                            <option value="dod_asc" <?php echo $sort == 'dod_asc' ? 'selected' : ''; ?>>Death Date (Oldest First)</option>
-                            <option value="dod_desc" <?php echo $sort == 'dod_desc' ? 'selected' : ''; ?>>Death Date (Newest First)</option>
+                            <option value="name_asc" <?php echo $sort == 'name_asc' ? 'selected' : ''; ?>>Sort by: Name
+                                (A-Z)</option>
+                            <option value="name_desc" <?php echo $sort == 'name_desc' ? 'selected' : ''; ?>>Name (Z-A)
+                            </option>
+                            <option value="dob_asc" <?php echo $sort == 'dob_asc' ? 'selected' : ''; ?>>Birth Date (Oldest
+                                First)</option>
+                            <option value="dob_desc" <?php echo $sort == 'dob_desc' ? 'selected' : ''; ?>>Birth Date
+                                (Newest First)</option>
+                            <option value="dod_asc" <?php echo $sort == 'dod_asc' ? 'selected' : ''; ?>>Death Date (Oldest
+                                First)</option>
+                            <option value="dod_desc" <?php echo $sort == 'dod_desc' ? 'selected' : ''; ?>>Death Date
+                                (Newest First)</option>
                         </select>
                     </div>
                 </div>
@@ -351,14 +362,14 @@ $result = $conn->query($sql);
                             $birthDate = new DateTime($row['DateOfBirth']);
                             $deathDate = new DateTime($row['DateOfPassing']);
                             $age = $birthDate->diff($deathDate)->y;
-                            
+
                             // Format dates for display
                             $formattedBirthDate = date('M d, Y', strtotime($row['DateOfBirth']));
                             $formattedDeathDate = date('M d, Y', strtotime($row['DateOfPassing']));
-                            
+
                             // Get image path or use placeholder
                             $imagePath = !empty($row['Image']) ? "assets/portraits/" . $row['Image'] : "https://via.placeholder.com/300x150";
-                            
+
                             // Output the memorial card
                             echo '<div class="col-md-4">
                                 <div class="result-tile">
@@ -385,40 +396,98 @@ $result = $conn->query($sql);
                     ?>
                 </div>
 
-                <!-- Pagination -->
-                <?php if ($total_pages > 1): ?>
-                <nav aria-label="Search results pages">
-                    <ul class="pagination">
-                        <li class="<?php echo $page <= 1 ? 'disabled' : ''; ?>">
-                            <a href="<?php echo $page <= 1 ? '#' : '?'.http_build_query(array_merge($_GET, ['page' => $page - 1])); ?>" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        
-                        <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-                        <li class="<?php echo $page == $i ? 'active' : ''; ?>">
-                            <a href="?<?php echo http_build_query(array_merge($_GET, ['page' => $i])); ?>">
-                                <?php echo $i; ?> <?php echo $page == $i ? '<span class="sr-only">(current)</span>' : ''; ?>
-                            </a>
-                        </li>
-                        <?php endfor; ?>
-                        
-                        <li class="<?php echo $page >= $total_pages ? 'disabled' : ''; ?>">
-                            <a href="<?php echo $page >= $total_pages ? '#' : '?'.http_build_query(array_merge($_GET, ['page' => $page + 1])); ?>" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-                <?php endif; ?>
+                <!-- 
+                PAGINATION SECTION
+                This code creates numbered page links with Previous/Next buttons
+                Only displays if we have more than one page of results 
+                -->
+                <?php
+                // Only show pagination if we have multiple pages
+                if ($total_pages > 1):
+                    ?>
+                    <nav aria-label="Search results pages">
+                        <ul class="pagination">
+                            <!-- PREVIOUS PAGE BUTTON -->
+                            <?php
+                            // Check if we're on the first page
+                            $is_first_page = ($page <= 1);
+
+                            // If we're on first page, disable the Previous button
+                            if ($is_first_page) {
+                                $prev_class = "disabled";
+                                $prev_link = "#"; // Link doesn't go anywhere when disabled
+                            } else {
+                                $prev_class = "";
+                                // Create link to previous page while keeping other URL parameters
+                                $prev_link = "?" . http_build_query(
+                                    array_merge($_GET, ['page' => $page - 1])
+                                );
+                            }
+                            ?>
+                            <li class="<?php echo $prev_class; ?>">
+                                <a href="<?php echo $prev_link; ?>" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span> <!-- Left arrow symbol -->
+                                </a>
+                            </li>
+
+                            <!-- NUMBERED PAGE BUTTONS -->
+                            <?php
+                            // Loop through all page numbers
+                            for ($i = 1; $i <= $total_pages; $i++):
+                                // Highlight the current page
+                                $is_current = ($page == $i);
+
+                                // Add URL parameters to the link but change the page number
+                                $page_link = "?" . http_build_query(
+                                    array_merge($_GET, ['page' => $i])
+                                );
+                                ?>
+                                <li class="<?php echo $is_current ? 'active' : ''; ?>">
+                                    <a href="<?php echo $page_link; ?>">
+                                        <?php echo $i; ?>
+                                        <?php
+                                        // Add hidden text for screen readers on current page
+                                        if ($is_current) {
+                                            echo '<span class="sr-only">(current)</span>';
+                                        }
+                                        ?>
+                                    </a>
+                                </li>
+                            <?php endfor; ?>
+
+                            <!-- NEXT PAGE BUTTON -->
+                            <?php
+                            // Check if we're on the last page
+                            $is_last_page = ($page >= $total_pages);
+
+                            // If we're on last page, disable the Next button
+                            if ($is_last_page) {
+                                $next_class = "disabled";
+                                $next_link = "#"; // Link doesn't go anywhere when disabled
+                            } else {
+                                $next_class = "";
+                                // Create link to next page while keeping other URL parameters
+                                $next_link = "?" . http_build_query(
+                                    array_merge($_GET, ['page' => $page + 1])
+                                );
+                            }
+                            ?>
+                            <li class="<?php echo $next_class; ?>">
+                                <a href="<?php echo $next_link; ?>" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span> <!-- Right arrow symbol -->
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                <?php endif; ?> <!-- End of "if multiple pages" condition -->
             </div>
         </div>
     </div>
 
     <?php
     include "inc/footer.inc.php"
-    ?>
-    
+        ?>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
