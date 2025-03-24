@@ -14,7 +14,7 @@ $config['remote'] = [
 $config['local'] = [
     'servername' => 'localhost',
     'username' => 'admin', // Replace with your local username
-    'password' => '',     // Replace with your local password
+    'password' => 'test123',     // Replace with your local password
     'dbname' => 'Memorial_Map' // Replace with your local database name
 ];
 ?>
