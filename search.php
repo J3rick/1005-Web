@@ -1,16 +1,43 @@
 <?php
-// Database connection configuration - adjust these values to match your setup
-$servername = "localhost";
-$username = "inf1005-sqldev";
-$password = "P@ssw0rd123";
-$dbname = "Memorial_Map";
+// Include the configuration file
+require_once 'db_config.php';
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+// Error handling mode
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+// Initialize connection variable
+$conn = null;
+$connection_source = "";
+
+try {
+    // First try remote connection
+    $conn = new mysqli(
+        $config['remote']['servername'],
+        $config['remote']['username'],
+        $config['remote']['password'],
+        $config['remote']['dbname']
+    );
+    $connection_source = "remote";
+} 
+catch (Exception $e) {
+    // If remote fails, try local
+    try {
+        $conn = new mysqli(
+            $config['local']['servername'],
+            $config['local']['username'],
+            $config['local']['password'],
+            $config['local']['dbname']
+        );
+        $connection_source = "local";
+    } 
+    catch (Exception $e) {
+        // If both connections fail, display simple error
+        echo "<div style='color:red; padding:10px;'>";
+        echo "<strong>Database Connection Failed</strong><br>";
+        echo "Please check your MySQL server and connection settings.";
+        echo "</div>";
+        die();
+    }
 }
 
 // Get search parameters from URL
@@ -405,7 +432,7 @@ $result = $conn->query($sql);
                 // Only show pagination if we have multiple pages
                 if ($total_pages > 1):
                     ?>
-                    <nav aria-label="Search results pages">
+                    <bottomnav aria-label="Search results pages">
                         <ul class="pagination">
                             <!-- PREVIOUS PAGE BUTTON -->
                             <?php
@@ -478,7 +505,7 @@ $result = $conn->query($sql);
                                 </a>
                             </li>
                         </ul>
-                    </nav>
+                    </bottomnav>
                 <?php endif; ?> <!-- End of "if multiple pages" condition -->
             </div>
         </div>
