@@ -1,6 +1,30 @@
 <?php
     include 'inc/head.inc.php';
     include 'inc/adminbar.inc.php';
+    //include 'inc/cookie.php'; For y'alls to work on that page without a hassle
+    //include 'inc/jwt.php'; // This is used for authentication
+
+
+    // If there is a logout button being implemented the in future
+    // Here is the generic logout function, this will destroy the session cookies, jwt token
+    function logout() {
+        session_start();
+        $_SESSION = array();
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(session_name(), '', time() - 42000,
+                $params["path"], $params["domain"],
+                $params["secure"], $params["httponly"]
+            );
+        }
+        session_destroy();
+        
+        // Clear JWT token
+        setcookie("jwt_token", "", time() - 3600, "/");
+    }
+
+    // INCASE I FORGET, TELL ME IF YOU'RE ADDING ANY POST REQUEST(FORMS) BECAUSE I NEED TO ADD IN CSRF
+
 ?>
 
 <!DOCTYPE html>

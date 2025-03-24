@@ -1,3 +1,24 @@
+<?php
+// Start the session to access session variables
+session_start(); 
+
+// Generate CSRF token if it doesn't exist
+if (!isset($_SESSION['csrf_token'])) {
+  $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
+// Check if there's an error message stored in the session
+if (isset($_SESSION['error_msg'])) {
+  // Display the error message
+  // NEEDS TO BE BEAUTIFIED
+  echo "<p class='error'>" . htmlspecialchars($_SESSION['error_msg']) . "</p>"; // Used htmlspecialchars() when outputting the error message and CSRF token to prevent XSS attacks.
+  // Clear the error message after displaying it
+  unset($_SESSION['error_msg']);
+}
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,6 +50,9 @@
         <label for="password">Password:</label>
         <input type="password" id="password" name="pwd" required>
       </div>
+
+      <!-- Add CSRF token as a hidden field -->
+      <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
       
       <div class="form-group">
         <input type="submit" value="Login" class="btn btn-primary">

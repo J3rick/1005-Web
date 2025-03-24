@@ -7,8 +7,27 @@
 ?>
 
 <?php
+
+// Start secure session
+//ini_set('session.cookie_secure', 1); // If I can set up HTTPS then uncomment this - Derrick
+
+ini_set('session.cookie_httponly', 1);
+
+ // Session Cookies
+ini_set('session.use_cookies', 1);
+ini_set('session.use_only_cookies', 1);
+ini_set('session.cookie_lifetime', 0);
+
+session_start();
+
 $username = $errorMsg = "";
 $success = true;
+
+// CSRF token validation
+if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+    $errorMsg .= "CSRF token validation failed.<br>";
+    $success = false;
+}
 
 // Validate username
 if (empty($_POST["username"])) {
@@ -30,30 +49,32 @@ if ($success) {
     authenticateUser();
 }
 
-// Display results
+// Process the login result
 if ($success) {
-    include "inc/head.inc.php";
-    echo "<div class='warning-message'>";
-    echo "<article class='col-sm'>";
-    echo "<hr/>"; //divider
-    echo "<h1>Login Successful!</h1>";
-    echo "<h4>Welcome Back, " . $username . "</h4>";
-    echo "<a href='index.php' class='btn btn-success' role='button' aria-pressed='true'>Return to Home</a>";
-    echo "</article>";
-    echo "</div><br/>";
-    include "inc/footer.inc.php";
+
+     // Regenerate session ID for security
+    session_regenerate_id(true);
+
+    // Start a session to store user information
+    session_start();
+    $_SESSION['username'] = $username;
+    $_SESSION['admin'] = true;
+    $_SESSION['last_activity'] = time();
+
+    // Generate a new CSRF token for the next request
+     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+
+    // Redirect to admin.php
+    header("Location: admin.php");
+    exit();
 } else {
-    include "inc/head.inc.php";
-    echo "<div class='warning-message'>";
-    echo "<article class='col-sm'>";
-    echo "<hr/>"; //divider
-    echo "<h1>Oops!</h1>";
-    echo "<h4>The following errors were detected:</h4>";
-    echo "<p>" . $errorMsg . "</p>";
-    echo "<a href='register.php' class='btn btn-danger' role='button' aria-pressed='true'>Return to Sign Up</a>";
-    echo "</article>";
-    echo "</div><br/>";
-    include "inc/footer.inc.php";
+    // Store the error message in a session variable
+    session_start();
+    $_SESSION['error_msg'] = $errorMsg;
+
+    // Redirect back to login.php
+    header("Location: login.php");
+    exit();
 }
 
 // Helper function that checks input for malicious or unwanted content.
@@ -83,9 +104,9 @@ function authenticateUser() {
 
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        $stored_pwd = $row["Admin_Password"];
+        $pwd_hashed = $row["Admin_Password"];
         // Since password is not hashed, directly compare
-        if ($pwd !== $stored_pwd) {
+        if (!password_verify($_POST["pwd"], $pwd_hashed))  {
             $errorMsg = "Username or password is incorrect.";
             $success = false;
         }
