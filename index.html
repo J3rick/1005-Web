@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MemorialMap</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f8f8;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            background-color: white;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+        }
+        
+        .logo h1 {
+            font-size: 20px;
+            font-weight: normal;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+        }
+        
+        .language-controls {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .language-controls button {
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        
+        .hero {
+            background-image: url('https://source.unsplash.com/random/1200x400/?cemetery,memorial');
+            background-size: cover;
+            background-position: center;
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 800px;
+        }
+        
+        .hero h2 {
+            margin-bottom: 30px;
+            font-size: 32px;
+        }
+        
+        .search-form {
+            display: flex;
+            width: 100%;
+            max-width: 800px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .search-form input, .search-form select {
+            flex: 1;
+            padding: 12px 15px;
+            border: none;
+            outline: none;
+            border-right: 1px solid #ddd;
+        }
+        
+        .search-form button {
+            padding: 12px 15px;
+            background-color: #2c3e50;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+        
+        .memorials {
+            padding: 40px 50px;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .section-header h3 {
+            font-size: 24px;
+            color: #333;
+        }
+        
+        .section-header a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        
+        .memorial-cards {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .memorial-card {
+            flex: 1;
+            background-color: white;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .memorial-img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            display: block;
+            margin: 0 auto;
+        }
+        
+        .memorial-info {
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .memorial-name {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        
+        .memorial-dates {
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .memorial-location {
+            color: #666;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+        
+        .memorial-age {
+            color: #666;
+        }
+        
+        .faq {
+            padding: 40px 50px;
+            background-color: #f8f8f8;
+        }
+        
+        .faq h3 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
+            color: #333;
+        }
+        
+        .faq-item {
+            background-color: white;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .contact {
+            padding: 40px 50px;
+            text-align: center;
+        }
+        
+        .contact h3 {
+            margin-bottom: 30px;
+            font-size: 24px;
+            color: #333;
+        }
+        
+        .contact-form {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+        }
+        
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            outline: none;
+        }
+        
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="https://via.placeholder.com/30x30" alt="MemorialMap Logo">
+            <h1>MemorialMap</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Contact us</a></li>
+                <li><a href="#">FAQ</a></li>
+            </ul>
+        </nav>
+        <div class="language-controls">
+            <button><i class="fas fa-globe"></i></button>
+            <button><i class="fas fa-moon"></i></button>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Find your loved ones today...</h2>
+            <form class="search-form">
+                <input type="text" placeholder="Name">
+                <input type="text" placeholder="Place">
+                <select>
+                    <option value="">Religion</option>
+                    <option value="christianity">Christianity</option>
+                    <option value="islam">Islam</option>
+                    <option value="judaism">Judaism</option>
+                    <option value="hinduism">Hinduism</option>
+                    <option value="buddhism">Buddhism</option>
+                    <option value="other">Other</option>
+                </select>
+                <select>
+                    <option value="">Cemetery/Grave</option>
+                    <option value="cemetery1">Cemetery 1</option>
+                    <option value="cemetery2">Cemetery 2</option>
+                    <option value="cemetery3">Cemetery 3</option>
+                </select>
+                <button type="submit"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+    </section>
+
+    <section class="memorials">
+        <div class="section-header">
+            <h3>Latest memorials</h3>
+            <a href="#">Explore more »</a>
+        </div>
+        <div class="memorial-cards">
+            <div class="memorial-card">
+                <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Memorial" class="memorial-img">
+                <div class="memorial-info">
+                    <div class="memorial-name">Donna Wood</div>
+                    <div class="memorial-dates">07/07/1950 - 10/09/2024</div>
+                    <div class="memorial-location">Sunny Meadow</div>
+                    <div class="memorial-age">Age: 80</div>
+                </div>
+            </div>
+            <div class="memorial-card">
+                <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Memorial" class="memorial-img">
+                <div class="memorial-info">
+                    <div class="memorial-name">Maria Cruz</div>
+                    <div class="memorial-dates">01/01/1944 - 15/09/2024</div>
+                    <div class="memorial-location">Peaceful Park</div>
+                    <div class="memorial-age">Age: 87</div>
+                </div>
+            </div>
+            <div class="memorial-card">
+                <img src="https://randomuser.me/api/portraits/women/28.jpg" alt="Memorial" class="memorial-img">
+                <div class="memorial-info">
+                    <div class="memorial-name">Karen Sue Lin</div>
+                    <div class="memorial-dates">01/01/1950 - 10/09/2024</div>
+                    <div class="memorial-location">Sacred Family Cemetery</div>
+                    <div class="memorial-age">Age: 80</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq">
+        <h3>Frequently Asked Questions</h3>
+        <div class="faq-item">
+            <div class="faq-question">
+                What is MemorialMap?
+                <i class="fas fa-plus"></i>
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">
+                How do I search for a resting place?
+                <i class="fas fa-plus"></i>
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">
+                Is MemorialMap free to use?
+                <i class="fas fa-plus"></i>
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">
+                Can I create a memorial page for a loved one?
+                <i class="fas fa-plus"></i>
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">
+                Can I report incorrect information on a post?
+                <i class="fas fa-plus"></i>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact">
+        <h3>Contact Us</h3>
+        <form class="contact-form">
+            <div class="form-group">
+                <input type="text" placeholder="Name" required>
+            </div>
+            <div class="form-group">
+                <input type="email" placeholder="Email" required>
+            </div>
+            <div class="form-group">
+                <textarea placeholder="Message" required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+    </section>
+
+    <script>
+        // JavaScript for FAQ accordion and other interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', function() {
+                    const icon = this.querySelector('i');
+                    icon.classList.toggle('fa-plus');
+                    icon.classList.toggle('fa-minus');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
