@@ -1,6 +1,6 @@
 <div class="side-menu" id="side-menu">
     <button id="toggle-sidebar" onclick="toggleSidebar()">☰</button>
-    <h2>Menu</h2>
+    <a href= "admin.php"><h2>Menu</h2></a>
     <ul>
         <li><a href="#add-grave">Add Grave</a></li>
         <li><a href="#edit-grave">Edit Grave</a></li>

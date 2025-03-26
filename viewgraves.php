@@ -4,6 +4,7 @@
     include 'inc/head.inc.php';
     include 'inc/adminbar.inc.php';
     include 'inc/sql.inc.php';
+    include 'inc/footer.inc.php';
     $conn = getDatabaseConnection();
 ?>
 
@@ -121,7 +122,7 @@
     }
     
     /* Responsive adjustments */
-    @media screen and (max-width: 1200px) {
+    @media screen and (max-width: 768px) {
         .graves-table {
             font-size: 14px;
         }
