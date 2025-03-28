@@ -43,8 +43,8 @@ catch (Exception $e) {
 // Get search parameters from URL
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
-// Build SQL query with search filters
-$sql = "SELECT * FROM Memorial_Map_Data WHERE Memorial_MapID = $id";
+// Build SQL query with search filters - MAKE SURE TO INCLUDE LATITUDE AND LONGITUDE
+$sql = "SELECT *, Latitude, Longitude FROM Memorial_Map_Data WHERE Memorial_MapID = $id";
 
 // Execute the query
 $result = $conn->query($sql);
@@ -69,12 +69,27 @@ if ($result->num_rows > 0) {
 
     <?php
     include "inc/head.inc.php"
-        ?>
+    ?>
 
+    <!-- Mapbox CSS -->
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.10.0/mapbox-gl.css" rel="stylesheet">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
     <link rel="stylesheet" href="css/main.css">
     <style>
+        /* Map container styling */
+        .map-container {
+            width: 100%;
+            height: 400px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        #map {
+            width: 100%;
+            height: 100%;
+            border-radius: 5px;
+        }
     </style>
 </head>
 
@@ -87,7 +102,7 @@ if ($result->num_rows > 0) {
         <div class="row">
             <div class="column-small">
             <div class="memorial-card">
-                <img src="assets/portraits/<?= htmlspecialchars($memorial['Image']) ?>" alt="poop" style="width: 500px; height: auto;">
+                <img src="assets/portraits/<?= htmlspecialchars($memorial['Image']) ?>" alt="Memorial Image" style="width: 500px; height: auto;">
                 </div>
             </div>
             <div class="column-large">
@@ -102,14 +117,63 @@ if ($result->num_rows > 0) {
                 </div>
             </div>
         </div>
+        <div class="row">
+        <div class="map-container">
+            <div id="map"></div>
+        </div>
         
-
+        </div>
     </section>
-
+    
     <?php
     include "inc/footer.inc.php"
-        ?>
+    ?>
+    
+    <!-- Mapbox JS -->
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.10.0/mapbox-gl.js"></script>
     <script src="js/main.js"></script>
+    
+    <script>
+    // Initialize map only if coordinates exist
+    <?php if (isset($memorial['Latitude']) && isset($memorial['Longitude']) && 
+             !empty($memorial['Latitude']) && !empty($memorial['Longitude'])) : ?>
+    
+    // Set Mapbox access token
+    mapboxgl.accessToken = 'pk.eyJ1IjoiYXlkaWxraGFpcjkiLCJhIjoiY204czlpZjM4MTFhZzJpc2FzdWFyYWg4MiJ9.zbnLvW0qIwRuxE74jf4QIw';
+    
+    // Convert coordinates to numbers
+    const lat = parseFloat('<?= $memorial['Latitude'] ?>');
+    const lng = parseFloat('<?= $memorial['Longitude'] ?>');
+    
+    // Initialize map
+    const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v12',
+        center: [lng, lat],
+        zoom: 17
+    });
+    
+    // Add navigation controls
+    map.addControl(new mapboxgl.NavigationControl());
+    
+    // Add a marker for the memorial location
+    const popup = new mapboxgl.Popup({ offset: 25 })
+        .setHTML(`
+            <strong><?= htmlspecialchars($memorial['Name']) ?></strong><br>
+            Plot: <?= htmlspecialchars($memorial['PlotNumber']) ?>
+        `);
+    
+    // Create a marker
+    new mapboxgl.Marker({ color: '#000000' })
+        .setLngLat([lng, lat])
+        .setPopup(popup)
+        .addTo(map);
+    
+    <?php else: ?>
+        // Display message if coordinates not available
+        document.querySelector('.map-container').innerHTML = '<p class="text-center">Location coordinates not available for this memorial.</p>';
+    <?php endif; ?>
+    </script>
 </body>
 
 </html>
