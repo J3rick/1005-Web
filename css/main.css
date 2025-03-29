@@ -201,7 +201,7 @@ nav.active {
 }
 
 .memorial-card {
-    background-color: #ffffff !important; /* Force pure white */
+    background-color: #6b705c !important; /* Force pure white */
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
