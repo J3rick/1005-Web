@@ -1,7 +1,7 @@
 <?php
     include 'inc/head.inc.php';
     include 'inc/adminbar.inc.php';
-    //include 'inc/cookie.php'; For y'alls to work on that page without a hassle
+    require_once 'cookie_admin.php'; //For y'alls to work on that page without a hassle
     //include 'inc/jwt.php'; // This is used for authentication
 
 

@@ -7,17 +7,7 @@
 ?>
 
 <?php
-
-// Start secure session
-//ini_set('session.cookie_secure', 1); // Uncomment if using HTTPS
-
-ini_set('session.cookie_httponly', 1);
-// Session Cookies
-ini_set('session.use_cookies', 1);
-ini_set('session.use_only_cookies', 1);
-ini_set('session.cookie_lifetime', 0);
-
-session_start();
+require_once 'cookie_admin.php';
 
 $username = $errorMsg = "";
 $success = true;

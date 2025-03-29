@@ -1,6 +1,7 @@
 <?php
-// Start the session to access session variables
-session_start(); 
+require_once 'cookie_public.php'; // Included public_cookie 
+
+session_start();  // Start the session to access session variables - CSRF
 
 // Generate CSRF token if it doesn't exist
 if (!isset($_SESSION['csrf_token'])) {
