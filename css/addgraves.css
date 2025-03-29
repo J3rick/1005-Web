@@ -1,23 +1,299 @@
- /* Addform css stylings */
+/* Addform css stylings */
 .addform {
     align-items: center;
-    color: rgb(0, 0, 0);
+    color: #333;
     display: flex;
     flex-direction: column;
-    height: 500px;
+    min-height: 100vh;
+    padding: 40px 20px;
     justify-content: center;
-    position: relative;
     text-align: center;
+    background-color: #f9f9f9;
+    box-sizing: border-box;
+    overflow-y: auto;
 }
 
 .addform-content {
-    max-width: 1500px;
-    position: relative;
+    max-width: 800px;
     width: 100%;
-    z-index: 1;
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    top: 0;
 }
 
 .addform-content h1 {
     font-size: 32px;
     margin-bottom: 30px;
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.addgraves-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.addform-grp {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.addform-grp label {
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #2c3e50;
+}
+
+.addform-grp input[type="text"],
+.addform-grp input[type="date"],
+.addform-grp select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+.addform-grp input[type="text"]:focus,
+.addform-grp input[type="date"]:focus,
+.addform-grp select:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(52,152,219,0.2);
+}
+
+.addform-row {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+}
+
+.addform-row .addform-grp {
+    flex: 1;
+}
+
+.addform-grp input[type="file"] {
+    padding: 10px;
+    border: 1px dashed #ddd;
+    border-radius: 6px;
+    width: 100%;
+}
+
+.addform-grp small {
+    color: #7f8c8d;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+.add-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.add-btn, .cancel-btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.add-btn {
+    background-color: #3498db;
+    color: white;
+}
+
+.add-btn:hover {
+    background-color: #2980b9;
+}
+
+.cancel-btn {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.cancel-btn:hover {
+    background-color: #c0392b;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .addform-row {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .addform-content {
+        padding: 30px 20px;
+        margin-top: 20px;
+        width: 100%;
+    }
+}
+
+/* Special styling for coordinate fields */
+.coord-group {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+}
+
+.coord-group .addform-grp {
+    flex: 1;
+}
+
+/* Medium devices (tablets, 768px and down) */
+@media (max-width: 768px) {
+    .addform-content {
+        padding: 30px 20px;
+        width: 90%;
+        margin: 20px auto;
+    }
+
+    .addform-row {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .coord-group {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .addform-grp input[type="text"],
+    .addform-grp input[type="date"],
+    .addform-grp select {
+        padding: 10px 12px;
+        font-size: 15px;
+    }
+
+    .add-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .add-btn, .cancel-btn {
+        width: 100%;
+    }
+}
+
+/* Small devices (phones, 576px and down) */
+@media (max-width: 576px) {
+    .addform-content {
+        padding: 25px 15px;
+        width: 95%;
+    }
+
+    .addform-content h1 {
+        font-size: 26px;
+        margin-bottom: 20px;
+    }
+
+    .addform-grp label {
+        font-size: 14px;
+    }
+
+    .addform-grp small {
+        font-size: 12px;
+    }
+}
+
+/* Extra small devices (phones, 400px and down) */
+@media (max-width: 400px) {
+    .addform {
+        padding: 20px 10px;
+    }
+
+    .addform-content {
+        padding: 20px 12px;
+        box-shadow: none;
+        border: 1px solid #eee;
+    }
+
+    .addform-grp input[type="text"],
+    .addform-grp input[type="date"],
+    .addform-grp select {
+        padding: 8px 10px;
+        font-size: 14px;
+    }
+}
+
+/* Orientation adjustments */
+@media (max-height: 700px) and (orientation: landscape) {
+    .addform {
+        padding: 20px;
+        min-height: auto;
+    }
+}
+
+/* Print styles */
+@media print {
+    .addform {
+        background: white;
+        padding: 0;
+    }
+    
+    .addform-content {
+        box-shadow: none;
+        padding: 10px;
+        width: 100%;
+    }
+    
+    .add-actions {
+        display: none;
+    }
+}
+
+/* Mobile-specific fixes */
+@media (max-width: 768px) {
+    .addform {
+        padding: 15px;
+        align-items: flex-start; /* NEW: Better mobile alignment */
+    }
+    
+    .addform-content {
+        padding: 25px 15px;
+        width: 100%;
+        margin-top: 20px; /* NEW: Add space at top */
+    }
+
+    /* Prevent header cutoff */
+    .addform-content h1 {
+        position: static;
+        margin-top: 0;
+        padding-top: 10px;
+    }
+}
+
+/* Small phone fixes */
+@media (max-width: 480px) {
+    .addform {
+        padding: 10px;
+        min-height: 90vh; /* NEW: Allows space for browser UI */
+    }
+    
+    body {
+        overflow-x: hidden; /* NEW: Prevents horizontal scroll */
+    }
+    
+    /* Make sure all content is visible */
+    .addform-content {
+        transform: none !important;
+        top: 0 !important;
+    }
+}
+
+/* Special fix for iOS Safari */
+@supports (-webkit-touch-callout: none) {
+    .addform {
+        min-height: -webkit-fill-available;
+        padding-bottom: 40px;
+    }
 }

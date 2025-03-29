@@ -16,139 +16,9 @@
     <title>Cemetery Management System</title>
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="css/viewgraves.css">
     <script src = js/admin.js></script>
 </head>
-<style>
-    .header-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-        position: relative;
-        padding-bottom: 10px;
-        border-bottom: 2px solid #333;
-    }
-
-    h1 {
-        margin-left: 30px;
-        color: #333;
-        font-size: 28px;
-    }
-
-    /* Search container styling */
-    .search-container {
-        display: flex;
-        align-items: center;
-        margin-left: 20px;
-    }
-
-    #search-input {
-        padding: 8px 12px;
-        border: 1px solid #ccc;
-        border-radius: 4px 0 0 4px;
-        font-size: 14px;
-        width: 200px;
-        outline: none;
-    }
-
-    #search-input:focus {
-        border-color: #3498db;
-        box-shadow: 0 0 3px rgba(52, 152, 219, 0.5);
-    }
-
-    .search-btn {
-        background-color: #333;
-        color: white;
-        border: none;
-        padding: 8px 15px;
-        border-radius: 0 4px 4px 0;
-        cursor: pointer;
-        font-size: 14px;
-    }
-
-    .search-btn:hover {
-        background-color: #555;
-    }
-
-    /* Table styling */
-    .graves-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-        background-color: white;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        border-radius: 4px;
-        overflow: hidden;
-    }
-
-    .graves-table th {
-        background-color: #333;
-        color: white;
-        padding: 12px 15px;
-        text-align: left;
-        font-weight: 600;
-        position: sticky;
-        top: 0;
-    }
-
-    .graves-table td {
-        padding: 10px 15px;
-        border-bottom: 1px solid #eee;
-        color: #444;
-    }
-
-    .graves-table tr:hover {
-        background-color: #f5f5f5;
-    }
-
-    .graves-table tr:last-child td {
-        border-bottom: none;
-    }
-
-    /* Zebra striping for better readability */
-    .graves-table tr:nth-child(even) {
-        background-color: #f9f9f9;
-    }
-
-    /* ID column styling */
-    .graves-table td:first-child {
-        font-weight: 600;
-        color: #555;
-    }
-
-    /* Add some color coding for resting type */
-    .graves-table td:last-child {
-        font-weight: 600;
-    }
-    
-    /* Responsive adjustments */
-    @media screen and (max-width: 768px) {
-        .graves-table {
-            font-size: 14px;
-        }
-        
-        .graves-table th, .graves-table td {
-            padding: 8px 10px;
-        }
-    }
-    
-    /* Optional: Add action buttons styling */
-    .action-btn {
-        display: inline-block;
-        padding: 6px 10px;
-        background-color: #333;
-        color: white;
-        text-decoration: none;
-        border-radius: 3px;
-        margin-right: 5px;
-        font-size: 12px;
-    }
-    
-    .action-btn:hover {
-        background-color: #555;
-    }
-    
-</style>
 
 <body>
     <div class="content">
@@ -176,6 +46,8 @@
                     <th>Plot</th>
                     <th>Image</th>
                     <th>Resting Type</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
                 </tr>
             </thead>
 
@@ -184,7 +56,7 @@
                 $query= $conn->prepare('SELECT * from Memorial_Map.Memorial_Map_Data'); 
                 $query->execute();
                 $query->store_result();
-                $query->bind_result($id, $name, $dob, $dod, $age, $religion, $plot, $image, $restingType);
+                $query->bind_result($id, $name, $dob, $dod, $age, $religion, $plot, $image, $restingType, $latitude, $longitude);
                 if($query->num_rows>0){
 
                 }
@@ -192,17 +64,22 @@
                     echo "No graves in database.";
                 }
                 while ($query->fetch()){
-                    echo
-                    "<tr>
-                <td>$id</td>
-                <td>$name</td>
-                <td>$dob</td>
-                <td>$dod</td>
-                <td>$age</td>
-                <td>$religion</td>
-                <td>$plot</td>
-                <td>$image</td>
-                <td>$restingType</td>          
+                    echo "<tr>
+                    <td data-label='ID'>$id</td>
+                    <td data-label='Name'>$name</td>
+                    <td data-label='Birth'>$dob</td>
+                    <td data-label='Death'>$dod</td>
+                    <td data-label='Age'>$age</td>
+                    <td data-label='Religion'>$religion</td>
+                    <td data-label='Plot'>$plot</td>
+                    <td data-label='Image'>$image</td>
+                    <td data-label='RestingType'>$restingType</td>
+                    <td data-label='Latitude'>$latitude</td>
+                    <td data-label='Longtitude'>$longitude</td>
+                    <td data-label='Actions'>
+                        <a href='editgraves.php?id=$id' class='action-btn'>Edit</a>
+                        <a href='deletegraves.php?id=$id' class='action-btn'>Delete</a>
+                    </td>          
                     </tr>";
                 }
                 ?>
