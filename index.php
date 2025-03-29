@@ -176,7 +176,7 @@ $memorials = getMemorialCards($conn);
                                 <form action="https://memorialmap.duckdns.org/memorial.php" method="get">
                                     <input type="hidden" name="id"
                                         value="<?php echo htmlspecialchars($memorial['Memorial_MapID']); ?>" />
-                                    <input type="submit" value="View Memorial" />
+                                    <button type="submit" class="search-btn">View Memorial</button>
                                 </form>
                             </div>
                         </div>
