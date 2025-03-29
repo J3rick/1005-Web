@@ -220,6 +220,7 @@ nav.active {
 .memorial-cards {
     display: flex;
     gap: 30px;
+    color: #E9ECDF;
 }
 
 .memorial-dates {
