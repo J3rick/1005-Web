@@ -201,11 +201,19 @@ nav.active {
 }
 
 .memorial-card {
-    background-color: white;
-    border-radius: 5px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    flex: 1;
-    overflow: hidden;
+    background-color: #ffffff !important; /* Force pure white */
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.memorial-img-wrapper {
+    height: 200px; /* fixed height */
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* crops taller images */
+    background-color: #f4f4f4;
 }
 
 .memorial-cards {
@@ -214,16 +222,17 @@ nav.active {
 }
 
 .memorial-dates {
-    color: #666;
+    background-color: #ffffff !important; /* Force pure white */
+    color: #ffffff;
     margin-bottom: 10px;
 }
 
 .memorial-img {
-    display: block;
     height: 200px;
-    margin: 0 auto;
+    width: auto;
+    max-width: 100%;
     object-fit: cover;
-    width: 100%;
+    display: block;
 }
 
 .memorial-info {

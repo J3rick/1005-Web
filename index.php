@@ -147,10 +147,17 @@ $memorials = getMemorialCards($conn);
                 foreach ($memorials as $memorial): 
             ?>
                 <div class="memorial-card">
-                    <img src="<?php echo displayImage($memorial['Image']); ?>" 
-                         alt="<?php echo htmlspecialchars($memorial['Name']); ?>" 
-                         class="memorial-img">
-                         
+                    <div class="memorial-img-wrapper">
+                    <?php
+                    $imagePath = !empty($memorial['Image']) 
+                        ? "assets/portraits/" . $memorial['Image'] 
+                        : "https://via.placeholder.com/300x150";
+                    ?>
+                    
+                    <img src="<?php echo htmlspecialchars($imagePath); ?>" 
+                        alt="<?php echo htmlspecialchars($memorial['Name']); ?>" 
+                        class="memorial-image">
+                    </div>
                     <div class="memorial-info">
                         <div class="memorial-name"><?php echo htmlspecialchars($memorial['Name']); ?></div>
                         <div class="memorial-dates">
