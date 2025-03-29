@@ -1,0 +1,176 @@
+/* Edit Form Container */
+.edit-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    min-height: calc(100vh - 150px);
+    padding: 30px 20px;
+    background-color: #f5f5f5;
+}
+
+.edit-form-content {
+    width: 100%;
+    max-width: 800px;
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.edit-form-content h1 {
+    font-size: 28px;
+    margin-bottom: 30px;
+    color: #2c3e50;
+    text-align: center;
+}
+
+/* Error Message Styling */
+.error-message {
+    color: #e74c3c;
+    background-color: #fdecea;
+    padding: 15px;
+    margin-bottom: 25px;
+    border-radius: 5px;
+    border-left: 4px solid #e74c3c;
+}
+
+/* Form Group Styling */
+.editform-grp {
+    margin-bottom: 20px;
+}
+
+.editform-grp label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #2c3e50;
+}
+
+.editform-grp input[type="text"],
+.editform-grp input[type="date"],
+.editform-grp select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: all 0.3s;
+}
+
+.editform-grp input[type="text"]:focus,
+.editform-grp input[type="date"]:focus,
+.editform-grp select:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(52,152,219,0.2);
+}
+
+/* Row Layout for Date Fields */
+.editform-row {
+    display: flex;
+    gap: 20px;
+}
+
+.editform-row .editform-grp {
+    flex: 1;
+}
+
+/* File Upload Styling */
+.editform-grp input[type="file"] {
+    padding: 10px;
+    border: 1px dashed #ddd;
+    border-radius: 6px;
+    width: 100%;
+    background: #f9f9f9;
+}
+
+.editform-grp small {
+    display: block;
+    margin-top: 5px;
+    color: #7f8c8d;
+    font-size: 13px;
+}
+
+/* Current File Display */
+.editform-grp p {
+    margin: 5px 0 10px;
+    padding: 8px;
+    background: #f0f0f0;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+/* Action Buttons */
+.edit-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.save-btn, .cancel-btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.save-btn {
+    background-color: #3498db;
+    color: white;
+}
+
+.save-btn:hover {
+    background-color: #2980b9;
+}
+
+.cancel-btn {
+    background-color: #95a5a6;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    line-height: normal;
+}
+
+.cancel-btn:hover {
+    background-color: #7f8c8d;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .edit-form {
+        padding: 20px 15px;
+        margin-top: 60px;
+        min-height: auto;
+    }
+    
+    .edit-form-content {
+        padding: 30px 20px;
+    }
+    
+    .editform-row {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .edit-actions {
+        flex-direction: column;
+    }
+    
+    .save-btn, .cancel-btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .edit-form-content {
+        padding: 25px 15px;
+    }
+    
+    .edit-form-content h1 {
+        font-size: 24px;
+    }
+}

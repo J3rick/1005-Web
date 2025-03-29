@@ -1,95 +1,113 @@
-<head>
-    <title>MemorialMap</title>
-    <?php
-        include "inc/head.inc.php"
-    ?>
-</head>
 <?php
-    //Helper function that checks input for malicious or unwanted content.
-    function sanitize_input($data)
-    {
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-        return $data;
-    }
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+require_once 'inc/sql.inc.php';
+
+try {
+    $conn = getDatabaseConnection();
     
-    $email = $errorMsg = "";
-    $success = true;
-
-    //Email validation checks
-    if (empty($_POST["email"]))
-    {
-        $errorMsg .= "Email is required.<br>";
-        $success = false;
-    }
-    else {
-        $email = sanitize_input($_POST["email"]);
-    // Additional check to make sure e-mail address is well-formed.
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL))
-        {
-            $errorMsg .= "Invalid email format.";
-            $success = false;
+    // Validate required fields
+    $required = ['name', 'dob', 'dop', 'plotno', 'latitude', 'longitude'];
+    foreach ($required as $field) {
+        if (empty($_POST[$field])) {
+            throw new Exception("Missing required field: $field");
         }
     }
 
-    //Name checks
-    if (empty($_POST["fname"]))
-    {
-        $errorMsg .= "First name is required.<br>";
-        $success = false;
+    // Sanitize inputs
+    $name = htmlspecialchars(trim($_POST['name']));
+    $plotNo = htmlspecialchars(trim($_POST['plotno']));
+    $latitude = (float)$_POST['latitude'];
+    $longitude = (float)$_POST['longitude'];
+
+    // Validate coordinates
+    if ($latitude < -90 || $latitude > 90) {
+        throw new Exception("Invalid latitude: must be between -90 and 90");
     }
-    elseif (empty($_POST["lname"])) {
-        $errorMsg .= "Last name is required.<br>";
-        $success = false;
-    }
-    else {
-        $fname = sanitize_input($_POST["fname"]);
-        $lname = sanitize_input($_POST["lname"]);
+    if ($longitude < -180 || $longitude > 180) {
+        throw new Exception("Invalid longitude: must be between -180 and 180");
     }
 
-
-    //Password check
-    if (empty($_POST["pwd"]) || empty($_POST["pwd_confirm"]) )
-    {
-        $errorMsg .= "Password is required.<br>";
-        $success = false;
+    // Validate dates
+    $dob = new DateTime($_POST['dob']);
+    $dop = new DateTime($_POST['dop']);
+    if ($dop < $dob) {
+        throw new Exception("Invalid dates: Date of passing cannot be before date of birth");
     }
-    else {
-        $pwd = $_POST["pwd"];
-        $pwd_confirm = $_POST["pwd_confirm"];
+    $age = $dob->diff($dop)->y;
 
-        if ($pwd_confirm != $pwd) {
-            $errorMsg .= "Passwords are not the same.<br>";
-            $success = false;
+    // Process file upload
+    $imagePath = null;
+    if (!empty($_FILES['image']['name'])) {
+        $allowedTypes = [
+            'image/jpeg' => 'jpg',
+            'image/png' => 'png',
+            'application/pdf' => 'pdf'
+        ];
+        
+        $fileInfo = finfo_open(FILEINFO_MIME_TYPE);
+        $mimeType = finfo_file($fileInfo, $_FILES['image']['tmp_name']);
+        
+        if (!array_key_exists($mimeType, $allowedTypes)) {
+            throw new Exception("Invalid file type. Only JPG, PNG, or PDF allowed.");
         }
+
+        if ($_FILES['image']['size'] > 5000000) { // 5MB
+            throw new Exception("File too large. Maximum 5MB allowed.");
+        }
+
+        $extension = $allowedTypes[$mimeType];
+        $filename = uniqid() . '.' . $extension;
+        $targetPath = 'assets/portraits/' . $filename;
+
+        if (!move_uploaded_file($_FILES['image']['tmp_name'], $targetPath)) {
+            throw new Exception("Failed to save uploaded file.");
+        }
+        
+        $imagePath = $targetPath;
     }
 
-    if ($success)
-    {
-        include "inc/nav.inc.php";
-        echo "<div class = 'warning-message'>";
-        echo "<article class = 'col-sm'>";
-        echo "<hr/>";
-        echo "<h1>Registration successful!</h1>";
-        echo "<h4>Thank you for signing up, " . $fname . " " . $lname."</h4>";
-        echo "<a href='register.php' class='btn btn-success' role = 'button' aria-pressed = 'true'>Login</a>";
-        echo "</article>";
-        echo "</div> <br/>";
-        include "inc/footer.inc.php";
-    }
-    else {
-        include "inc/nav.inc.php";
-        echo "<div class = 'warning-message'>";
-        echo "<article class = 'col-sm'>";
-        echo "<hr/>";
-        echo "<h1>Oops!</h1>";
-        echo "<h4>The following input errors were detected:</h4>";
-        echo "<p>" . $errorMsg . "</p>";
-        echo "<a href='register.php' class='btn btn-danger' role = 'button' aria-pressed = 'true'>Return to Sign Up</a>";
-        echo "</article>";
-        echo "</div> <br/>";
-        include "inc/footer.inc.php";
+    // Check plot availability
+    $checkStmt = $conn->prepare("SELECT Memorial_MapID FROM Memorial_Map_Data WHERE PlotNumber = ?");
+    $checkStmt->bind_param("s", $plotNo);
+    $checkStmt->execute();
+    if ($checkStmt->get_result()->num_rows > 0) {
+        throw new Exception("Plot number $plotNo is already in use.");
     }
 
-?>
+    // Insert record
+    $stmt = $conn->prepare("
+        INSERT INTO Memorial_Map_Data (Name, DateOfBirth, DateOfPassing, Age, Religion, PlotNumber, Image, RestingType, Latitude, Longitude) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ");
+
+    $stmt->bind_param(
+        "sssissssss",
+        $name,
+        $_POST['dob'],
+        $_POST['dop'],
+        $age,
+        $_POST['religion'],
+        $plotNo,
+        $imagePath,
+        $_POST['restingtype'],
+        $latitude,
+        $longitude
+    );
+
+    if ($stmt->execute()) {
+        echo "<script>alert('Grave added successfully!');
+        window.location.href = 'admin.php';
+        </script>";
+        exit();
+    } else {
+        throw new Exception("Database error: " . $stmt->error);
+    }
+
+} catch (Exception $e) {
+    // Log error
+    error_log("[".date('Y-m-d H:i:s')."] Add Grave Error: " . $e->getMessage());
+    
+    // Redirect back with error
+    header("Location: addgraves.php?error=" . urlencode($e->getMessage()));
+    exit();
+}

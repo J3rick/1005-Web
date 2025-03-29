@@ -6,7 +6,7 @@
 $config['remote'] = [
     'servername' => 'localhost',
     'username' => 'inf1005-sqldev',
-    'password' => 'P@ssw0rd123',
+    'password' => 'Tri3IsCom1ing_ToAnEndS0on!',
     'dbname' => 'Memorial_Map'
 ];
 

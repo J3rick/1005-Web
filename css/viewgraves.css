@@ -1,0 +1,201 @@
+/* Base Styles */
+.content {
+    padding: 20px;
+    box-sizing: border-box;
+    width: 100%;
+    overflow-x: auto;
+}
+
+/* Header Section */
+.header-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #2c3e50;
+}
+
+@media (min-width: 768px) {
+    .header-container {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
+/* Table Container */
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    margin: 20px 0;
+    border-radius: 8px;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Table Styles */
+.graves-table {
+    width: 100%;
+    min-width: 600px; /* Minimum width before scrolling */
+    border-collapse: collapse;
+    font-size: 15px;
+}
+
+.graves-table th {
+    background-color: #2c3e50;
+    color: white;
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+}
+
+.graves-table td {
+    padding: 10px 15px;
+    border-bottom: 1px solid #eee;
+    color: #333;
+}
+
+/* Zebra Striping */
+.graves-table tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.graves-table tr:hover {
+    background-color: #e9ecef;
+}
+
+/* Action Buttons */
+.action-btn {
+    display: inline-block;
+    padding: 6px 12px;
+    background-color: #3498db;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-right: 5px;
+    font-size: 14px;
+    transition: all 0.3s;
+}
+
+.action-btn.delete {
+    background-color: #e74c3c;
+}
+
+.action-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+/* ============================================= */
+/* Mobile Responsive Styles */
+/* ============================================= */
+
+@media (max-width: 767px) {
+    /* Stacked table layout for mobile */
+    .header-container {
+        margin-top: 60px;
+        padding: 15px;
+    }
+
+    .graves-table, 
+    .graves-table thead, 
+    .graves-table tbody, 
+    .graves-table th, 
+    .graves-table td, 
+    .graves-table tr {
+        display: block;
+        width: 100%;
+    }
+    
+    .graves-table thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+    
+    .graves-table tr {
+        border: 1px solid #ddd;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        background: white;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .graves-table td {
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 45%;
+        text-align: left;
+    }
+    
+    .graves-table td:before {
+        position: absolute;
+        left: 15px;
+        width: 40%;
+        content: attr(data-label);
+        font-weight: 600;
+        color: #2c3e50;
+    }
+    
+    /* Action buttons row */
+    .graves-table td:last-child {
+        text-align: center;
+        padding-left: 15px;
+    }
+    
+    .graves-table td:last-child:before {
+        display: none;
+    }
+    
+    /* Adjust header padding */
+    .header-container {
+        padding: 0 10px 15px 10px;
+    }
+    
+    /* Search input full width */
+    .search-container {
+        width: 100%;
+    }
+    
+    /* Action buttons */
+    .action-btn {
+        padding: 8px 12px;
+        margin: 5px;
+        display: inline-block;
+        width: auto;
+    }
+}
+
+/* Medium devices (tablets) */
+@media (min-width: 768px) and (max-width: 991px) {
+    .header-container {
+        margin-top: 60px;
+        padding: 15px;
+    }
+    
+    .graves-table {
+        min-width: 100%;
+        font-size: 14px;
+    }
+    
+    .graves-table th, 
+    .graves-table td {
+        padding: 10px 12px;
+    }
+}
+
+/* Scroll indicators for mobile tables */
+.table-container {
+    background: 
+        linear-gradient(to right, white 30%, rgba(255,255,255,0)),
+        linear-gradient(to left, white 30%, rgba(255,255,255,0));
+    background-position: left center, right center;
+    background-repeat: no-repeat;
+    background-size: 40px 100%, 40px 100%;
+    background-attachment: local, local;
+}

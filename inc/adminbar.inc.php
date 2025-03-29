@@ -2,10 +2,9 @@
     <button id="toggle-sidebar" onclick="toggleSidebar()">☰</button>
     <a href= "admin.php"><h2>Menu</h2></a>
     <ul>
-        <li><a href="#add-grave">Add Grave</a></li>
-        <li><a href="#edit-grave">Edit Grave</a></li>
-        <li><a href="#delete-grave">Delete Grave</a></li>
-        <li><a href="#view-graves">View Graves</a></li>
+        <li><a href="addgraves.php">Add Grave</a></li>
+        <li><a href="viewgraves.php">View Graves</a></li>
+        <li><a href="viewfeedback.php">View Feedback</a></li>
     </ul>
 </div>
 
