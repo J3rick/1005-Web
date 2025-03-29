@@ -172,7 +172,7 @@ $memorials = getMemorialCards($conn);
                             <?php endif; ?>
                         </div>
                         <div class="memorial-age">Age: <?php echo htmlspecialchars($memorial['Age']); ?></div>
-                        <a href="memorial.php?id=<?php echo htmlspecialchars($memorial['Memorial_MapID']); ?>">View Memorial</a>
+                        <a href="memorial.php?id=<?php echo htmlspecialchars($memorial['Memorial_MapID']); ?>" class="search-btn">View Memorial</a>
                     </div>
                 </div>
             <?php 
