@@ -149,7 +149,7 @@ if ($result->num_rows > 0) {
     const map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/streets-v12',
-        center: [lng, lng],
+        center: [lng, lat],
         zoom: 17
     });
     
