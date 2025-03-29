@@ -71,6 +71,7 @@ $memorials = getMemorialCards($conn);
     ?>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/main.css">
 </head>
 
@@ -146,7 +147,6 @@ $memorials = getMemorialCards($conn);
             if (count($memorials) > 0): 
                 foreach ($memorials as $memorial): 
             ?>
-                <a href="memorial.php?id=">
                 <div class="memorial-card">
                     <div class="memorial-img-wrapper">
                     <?php
@@ -175,7 +175,6 @@ $memorials = getMemorialCards($conn);
                         <a href="memorial.php?id=<?php echo htmlspecialchars($memorial['Memorial_MapID']); ?>" class="btn btn-primary btn-sm">View Memorial</a>
                     </div>
                 </div>
-                </a>
             <?php 
                 endforeach; 
             else: 
