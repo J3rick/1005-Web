@@ -206,7 +206,7 @@ nav.active {
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
-.memorials .memorial-img-wrapper {
+.memorial-img-wrapper {
     height: 200px; /* fixed height */
     width: 100%;
     display: flex;
