@@ -146,7 +146,7 @@ $memorials = getMemorialCards($conn);
             if (count($memorials) > 0): 
                 foreach ($memorials as $memorial): 
             ?>
-                <a href="memorial.php?id=<?php echo htmlspecialchars($memorial['Memorial_MapID']); ?>">
+                <a href="memorial.php?id=">
                 <div class="memorial-card">
                     <div class="memorial-img-wrapper">
                     <?php
@@ -172,6 +172,7 @@ $memorials = getMemorialCards($conn);
                             <?php endif; ?>
                         </div>
                         <div class="memorial-age">Age: <?php echo htmlspecialchars($memorial['Age']); ?></div>
+                        <a href="memorial.php?id=<?php echo htmlspecialchars($memorial['Memorial_MapID']); ?>" class="btn btn-primary btn-sm">View Memorial</a>
                     </div>
                 </div>
                 </a>
