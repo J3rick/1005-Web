@@ -28,7 +28,7 @@ function getMemorialCards($conn, $limit = 10) {
     $memorials = [];
     
     // Prepare SQL query to fetch memorial data
-    $sql = "SELECT Name, DateOfBirth, DateOfPassing, PlotNumber, Age, Image, Religion, RestingType 
+    $sql = "SELECT Name, DateOfBirth, DateOfPassing, PlotNumber, Age, Image, Religion, RestingType, Memorial_MapID 
             FROM Memorial_Map_Data 
             ORDER BY DateOfPassing DESC 
             LIMIT ?";
@@ -146,6 +146,7 @@ $memorials = getMemorialCards($conn);
             if (count($memorials) > 0): 
                 foreach ($memorials as $memorial): 
             ?>
+                <a href="memorial.php?id=<?php echo htmlspecialchars($memorial['Memorial_MapID']); ?>">
                 <div class="memorial-card">
                     <div class="memorial-img-wrapper">
                     <?php
@@ -173,6 +174,7 @@ $memorials = getMemorialCards($conn);
                         <div class="memorial-age">Age: <?php echo htmlspecialchars($memorial['Age']); ?></div>
                     </div>
                 </div>
+                </a>
             <?php 
                 endforeach; 
             else: 
