@@ -224,7 +224,6 @@ nav.active {
 }
 
 .memorial-dates {
-    color: #ffffff;
     margin-bottom: 10px;
 }
 
@@ -242,7 +241,6 @@ nav.active {
 }
 
 .memorial-location {
-    color: #666;
     font-style: italic;
     margin-bottom: 15px;
 }
@@ -251,10 +249,6 @@ nav.active {
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 10px;
-}
-
-.memorial-age {
-    color: #666;
 }
 
 /* Section Header */
