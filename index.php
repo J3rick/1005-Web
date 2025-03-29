@@ -244,6 +244,9 @@ $memorials = getMemorialCards($conn);
             </div>
         </div>
     </section>
+    
+    // Add reCAPTCHA script
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
     <section class="contact">
         <h3>Contact Us Now Please!!</h3>
@@ -257,6 +260,7 @@ $memorials = getMemorialCards($conn);
             <div class="form-group">
                 <textarea class="form-control" id="feedback" name="feedback" placeholder="Message" rows="4" required></textarea>
             </div>
+            <div class="g-recaptcha" data-sitekey="6LeCwQMrAAAAAJXDUke3bJ-9MdERoi86AAcPNlMF"></div>
             <button type="submit" class="submit-btn">Submit</button>
         </form>
     </section>

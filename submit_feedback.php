@@ -10,6 +10,40 @@ $success = true;
 
 // Process form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // ---------------------------
+    // 1. Verify reCAPTCHA
+    // ---------------------------
+    if (empty($_POST['g-recaptcha-response'])) {
+        $errorMsg .= "Please complete the reCAPTCHA.<br>";
+        $success = false;
+    } else {
+        $recaptcha_secret = '6LeCwQMrAAAAALobYbZlQmuNyjZU7tgaMaFABs4z'; 
+        $recaptcha_response = $_POST['g-recaptcha-response'];
+        $verify_url = 'https://www.google.com/recaptcha/api/siteverify';
+        $data = [
+            'secret'   => $recaptcha_secret,
+            'response' => $recaptcha_response,
+            'remoteip' => $_SERVER['REMOTE_ADDR']
+        ];
+        $options = [
+            'http' => [
+                'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+                'method'  => 'POST',
+                'content' => http_build_query($data)
+            ]
+        ];
+        $context = stream_context_create($options);
+        $result = file_get_contents($verify_url, false, $context);
+        $resultJson = json_decode($result, true);
+        if (!$resultJson["success"]) {
+            $errorMsg .= "reCAPTCHA verification failed. Please try again.<br>";
+            $success = false;
+        }
+    }
+
+    // ---------------------------
+    // 2. Validate Form Fields
+    // ---------------------------
     // Validate Name
     if (empty($_POST["name"])) {
         $errorMsg .= "Name is required.<br>";
