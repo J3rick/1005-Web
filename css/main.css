@@ -214,6 +214,7 @@ nav.active {
     justify-content: center;
     overflow: hidden; /* crops taller images */
     background-color: #f4f4f4;
+    text-align: center;
 }
 
 .memorial-cards {
