@@ -200,6 +200,10 @@ nav.active {
     padding: 40px 50px;
 }
 
+.memorial-age {
+    padding-bottom: 15px;
+}
+
 .memorial-card {
     background-color: #6b705c !important; /* Force pure white */
     border-radius: 8px;
