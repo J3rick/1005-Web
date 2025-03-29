@@ -71,7 +71,7 @@ $memorials = getMemorialCards($conn);
     ?>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
     <link rel="stylesheet" href="css/main.css">
 </head>
 
@@ -172,7 +172,7 @@ $memorials = getMemorialCards($conn);
                             <?php endif; ?>
                         </div>
                         <div class="memorial-age">Age: <?php echo htmlspecialchars($memorial['Age']); ?></div>
-                        <a href="memorial.php?id=<?php echo htmlspecialchars($memorial['Memorial_MapID']); ?>" class="btn btn-primary btn-sm">View Memorial</a>
+                        <a href="memorial.php?id=<?php echo htmlspecialchars($memorial['Memorial_MapID']); ?>">View Memorial</a>
                     </div>
                 </div>
             <?php 
