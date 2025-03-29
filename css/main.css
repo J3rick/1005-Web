@@ -223,7 +223,6 @@ nav.active {
 }
 
 .memorial-dates {
-    background-color: #ffffff !important; /* Force pure white */
     color: #ffffff;
     margin-bottom: 10px;
 }
