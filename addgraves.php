@@ -3,7 +3,10 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 include 'inc/head.inc.php';
 include 'inc/adminbar.inc.php';
+require_once __DIR__ . '/inc/cookie_admin.php';
+require_once __DIR__ . '/inc/csrf.php';
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -113,6 +116,9 @@ include 'inc/adminbar.inc.php';
                     <button type="submit" class="add-btn">Add Record</button>
                     <button type="reset" class="cancel-btn">Reset Form</button>
                 </div>
+
+                      <!-- CSRF token -->
+                    <?php csrfInputField(); ?>
             </form>
         </div>
     </section>

@@ -1,3 +1,7 @@
+<?php
+      require_once __DIR__ . '/inc/cookie_public.php'; 
+    ?>
+    
 <!DOCTYPE html>
 <html lang="en">
 <head>

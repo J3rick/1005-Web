@@ -1,20 +1,6 @@
 <?php
-require_once 'cookie_public.php'; // Included public_cookie 
-
-session_start();  // Start the session to access session variables - CSRF
-
-// Generate CSRF token if it doesn't exist
-if (!isset($_SESSION['csrf_token'])) {
-  $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-}
-
-// Check if there's an error message stored in the session
-if (isset($_SESSION['error_msg'])) {
-  // Display the error message (needs beautification)
-  echo "<p class='error'>" . htmlspecialchars($_SESSION['error_msg']) . "</p>";
-  // Clear the error message after displaying it
-  unset($_SESSION['error_msg']);
-}
+require_once __DIR__ . '/inc/cookie_public.php'; 
+require_once __DIR__ . '/inc/csrf.php';
 ?>
 
 <!DOCTYPE html>
@@ -45,7 +31,7 @@ if (isset($_SESSION['error_msg'])) {
       </div>
 
       <!-- CSRF token -->
-      <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
+      <?php csrfInputField(); ?>
       
       <!-- Add reCAPTCHA widget -->
       <div class="form-group">

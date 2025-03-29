@@ -7,18 +7,33 @@
 ?>
 
 <?php
-require_once 'cookie_admin.php';
+require_once __DIR__ . '/inc/cookie_public.php';
+require_once __DIR__ . '/inc/csrf.php';
+
+
+// For login attempts limiter
+define('MAX_LOGIN_ATTEMPTS', 3); // Maximum allowed attempts
+define('LOCKOUT_DURATION', 900); // Lockout duration in seconds (15 minutes)
+
 
 $username = $errorMsg = "";
 $success = true;
 
-// ---------------------------
-// 1. CSRF Token Validation
-// ---------------------------
-if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+// Check for lockout status
+
+if (isset($_SESSION['lockout_time']) && time() < $_SESSION['lockout_time']) {
+    $remainingTime = $_SESSION['lockout_time'] - time();
+    die("You are temporarily locked out due to too many failed login attempts. Please try again in $remainingTime seconds.");
+}
+
+
+// Validate CSRF Token
+
+if (!isset($_POST['csrf_token']) || !validateCSRFToken($_POST['csrf_token'])) {
     $errorMsg .= "CSRF token validation failed.<br>";
     $success = false;
 }
+
 
 // ---------------------------
 // 2. reCAPTCHA Validation
@@ -77,6 +92,11 @@ if ($success) {
 
 // Process the login result
 if ($success) {
+
+    // Reset failed attempts after successful login
+    unset($_SESSION['failed_attempts']);
+    unset($_SESSION['lockout_time']);
+
     // Regenerate session ID for security
     session_regenerate_id(true);
 
@@ -86,15 +106,27 @@ if ($success) {
     $_SESSION['admin'] = true;
     $_SESSION['last_activity'] = time();
 
-    // Generate a new CSRF token for the next request
-    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-
     // Redirect to admin.php
     header("Location: admin.php");
     exit();
 } else {
+
+    // Increment failed attempts counter
+    if (!isset($_SESSION['failed_attempts'])) {
+        $_SESSION['failed_attempts'] = 0;
+    }
+    $_SESSION['failed_attempts']++;
+
+    if ($_SESSION['failed_attempts'] >= MAX_LOGIN_ATTEMPTS) {
+        // Lock out the user
+        $_SESSION['lockout_time'] = time() + LOCKOUT_DURATION;
+        unset($_SESSION['failed_attempts']); // Reset failed attempts after lockout
+
+        die("Too many failed login attempts. You are temporarily locked out for " . (LOCKOUT_DURATION / 60) . " minutes.");
+        header("Location: login.php");
+    }
+
     // Store the error message in a session variable
-    session_start();
     $_SESSION['error_msg'] = $errorMsg;
 
     // Redirect back to login.php

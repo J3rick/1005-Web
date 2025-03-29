@@ -5,6 +5,8 @@ $username = "inf1005-sqldev";
 $password = "Tri3IsCom1ing_ToAnEndS0on!";
 $dbname = "Memorial_Map";
 
+require_once __DIR__ . '/inc/cookie_public.php'; // Included public_cookie 
+
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 

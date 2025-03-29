@@ -1,6 +1,11 @@
 <!-- Only difference is that this is tailored (with more security) for admin-only access pages -->
 
 <?php
+
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        session_start();
+    }
+
     ini_set('session.cookie_secure', 1);  // Enforce HTTPS-only cookies
     ini_set('session.cookie_httponly', 1); // Reduces the risk of cross-site scripting (XSS) attacks, prevent access through client-side scripts
 
@@ -24,11 +29,13 @@
         $_SESSION['regenerated'] = true;
     }
 
-    // Check if user is logged in and is an admin
-    if (!isset($_SESSION['admin']) || $_SESSION['admin'] !== true) {
-        header("Location: index.php"); // right now if its not admin, user will be redirected to index.php 
-        exit();
-    }
+    // // Check if user is logged in and is an admin
+    // if (!isset($_SESSION['admin']) || $_SESSION['admin'] !== true) {
+    //     header("Location: index.php"); // right now if its not admin, user will be redirected to index.php 
+    //     exit();
+    // }
+
+
     
     // Check for session timeout
     $timeout = 1800; // 30 minutes
@@ -41,7 +48,7 @@
     $_SESSION['last_activity'] = time();
 
     // Content Security Policy (CSP)  to restrict the sources from which scripts can be loaded, further mitigating XSS risks
-    header("Content-Security-Policy: default-src 'self'; script-src 'self' https://apis.example.com; style-src 'self' https://fonts.example.com; img-src 'self'; frame-ancestors 'none';");
+    header("Content-Security-Policy: default-src 'self'; script-src 'self' https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/; style-src 'self' 'unsafe-inline'; frame-src https://www.google.com/recaptcha/ https://recaptcha.google.com/recaptcha/; img-src 'self' data: https://www.gstatic.com/recaptcha/; connect-src 'self' https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/");
 
 
 ?>

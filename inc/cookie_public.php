@@ -1,4 +1,9 @@
 <?php
+
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        session_start();
+    }
+
     ini_set('session.cookie_secure', 1);  // Enforce HTTPS-only cookies
     ini_set('session.cookie_httponly', 1); // Reduces the risk of cross-site scripting (XSS) attacks, prevent access through client-side scripts
 
@@ -24,7 +29,7 @@
 
 
     // Content Security Policy (CSP)  to restrict the sources from which scripts can be loaded, further mitigating XSS risks
-    header("Content-Security-Policy: default-src 'self'; script-src 'self' https://apis.example.com; style-src 'self' https://fonts.example.com; img-src 'self'; frame-ancestors 'none';");
+    header("Content-Security-Policy: default-src 'self'; script-src 'self' https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/; style-src 'self' 'unsafe-inline'; frame-src https://www.google.com/recaptcha/ https://recaptcha.google.com/recaptcha/; img-src 'self' data: https://www.gstatic.com/recaptcha/; connect-src 'self' https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/");
 
 
 ?>

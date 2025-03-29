@@ -2,6 +2,16 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 require_once 'inc/sql.inc.php';
+require_once __DIR__ . '/inc/cookie_admin.php';
+require_once __DIR__ . '/inc/csrf.php';
+
+
+// Validate CSRF Token
+
+if (!isset($_POST['csrf_token']) || !validateCSRFToken($_POST['csrf_token'])) {
+    $errorMsg .= "CSRF token validation failed.<br>";
+    $success = false;
+}
 
 /**
  * Sanitizes input data
