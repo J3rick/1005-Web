@@ -8,7 +8,6 @@
     </div>
     <nav>
         <ul>
-            <li><a href="#">About</a></li>
             <li><a href="announcements.php">Announcements</a></li>
             <li><a href="services.php">Services</a></li>
         </ul>
