@@ -18,8 +18,7 @@ try {
         $config['remote']['dbname']
     );
     $connection_source = "remote";
-} 
-catch (Exception $e) {
+} catch (Exception $e) {
     // If remote fails, try local
     try {
         $conn = new mysqli(
@@ -29,8 +28,7 @@ catch (Exception $e) {
             $config['local']['dbname']
         );
         $connection_source = "local";
-    } 
-    catch (Exception $e) {
+    } catch (Exception $e) {
         // If both connections fail, display simple error
         echo "<div style='color:red; padding:10px;'>";
         echo "<strong>Database Connection Failed</strong><br>";
@@ -520,11 +518,20 @@ $result = $conn->query($sql);
     <script src="js/main.js"></script>
     <script>
         $(document).ready(function () {
-            // Reset filter form
-            $('#resetFilters').click(function () {
+            $('#resetFilters').click(function (e) {
+                // Prevent any default behavior
+                e.preventDefault();
+
+                // Reset the form
                 $('#searchForm')[0].reset();
-                // Submit the form after reset to refresh results
-                $('#searchForm').submit();
+
+                // You might also need to manually clear values if they're coming from PHP
+                $('input[type="text"], input[type="date"]').val('');
+                $('select').prop('selectedIndex', 0);
+                $('input[type="checkbox"]').prop('checked', false);
+
+                // If you need to trigger any change events for other components listening to these fields
+                $('input, select').trigger('change');
             });
 
             // Sort results
