@@ -1,7 +1,7 @@
 <?php
 // Include the configuration file
 require_once 'db_config.php';
-require_once __DIR__ . '/inc/cookie_public.php';
+//require_once __DIR__ . '/inc/cookie_public.php';
 // Error handling mode
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
