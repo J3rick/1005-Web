@@ -13,4 +13,3 @@ function toggleSidebar() {
         content.style.marginLeft = '0';
     }
 }
-
