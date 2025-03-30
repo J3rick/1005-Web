@@ -29,7 +29,6 @@
 
 
     // Content Security Policy (CSP)  to restrict the sources from which scripts can be loaded, further mitigating XSS risks
-    header("Content-Security-Policy: default-src 'self'; script-src 'self' https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/; style-src 'self' 'unsafe-inline'; frame-src https://www.google.com/recaptcha/ https://recaptcha.google.com/recaptcha/; img-src 'self' data: https://www.gstatic.com/recaptcha/; connect-src 'self' https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/");
-
+    header("Content-Security-Policy: default-src 'self'; script-src 'self' https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://maxcdn.bootstrapcdn.com; font-src 'self' https://cdnjs.cloudflare.com; frame-src https://www.google.com/recaptcha/ https://recaptcha.google.com/recaptcha/; img-src 'self' data: https://www.gstatic.com/recaptcha/; connect-src 'self' https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/");
 
 ?>
