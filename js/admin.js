@@ -1,5 +1,5 @@
 // admin.js - JavaScript functions for admin dashboard
-
+document.getElementById('toggle-sidebar').addEventListener('click', toggleSidebar);
 // Function to toggle the sidebar
 function toggleSidebar() {
     const sideMenu = document.getElementById('side-menu');

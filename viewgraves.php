@@ -97,8 +97,8 @@
                     
                     while ($query->fetch()){
                         echo "<tr>
-                        <td data-label='ID'>$id</td>
-                        <td data-label='Name'>$name</td>
+                        <td data-label='ID'><span>$id</span></td>
+                        <td data-label='Name'><span>$name</span></td>
                         <td data-label='Birth'>$dob</td>
                         <td data-label='Death'>$dod</td>
                         <td data-label='Age'>$age</td>
