@@ -39,6 +39,7 @@
     <title>Cemetery Management System - Admin Page</title>
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/admin.css">
+    <script src = "js/admin.js"></script>
 </head>
 <body>
     <div class="content">

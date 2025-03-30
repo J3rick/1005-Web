@@ -16,6 +16,7 @@ require_once __DIR__ . '/inc/csrf.php';
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/admin.css">
     <link rel="stylesheet" href="css/addgraves.css">
+    <script src = "js/admin.js"></script>
     <style>
         .coord-group {
             display: flex;
