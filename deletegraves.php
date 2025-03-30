@@ -4,6 +4,8 @@ ini_set('display_errors', 1);
 include 'inc/head.inc.php';
 include 'inc/adminbar.inc.php';
 include 'inc/sql.inc.php';
+require_once __DIR__ . '/inc/cookie_admin.php';
+require_once __DIR__ . '/inc/csrf.php';
 
 // Get grave record to delete
 $conn = getDatabaseConnection();
@@ -57,6 +59,9 @@ if (!$grave) {
                     <button type="submit" class="confirm-delete-btn">Delete Permanently</button>
                     <a href="viewgraves.php" class="cancel-btn">Cancel</a>
                 </div>
+
+                      <!-- CSRF token -->
+                    <?php csrfInputField(); ?>
             </form>
         </div>
     </section>

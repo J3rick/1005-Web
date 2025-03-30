@@ -142,7 +142,7 @@
         padding: 30px 20px;
         width: 90%;
         margin: 20px auto;
-        margin-top: 90px;
+        margin-top: 100px;
     }
 
     .addform-row {
@@ -177,7 +177,7 @@
     .addform-content {
         padding: 25px 15px;
         width: 95%;
-        margin-top: 90px;
+        margin-top: 100px;
     }
 
     .addform-content h1 {
@@ -198,13 +198,14 @@
 @media (max-width: 400px) {
     .addform {
         padding: 20px 10px;
+        margin-top: 100px;
     }
 
     .addform-content {
         padding: 20px 12px;
         box-shadow: none;
         border: 1px solid #eee;
-        margin-top: 90px;
+        margin-top: 100px;
     }
 
     .addform-grp input[type="text"],
@@ -220,63 +221,6 @@
     .addform {
         padding: 20px;
         min-height: auto;
-    }
-}
-
-/* Print styles */
-@media print {
-    .addform {
-        background: white;
-        padding: 0;
-    }
-    
-    .addform-content {
-        box-shadow: none;
-        padding: 10px;
-        width: 100%;
-    }
-    
-    .add-actions {
-        display: none;
-    }
-}
-
-/* Mobile-specific fixes */
-@media (max-width: 768px) {
-    .addform {
-        padding: 15px;
-        align-items: flex-start; /* NEW: Better mobile alignment */
-    }
-    
-    .addform-content {
-        padding: 25px 15px;
-        width: 100%;
-        margin-top: 20px; /* NEW: Add space at top */
-    }
-
-    /* Prevent header cutoff */
-    .addform-content h1 {
-        position: static;
-        margin-top: 0;
-        padding-top: 10px;
-    }
-}
-
-/* Small phone fixes */
-@media (max-width: 480px) {
-    .addform {
-        padding: 10px;
-        min-height: 90vh; /* NEW: Allows space for browser UI */
-    }
-    
-    body {
-        overflow-x: hidden; /* NEW: Prevents horizontal scroll */
-    }
-    
-    /* Make sure all content is visible */
-    .addform-content {
-        transform: none !important;
-        top: 0 !important;
     }
 }
 

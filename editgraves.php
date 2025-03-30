@@ -4,6 +4,7 @@ ini_set('display_errors', 1);
 include 'inc/head.inc.php';
 include 'inc/adminbar.inc.php';
 include 'inc/sql.inc.php';
+require_once __DIR__ . '/inc/cookie_admin.php';
 
 // Get grave record to edit
 $conn = getDatabaseConnection();

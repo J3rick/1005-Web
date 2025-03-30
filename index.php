@@ -5,6 +5,8 @@ $username = "inf1005-sqldev";
 $password = "Tri3IsCom1ing_ToAnEndS0on!";
 $dbname = "Memorial_Map";
 
+require_once __DIR__ . '/inc/cookie_public.php'; // Included public_cookie 
+
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -14,7 +16,8 @@ if ($conn->connect_error) {
 }
 
 // Function to safely display image
-function displayImage($imageBlob) {
+function displayImage($imageBlob)
+{
     if (!empty($imageBlob)) {
         $imgData = base64_encode($imageBlob);
         return 'data:image/jpeg;base64,' . $imgData;
@@ -24,31 +27,32 @@ function displayImage($imageBlob) {
 }
 
 // Fetch memorial data for carousel
-function getMemorialCards($conn, $limit = 10) {
+function getMemorialCards($conn, $limit = 10)
+{
     $memorials = [];
-    
+
     // Prepare SQL query to fetch memorial data
-    $sql = "SELECT Name, DateOfBirth, DateOfPassing, PlotNumber, Age, Image, Religion, RestingType 
+    $sql = "SELECT Name, DateOfBirth, DateOfPassing, PlotNumber, Age, Image, Religion, RestingType, Memorial_MapID 
             FROM Memorial_Map_Data 
             ORDER BY DateOfPassing DESC 
             LIMIT ?";
-            
+
     $stmt = $conn->prepare($sql);
-    
+
     if ($stmt) {
         $stmt->bind_param("i", $limit);
         $stmt->execute();
         $result = $stmt->get_result();
-        
+
         if ($result && $result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 $memorials[] = $row;
             }
         }
-        
+
         $stmt->close();
     }
-    
+
     return $memorials;
 }
 
@@ -68,9 +72,10 @@ $memorials = getMemorialCards($conn);
 
     <?php
     include "inc/head.inc.php"
-    ?>
+        ?>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
     <link rel="stylesheet" href="css/main.css">
 </head>
 
@@ -133,68 +138,72 @@ $memorials = getMemorialCards($conn);
 
 
     <section class="memorials">
-    <div class="section-header">
-        <h3>Latest memorials</h3>
-        <a href="all-memorials.php">Explore more »</a>
-    </div>
-    <div class="carousel-container">
-        <div class="memorial-cards">
-            <?php 
-            // Get memorials from database
-            $memorials = getMemorialCards($conn); 
-            
-            if (count($memorials) > 0): 
-                foreach ($memorials as $memorial): 
-            ?>
-                <div class="memorial-card">
-                    <div class="memorial-img-wrapper">
+        <div class="section-header">
+            <h3>Latest memorials</h3>
+            <a href="all-memorials.php">Explore more »</a>
+        </div>
+        <div class="carousel-container">
+            <div class="memorial-cards">
+                <?php
+                // Get memorials from database
+                $memorials = getMemorialCards($conn);
+
+                if (count($memorials) > 0):
+                    foreach ($memorials as $memorial):
+                        ?>
+                        <div class="memorial-card">
+                            <div class="memorial-img-wrapper">
+                                <?php
+                                $imagePath = !empty($memorial['Image'])
+                                    ? "assets/portraits/" . $memorial['Image']
+                                    : "https://via.placeholder.com/300x150";
+                                ?>
+
+                                <img src="<?php echo htmlspecialchars($imagePath); ?>"
+                                    alt="<?php echo htmlspecialchars($memorial['Name']); ?>" class="memorial-image">
+                            </div>
+                            <div class="memorial-info">
+                                <div class="memorial-name"><?php echo htmlspecialchars($memorial['Name']); ?></div>
+                                <div class="memorial-dates">
+                                    <?php echo htmlspecialchars($memorial['DateOfBirth']); ?> -
+                                    <?php echo htmlspecialchars($memorial['DateOfPassing']); ?>
+                                </div>
+                                <div class="memorial-location">
+                                    Plot: <?php echo htmlspecialchars($memorial['PlotNumber']); ?>
+                                    <?php if (!empty($memorial['Religion'])): ?>
+                                        <br>Religion: <?php echo htmlspecialchars($memorial['Religion']); ?>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="memorial-age">Age: <?php echo htmlspecialchars($memorial['Age']); ?></div>
+                                <form action="https://memorialmap.duckdns.org/memorial.php" method="get">
+                                    <input type="hidden" name="id"
+                                        value="<?php echo htmlspecialchars($memorial['Memorial_MapID']); ?>" />
+                                    <button type="submit" class="search-btn">View Memorial</button>
+                                </form>
+                            </div>
+                        </div>
                     <?php
-                    $imagePath = !empty($memorial['Image']) 
-                        ? "assets/portraits/" . $memorial['Image'] 
-                        : "https://via.placeholder.com/300x150";
+                    endforeach;
+                else:
                     ?>
-                    
-                    <img src="<?php echo htmlspecialchars($imagePath); ?>" 
-                        alt="<?php echo htmlspecialchars($memorial['Name']); ?>" 
-                        class="memorial-image">
-                    </div>
-                    <div class="memorial-info">
-                        <div class="memorial-name"><?php echo htmlspecialchars($memorial['Name']); ?></div>
-                        <div class="memorial-dates">
-                            <?php echo htmlspecialchars($memorial['DateOfBirth']); ?> - 
-                            <?php echo htmlspecialchars($memorial['DateOfPassing']); ?>
+                    <!-- Fallback card if no memorials are found -->
+                    <div class="memorial-card">
+                        <img src="https://randomuser.me/api/portraits/lego/3.jpg" alt="No memorials" class="memorial-img">
+                        <div class="memorial-info">
+                            <div class="memorial-name">No memorials found</div>
+                            <div class="memorial-dates">Please check back later</div>
+                            <div class="memorial-location">N/A</div>
+                            <div class="memorial-age">N/A</div>
                         </div>
-                        <div class="memorial-location">
-                            Plot: <?php echo htmlspecialchars($memorial['PlotNumber']); ?>
-                            <?php if (!empty($memorial['Religion'])): ?>
-                                <br>Religion: <?php echo htmlspecialchars($memorial['Religion']); ?>
-                            <?php endif; ?>
-                        </div>
-                        <div class="memorial-age">Age: <?php echo htmlspecialchars($memorial['Age']); ?></div>
                     </div>
-                </div>
-            <?php 
-                endforeach; 
-            else: 
-            ?>
-                <!-- Fallback card if no memorials are found -->
-                <div class="memorial-card">
-                    <img src="https://randomuser.me/api/portraits/lego/3.jpg" alt="No memorials" class="memorial-img">
-                    <div class="memorial-info">
-                        <div class="memorial-name">No memorials found</div>
-                        <div class="memorial-dates">Please check back later</div>
-                        <div class="memorial-location">N/A</div>
-                        <div class="memorial-age">N/A</div>
-                    </div>
-                </div>
-            <?php endif; ?>
+                <?php endif; ?>
+            </div>
+            <div class="carousel-controls">
+                <button class="carousel-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
+                <button class="carousel-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+            </div>
         </div>
-        <div class="carousel-controls">
-            <button class="carousel-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
-            <button class="carousel-btn next-btn"><i class="fas fa-chevron-right"></i></button>
-        </div>
-    </div>
-</section>
+    </section>
 
     <section class="faq">
         <h3>Frequently Asked Questions</h3>
@@ -244,6 +253,9 @@ $memorials = getMemorialCards($conn);
             </div>
         </div>
     </section>
+    
+    // Add reCAPTCHA script
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
     <section class="contact">
         <h3>Contact Us Now Please!!</h3>
@@ -255,8 +267,10 @@ $memorials = getMemorialCards($conn);
                 <input type="email" name="email" placeholder="Email" required>
             </div>
             <div class="form-group">
-                <textarea class="form-control" id="feedback" name="feedback" placeholder="Message" rows="4" required></textarea>
+                <textarea class="form-control" id="feedback" name="feedback" placeholder="Message" rows="4"
+                    required></textarea>
             </div>
+            <div class="g-recaptcha" data-sitekey="6LeCwQMrAAAAAJXDUke3bJ-9MdERoi86AAcPNlMF"></div>
             <button type="submit" class="submit-btn">Submit</button>
         </form>
     </section>

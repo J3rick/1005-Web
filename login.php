@@ -1,23 +1,7 @@
 <?php
-// Start the session to access session variables
-session_start(); 
-
-// Generate CSRF token if it doesn't exist
-if (!isset($_SESSION['csrf_token'])) {
-  $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-}
-
-// Check if there's an error message stored in the session
-if (isset($_SESSION['error_msg'])) {
-  // Display the error message
-  // NEEDS TO BE BEAUTIFIED
-  echo "<p class='error'>" . htmlspecialchars($_SESSION['error_msg']) . "</p>"; // Used htmlspecialchars() when outputting the error message and CSRF token to prevent XSS attacks.
-  // Clear the error message after displaying it
-  unset($_SESSION['error_msg']);
-}
+require_once __DIR__ . '/inc/cookie_public.php'; 
+require_once __DIR__ . '/inc/csrf.php';
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -26,17 +10,12 @@ if (isset($_SESSION['error_msg'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MemorialMap</title>
     
-    <?php
-      include "inc/head.inc.php"
-    ?>
+    <?php include "inc/head.inc.php"; ?>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="css/main.css">
 </head>
-
-
 <body>
-
 <main class="container">
     <h1>Login</h1>
     
@@ -51,8 +30,13 @@ if (isset($_SESSION['error_msg'])) {
         <input type="password" id="password" name="pwd" required>
       </div>
 
-      <!-- Add CSRF token as a hidden field -->
-      <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
+      <!-- CSRF token -->
+      <?php csrfInputField(); ?>
+      
+      <!-- Add reCAPTCHA widget -->
+      <div class="form-group">
+          <div class="g-recaptcha" data-sitekey="6LeCwQMrAAAAAJXDUke3bJ-9MdERoi86AAcPNlMF"></div>
+      </div>
       
       <div class="form-group">
         <input type="submit" value="Login" class="btn btn-primary">
@@ -62,12 +46,11 @@ if (isset($_SESSION['error_msg'])) {
         <a href="forgot-password.php">Forgot Password?</a>
       </div>
     </form>
-  
-  </main>
+</main>
     
-    <?php
-        include "inc/footer.inc.php"
-        ?>
+<?php include "inc/footer.inc.php"; ?>
 
+<!-- Include the reCAPTCHA API script -->
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </body>
 </html>
