@@ -280,7 +280,7 @@ $memorials = getMemorialCards($conn);
         </div>
         <div class="faq-item">
             <div class="faq-question">
-                Can I report incorrect information on a post? Test hello
+                Can I report incorrect information on a post?
                 <i class="fas fa-plus"></i>
             </div>
             <div class="faq-answer">
