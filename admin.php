@@ -4,9 +4,7 @@
     include 'inc/sql.inc.php';
     include 'inc/footer.inc.php';
     //require_once __DIR__ . '/inc/cookie_admin.php';  //For y'alls to work on that page without a hassle
-    //include 'inc/jwt.php'; // This is used for authentication
-
-
+    
     // If there is a logout button being implemented the in future
     // Here is the generic logout function, this will destroy the session cookies, jwt token
     function logout() {

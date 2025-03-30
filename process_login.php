@@ -175,4 +175,6 @@ function authenticateUser() {
     $stmt->close();
     $conn->close();
 }
+
+
 ?>
