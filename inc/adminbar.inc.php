@@ -87,11 +87,31 @@
     }
 
     @media (max-width: 768px) {
-        .sidebar-open table {
-            width: 100% !important;
-            margin-left: 0 !important;
-            overflow-x: auto;
-            display: block;
+        .side-menu {
+            width: 100% !important; /* Full width on mobile */
+            left: -100% !important; /* Hide completely off-screen */
+            height: 100vh !important; /* Full viewport height */
+            z-index: 10000 !important; /* Ensure it's above everything */
+        }
+
+        .side-menu.active {
+            left: 0 !important; /* Slide in from left */
+        }
+        
+        #toggle-sidebar {
+            position: fixed !important;
+            left: 20px !important;
+            top: 20px !important;
+            z-index: 1001 !important;
+            transition: left 0.3s ease !important;
+        }
+
+        .side-menu.active ~ #toggle-sidebar {
+            left: 300px !important; /* Keep button visible */
+        }
+
+        .side-menu.active ~ .sidebar-overlay {
+            display: none !important; 
         }
     }
 
