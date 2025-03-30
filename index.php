@@ -1,19 +1,54 @@
 <?php
-// Database connection details
-$servername = "localhost";
-$username = "inf1005-sqldev";
-$password = "Tri3IsCom1ing_ToAnEndS0on!";
-$dbname = "Memorial_Map";
+// Include the configuration file
+require_once 'db_config.php';
+//require_once __DIR__ . '/inc/cookie_public.php';
+// Error handling mode
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+
+// Initialize connection variable
+$conn = null;
+$connection_source = "";
+
+try {
+    // First try remote connection
+    $conn = new mysqli(
+        $config['remote']['servername'],
+        $config['remote']['username'],
+        $config['remote']['password'],
+        $config['remote']['dbname']
+    );
+    $connection_source = "remote";
+} 
+catch (Exception $e) {
+    // If remote fails, try local
+    try {
+        $conn = new mysqli(
+            $config['local']['servername'],
+            $config['local']['username'],
+            $config['local']['password'],
+            $config['local']['dbname']
+        );
+        $connection_source = "local";
+    } 
+    catch (Exception $e) {
+        // If both connections fail, display simple error
+        echo "<div style='color:red; padding:10px;'>";
+        echo "<strong>Database Connection Failed</strong><br>";
+        echo "Please check your MySQL server and connection settings.";
+        echo "</div>";
+        die();
+    }
+}
 
 require_once __DIR__ . '/inc/cookie_public.php'; // Included public_cookie 
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+// // Create connection
+// $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+// // Check connection
+// if ($conn->connect_error) {
+//     die("Connection failed: " . $conn->connect_error);
+// }
 
 // Function to safely display image
 function displayImage($imageBlob)
