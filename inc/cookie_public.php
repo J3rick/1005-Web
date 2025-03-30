@@ -31,6 +31,14 @@
 
 
     // Content Security Policy (CSP)  to restrict the sources from which scripts can be loaded, further mitigating XSS risks
-    header("Content-Security-Policy: default-src 'self'; script-src 'self' https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://maxcdn.bootstrapcdn.com; font-src 'self' https://cdnjs.cloudflare.com; frame-src https://www.google.com/recaptcha/ https://recaptcha.google.com/recaptcha/; img-src 'self' data: https://www.gstatic.com/recaptcha/; connect-src 'self' https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/");
-
+        // Content Security Policy (CSP) - Updated to include CSS sources and Mapbox
+        header("Content-Security-Policy: 
+        default-src 'self'; 
+        script-src 'self' https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/ https://api.mapbox.com https://api.tiles.mapbox.com 'unsafe-inline'; 
+        style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://maxcdn.bootstrapcdn.com https://api.mapbox.com https://api.tiles.mapbox.com; 
+        font-src 'self' https://cdnjs.cloudflare.com; 
+        frame-src https://www.google.com/recaptcha/ https://recaptcha.google.com/recaptcha/; 
+        img-src 'self' data: https://www.gstatic.com/recaptcha/ https://*.mapbox.com https://api.mapbox.com https://api.tiles.mapbox.com; 
+        connect-src 'self' https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/ https://api.mapbox.com https://*.tiles.mapbox.com https://events.mapbox.com;
+        worker-src blob:;");
 ?>
