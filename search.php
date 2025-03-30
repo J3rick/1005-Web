@@ -351,7 +351,7 @@ $result = $conn->query($sql);
                     </div>
 
                     <div class="filter-reset">
-                        <button type="button" class="btn btn-default" id="resetFilters">Reset Filters</button>
+                        <button type="reset" class="btn btn-default" id="resetFilters">Reset Filters</button>
                     </div>
                 </form>
             </div>
