@@ -1,6 +1,8 @@
 <?php
     include 'inc/head.inc.php';
     include 'inc/adminbar.inc.php';
+    include 'inc/sql.inc.php';
+    include 'inc/footer.inc.php';
     require_once __DIR__ . '/inc/cookie_admin.php';  //For y'alls to work on that page without a hassle
     //include 'inc/jwt.php'; // This is used for authentication
 
@@ -25,6 +27,10 @@
 
     // INCASE I FORGET, TELL ME IF YOU'RE ADDING ANY POST REQUEST(FORMS) BECAUSE I NEED TO ADD IN CSRF
 
+    $conn = getDatabaseConnection();
+    $query = $conn -> prepare("SELECT * FROM Memorial_Map.Feedback ORDER BY Submitted_At DESC LIMIT 3"); 
+    $query -> execute();
+    $recentFeedback = $query -> get_result()->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -68,7 +74,20 @@
                 <!-- Rectangle 2 -->
                 <div class="small-rectangle">
                     <h3>Notifications</h3>
-                    <p>No new notifications.</p>
+                    <?php if (!empty($recentFeedback)): ?>
+                        <div class="feedback-notifications">
+                            <?php foreach ($recentFeedback as $feedback): ?>
+                                <div class="feedback-item">
+                                    <br><strong>User: </strong> <?= htmlspecialchars($feedback['Feedback_Name']) ?> <strong> Email: </strong> <?= htmlspecialchars($feedback['Feedback_Email']) ?>
+                                    <br><strong>Received at </strong> <small><?= htmlspecialchars($feedback['Submitted_At']) ?></small>
+                                    <p><strong> Feedback message: </strong> <?= htmlspecialchars(substr($feedback['Feedback_Msg'], 0, 50)) ?>...</p>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php else: ?>
+                        <p>No new notifications.</p>
+                    <?php endif; ?>
+                    <br><p><a href="feedback.php">View All Feedback</a></p>
                 </div>
             </div>
         </div>
