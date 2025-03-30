@@ -2,10 +2,6 @@
 
 <?php
 
-    if (session_status() !== PHP_SESSION_ACTIVE) {
-        session_start();
-    }
-
     ini_set('session.cookie_secure', 1);  // Enforce HTTPS-only cookies
     ini_set('session.cookie_httponly', 1); // Reduces the risk of cross-site scripting (XSS) attacks, prevent access through client-side scripts
 
@@ -18,25 +14,25 @@
     ini_set('session.cookie_samesite', 'Lax'); // Allow CSRF protection but permit cross-origin GET requests
    
 
-    // Start the session securely
-    session_start([
-        'read_and_close' => true // Minimize session locking to prevent DoS attacks
-    ]);
-
+    // Start the session securely if there is no existing session
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        session_start([
+            'read_and_close' => true // Minimize session locking to prevent DoS attack
+        ]);
+}
     // session regeneration, to prevent session fixation attacks
     if (!isset($_SESSION['regenerated'])) {
         session_regenerate_id(true);
         $_SESSION['regenerated'] = true;
     }
 
-    // // Check if user is logged in and is an admin
-    // if (!isset($_SESSION['admin']) || $_SESSION['admin'] !== true) {
-    //     header("Location: index.php"); // right now if its not admin, user will be redirected to index.php 
-    //     exit();
-    // }
+    // Check if user is logged in and is an admin
+    if (!isset($_SESSION['admin']) || $_SESSION['admin'] !== true) {
+        header("Location: index.php"); // right now if its not admin, user will be redirected to index.php 
+        exit();
+    }
 
 
-    
     // Check for session timeout
     $timeout = 1800; // 30 minutes
     if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > $timeout)) {
