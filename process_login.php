@@ -16,11 +16,11 @@ define('LOCKOUT_DURATION', 900);       // Lockout duration in seconds (15 minute
 $username = $errorMsg = "";
 $success = true;
 
-// Check for lockout status
-if (isset($_SESSION['lockout_time']) && time() < $_SESSION['lockout_time']) {
-    $remainingTime = $_SESSION['lockout_time'] - time();
-    die("You are temporarily locked out due to too many failed login attempts. Please try again in $remainingTime seconds.");
-}
+// // Check for lockout status
+// if (isset($_SESSION['lockout_time']) && time() < $_SESSION['lockout_time']) {
+//     $remainingTime = $_SESSION['lockout_time'] - time();
+//     die("You are temporarily locked out due to too many failed login attempts. Please try again in $remainingTime seconds.");
+// }
 
 // Validate CSRF Token
 if (!isset($_POST['csrf_token']) || !validateCSRFToken($_POST['csrf_token'])) {
