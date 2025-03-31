@@ -1,29 +1,36 @@
 <?php
-    include 'inc/head.inc.php';
-    include 'inc/adminbar.inc.php';
-    include 'inc/sql.inc.php';
-    include 'inc/footer.inc.php';
-    //require_once __DIR__ . '/inc/cookie_admin.php';  //For y'alls to work on that page without a hassle
-    
-    // If there is a logout button being implemented the in future
-    // Here is the generic logout function, this will destroy the session cookies, jwt token
-    function logout() {
-        session_start();
-        $_SESSION = array();
-        if (ini_get("session.use_cookies")) {
-            $params = session_get_cookie_params();
-            setcookie(session_name(), '', time() - 42000,
-                $params["path"], $params["domain"],
-                $params["secure"], $params["httponly"]
-            );
-        }
-        session_destroy();
-        
-        // Clear JWT token
-        setcookie("jwt_token", "", time() - 3600, "/");
-    }
+// 1. Check if logout action is requested before any output
+if (isset($_GET['action']) && $_GET['action'] === 'logout') {
+    logout();
+    header("Location: index.php");
+    exit();
+}
 
-// INCASE I FORGET, TELL ME IF YOU'RE ADDING ANY POST REQUEST(FORMS) BECAUSE I NEED TO ADD IN CSRF
+// 2. Include your required files
+include 'inc/head.inc.php';
+include 'inc/adminbar.inc.php';
+include 'inc/sql.inc.php';
+include 'inc/footer.inc.php';
+// require_once __DIR__ . '/inc/cookie_admin.php';  // Uncomment if needed
+
+// 3. Define the logout function
+function logout() {
+    session_start();
+    $_SESSION = array();
+    if (ini_get("session.use_cookies")) {
+        $params = session_get_cookie_params();
+        setcookie(session_name(), '', time() - 42000,
+            $params["path"], $params["domain"],
+            $params["secure"], $params["httponly"]
+        );
+    }
+    session_destroy();
+    
+    // Clear JWT token
+    setcookie("jwt_token", "", time() - 3600, "/");
+}
+
+// NOTE: If you add any POST requests (forms), remember to include CSRF protection
 
 // 4. Fetch recent feedback from the database
 $conn = getDatabaseConnection();
@@ -40,7 +47,7 @@ $recentFeedback = $query->get_result()->fetch_all(MYSQLI_ASSOC);
     <title>Cemetery Management System - Admin Page</title>
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/admin.css">
-    <script src = "js/admin.js"></script>
+    <script src="js/admin.js"></script>
 </head>
 <body>
     <!-- Top Menu / Navbar (with Logout button on the right) -->
@@ -53,8 +60,8 @@ $recentFeedback = $query->get_result()->fetch_all(MYSQLI_ASSOC);
         <!-- Right side: Logout button -->
         <div>
             <a 
-               href="admin.php?action=logout" 
-               style="text-decoration: none; background: #c00; color: #fff; padding: 8px 16px; border-radius: 4px;"
+                href="admin.php?action=logout" 
+                style="text-decoration: none; background: #c00; color: #fff; padding: 8px 16px; border-radius: 4px;"
             >
                 Logout
             </a>
@@ -93,16 +100,18 @@ $recentFeedback = $query->get_result()->fetch_all(MYSQLI_ASSOC);
                 <div class="small-rectangle">
                     <h3>Notifications</h3>
                     <?php if (!empty($recentFeedback)): ?>
-                        <div class="feedback-notifications" tabindex ="0" role = "region" aria-label = "Feedback Notifications">
+                        <div class="feedback-notifications" tabindex="0" role="region" aria-label="Feedback Notifications">
                             <?php foreach ($recentFeedback as $feedback): ?>
                                 <div class="feedback-item">
                                     <br>
                                     <strong>User:</strong> <?= htmlspecialchars($feedback['Feedback_Name']) ?> 
                                     <strong>Email:</strong> <?= htmlspecialchars($feedback['Feedback_Email']) ?>
                                     <br>
-                                    <strong>Received at:</strong> 
+                                    <strong>Received at:</strong>
                                     <small><?= htmlspecialchars($feedback['Submitted_At']) ?></small>
-                                    <p><strong>Feedback message:</strong> <?= htmlspecialchars(substr($feedback['Feedback_Msg'], 0, 50)) ?>...</p>
+                                    <p><strong>Feedback message:</strong> 
+                                       <?= htmlspecialchars(substr($feedback['Feedback_Msg'], 0, 50)) ?>...
+                                    </p>
                                 </div>
                             <?php endforeach; ?>
                         </div>
