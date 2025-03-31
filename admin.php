@@ -1,36 +1,43 @@
 <?php
-    include 'inc/head.inc.php';
-    include 'inc/adminbar.inc.php';
-    include 'inc/sql.inc.php';
-    include 'inc/footer.inc.php';
-    //require_once __DIR__ . '/inc/cookie_admin.php';  //For y'alls to work on that page without a hassle
-    //include 'inc/jwt.php'; // This is used for authentication
-
-
-    // If there is a logout button being implemented the in future
-    // Here is the generic logout function, this will destroy the session cookies, jwt token
-    function logout() {
-        session_start();
-        $_SESSION = array();
-        if (ini_get("session.use_cookies")) {
-            $params = session_get_cookie_params();
-            setcookie(session_name(), '', time() - 42000,
-                $params["path"], $params["domain"],
-                $params["secure"], $params["httponly"]
-            );
-        }
-        session_destroy();
-        
-        // Clear JWT token
-        setcookie("jwt_token", "", time() - 3600, "/");
+// 1. Define the logout function
+function logout() {
+    session_start();
+    $_SESSION = array();
+    if (ini_get("session.use_cookies")) {
+        $params = session_get_cookie_params();
+        setcookie(session_name(), '', time() - 42000,
+            $params["path"], $params["domain"],
+            $params["secure"], $params["httponly"]
+        );
     }
+    session_destroy();
+    
+    // Clear JWT token
+    setcookie("jwt_token", "", time() - 3600, "/");
+}
 
-    // INCASE I FORGET, TELL ME IF YOU'RE ADDING ANY POST REQUEST(FORMS) BECAUSE I NEED TO ADD IN CSRF
+// 2. If the logout action is requested, call logout() and redirect to index.php
+if (isset($_GET['action']) && $_GET['action'] === 'logout') {
+    logout();
+    header("Location: index.php");
+    exit();
+}
 
-    $conn = getDatabaseConnection();
-    $query = $conn -> prepare("SELECT * FROM Memorial_Map.Feedback ORDER BY Submitted_At DESC LIMIT 3"); 
-    $query -> execute();
-    $recentFeedback = $query -> get_result()->fetch_all(MYSQLI_ASSOC);
+// 3. Include necessary files (make sure these files exist and work properly)
+include 'inc/head.inc.php';
+include 'inc/adminbar.inc.php';
+include 'inc/sql.inc.php';
+include 'inc/footer.inc.php';
+// require_once __DIR__ . '/inc/cookie_admin.php';  // Uncomment if needed
+// include 'inc/jwt.php'; // Uncomment if needed for authentication
+
+// INCASE I FORGET, TELL ME IF YOU'RE ADDING ANY POST REQUEST(FORMS) BECAUSE I NEED TO ADD IN CSRF
+
+// 4. Fetch recent feedback from the database
+$conn = getDatabaseConnection();
+$query = $conn->prepare("SELECT * FROM Memorial_Map.Feedback ORDER BY Submitted_At DESC LIMIT 3"); 
+$query->execute();
+$recentFeedback = $query->get_result()->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -43,6 +50,24 @@
     <link rel="stylesheet" href="css/admin.css">
 </head>
 <body>
+    <!-- Top Menu / Navbar (with Logout button on the right) -->
+    <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px;">
+        <!-- Left side could be your logo, site name, or menu -->
+        <div>
+            <strong>MemorialMap Admin</strong>
+        </div>
+        
+        <!-- Right side: Logout button -->
+        <div>
+            <a 
+               href="admin.php?action=logout" 
+               style="text-decoration: none; background: #c00; color: #fff; padding: 8px 16px; border-radius: 4px;"
+            >
+                Logout
+            </a>
+        </div>
+    </div>
+
     <div class="content">
         <div class="main-content">
             <!-- Large Rectangle (Top) -->
@@ -78,16 +103,21 @@
                         <div class="feedback-notifications">
                             <?php foreach ($recentFeedback as $feedback): ?>
                                 <div class="feedback-item">
-                                    <br><strong>User: </strong> <?= htmlspecialchars($feedback['Feedback_Name']) ?> <strong> Email: </strong> <?= htmlspecialchars($feedback['Feedback_Email']) ?>
-                                    <br><strong>Received at </strong> <small><?= htmlspecialchars($feedback['Submitted_At']) ?></small>
-                                    <p><strong> Feedback message: </strong> <?= htmlspecialchars(substr($feedback['Feedback_Msg'], 0, 50)) ?>...</p>
+                                    <br>
+                                    <strong>User:</strong> <?= htmlspecialchars($feedback['Feedback_Name']) ?> 
+                                    <strong>Email:</strong> <?= htmlspecialchars($feedback['Feedback_Email']) ?>
+                                    <br>
+                                    <strong>Received at:</strong> 
+                                    <small><?= htmlspecialchars($feedback['Submitted_At']) ?></small>
+                                    <p><strong>Feedback message:</strong> <?= htmlspecialchars(substr($feedback['Feedback_Msg'], 0, 50)) ?>...</p>
                                 </div>
                             <?php endforeach; ?>
                         </div>
                     <?php else: ?>
                         <p>No new notifications.</p>
                     <?php endif; ?>
-                    <br><p><a href="feedback.php">View All Feedback</a></p>
+                    <br>
+                    <p><a href="feedback.php">View All Feedback</a></p>
                 </div>
             </div>
         </div>
