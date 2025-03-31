@@ -13,8 +13,4 @@
             <li><a href="services.php">Services</a></li>
         </ul>
     </nav>
-    <div class="language-controls">
-        <button><i class="fas fa-globe"></i></button>
-        <button><i class="fas fa-moon"></i></button>
-    </div>
 </header>
