@@ -1,39 +1,32 @@
-<link rel="stylesheet" href="css/main.css">
-
-<!-- For error debugging -->
 <?php
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);
-?>
+// For error debugging
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-<?php
+// Start session (assumed to be started in inc/cookie_public.php)
 require_once __DIR__ . '/inc/cookie_public.php';
 require_once __DIR__ . '/inc/csrf.php';
+// Include Composer's autoloader for PHPGangsta_GoogleAuthenticator
+require_once __DIR__ . '/vendor/autoload.php';
 
-
-// For login attempts limiter
-define('MAX_LOGIN_ATTEMPTS', 3); // Maximum allowed attempts
-define('LOCKOUT_DURATION', 900); // Lockout duration in seconds (15 minutes)
-
+// For login attempt limiter
+define('MAX_LOGIN_ATTEMPTS', 3);     // Maximum allowed attempts
+define('LOCKOUT_DURATION', 900);       // Lockout duration in seconds (15 minutes)
 
 $username = $errorMsg = "";
 $success = true;
 
 // Check for lockout status
-
 if (isset($_SESSION['lockout_time']) && time() < $_SESSION['lockout_time']) {
     $remainingTime = $_SESSION['lockout_time'] - time();
     die("You are temporarily locked out due to too many failed login attempts. Please try again in $remainingTime seconds.");
 }
 
-
 // Validate CSRF Token
-
 if (!isset($_POST['csrf_token']) || !validateCSRFToken($_POST['csrf_token'])) {
     $errorMsg .= "CSRF token validation failed.<br>";
     $success = false;
 }
-
 
 // ---------------------------
 // 2. reCAPTCHA Validation
@@ -67,7 +60,7 @@ if (empty($_POST['g-recaptcha-response'])) {
 }
 
 // ---------------------------
-// 3. Validate Username and Password
+// 3. Validate Username, Password, and TOTP Code
 // ---------------------------
 if (empty($_POST["username"])) {
     $errorMsg .= "Username is required.<br>";
@@ -80,7 +73,12 @@ if (empty($_POST["pwd"])) {
     $errorMsg .= "Password is required.<br>";
     $success = false;
 } else {
-    $pwd = $_POST["pwd"]; // Don't sanitize passwords
+    $pwd = $_POST["pwd"]; // Do not sanitize passwords
+}
+
+if (empty($_POST["2fa_code"])) {
+    $errorMsg .= "Google Authenticator code is required.<br>";
+    $success = false;
 }
 
 // ---------------------------
@@ -92,7 +90,6 @@ if ($success) {
 
 // Process the login result
 if ($success) {
-
     // Reset failed attempts after successful login
     unset($_SESSION['failed_attempts']);
     unset($_SESSION['lockout_time']);
@@ -100,8 +97,7 @@ if ($success) {
     // Regenerate session ID for security
     session_regenerate_id(true);
 
-    // Start a session to store user information
-    session_start();
+    // (Session should already be started by inc/cookie_public.php)
     $_SESSION['username'] = $username;
     $_SESSION['admin'] = true;
     $_SESSION['last_activity'] = time();
@@ -110,7 +106,6 @@ if ($success) {
     header("Location: admin.php");
     exit();
 } else {
-
     // Increment failed attempts counter
     if (!isset($_SESSION['failed_attempts'])) {
         $_SESSION['failed_attempts'] = 0;
@@ -121,12 +116,10 @@ if ($success) {
         // Lock out the user
         $_SESSION['lockout_time'] = time() + LOCKOUT_DURATION;
         unset($_SESSION['failed_attempts']); // Reset failed attempts after lockout
-
         die("Too many failed login attempts. You are temporarily locked out for " . (LOCKOUT_DURATION / 60) . " minutes.");
-        header("Location: login.php");
     }
 
-    // Store the error message in a session variable
+    // Store the error message in a session variable for display on the login page
     $_SESSION['error_msg'] = $errorMsg;
 
     // Redirect back to login.php
@@ -134,7 +127,7 @@ if ($success) {
     exit();
 }
 
-// Helper function that checks input for malicious or unwanted content.
+// Helper function: Sanitize input
 function sanitize_input($data) {
     $data = trim($data);
     $data = stripslashes($data);
@@ -142,10 +135,10 @@ function sanitize_input($data) {
     return $data;
 }
 
-// Function to authenticate user
+// Function to authenticate user, including TOTP verification using Admin_2FA column.
 function authenticateUser() {
     global $username, $pwd, $errorMsg, $success;
-
+    
     // Include the database connection file
     require_once "inc/sql.inc.php";
     $conn = getDatabaseConnection();
@@ -153,7 +146,7 @@ function authenticateUser() {
         die("Database connection failed: " . mysqli_connect_error());
     }
 
-    // Prepare and execute the query
+    // Prepare and execute the query to fetch admin details.
     $stmt = $conn->prepare("SELECT * FROM Memorial_Map_Admins WHERE Admin_Username=?");
     $stmt->bind_param("s", $username);
     $stmt->execute();
@@ -162,10 +155,26 @@ function authenticateUser() {
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         $pwd_hashed = $row["Admin_Password"];
-        // Check the password using password_verify
-        if (!password_verify($_POST["pwd"], $pwd_hashed)) {
+        
+        // Verify the password.
+        if (!password_verify($pwd, $pwd_hashed)) {
             $errorMsg = "Username or password is incorrect.";
             $success = false;
+        } else {
+            // Password is correct – now verify the TOTP code using Admin_2FA column.
+            if (!empty($row['Admin_2FA'])) {
+                $ga = new PHPGangsta_GoogleAuthenticator();
+                $user2fa = trim($_POST['2fa_code']);
+                // Allow a tolerance of 2 time intervals (2 * 30 seconds, usually)
+                if (!$ga->verifyCode($row['Admin_2FA'], $user2fa, 2)) {
+                    $errorMsg = "Invalid Google Authenticator code.";
+                    $success = false;
+                }
+            } else {
+                // Optionally, block login if 2FA is mandatory.
+                $errorMsg = "Two-Factor Authentication is not set up for this account.";
+                $success = false;
+            }
         }
     } else {
         $errorMsg = "Username or password is incorrect.";
@@ -175,6 +184,4 @@ function authenticateUser() {
     $stmt->close();
     $conn->close();
 }
-
-
 ?>
