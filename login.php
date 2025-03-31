@@ -30,6 +30,11 @@ require_once __DIR__ . '/inc/csrf.php';
         <input type="password" id="password" name="pwd" required>
       </div>
 
+      <div class="form-group">
+        <label for="2fa_code">Google Authenticator Code:</label>
+        <input type="text" id="2fa_code" name="2fa_code" required>
+      </div>
+
       <!-- CSRF token -->
       <?php csrfInputField(); ?>
       
@@ -45,6 +50,7 @@ require_once __DIR__ . '/inc/csrf.php';
       <div class="form-group">
         <a href="forgot-password.php">Forgot Password?</a>
       </div>
+
     </form>
 </main>
     
