@@ -41,7 +41,6 @@ header {
     padding: 15px;
     text-align: center;
     margin-bottom: 15px; /* Space between sections on mobile */
-    height: auto;
 }
 
 /* Stats Section - Original class maintained */
@@ -81,7 +80,7 @@ header {
 /* Feedback Notifications Styles */
 .feedback-notifications {
     max-height: 300px;
-    overflow: hidden;
+    overflow-y: auto;
 }
 
 .feedback-item {
@@ -91,7 +90,6 @@ header {
     border-radius: 4px;
     border-left: 3px solid #3498db;
     border-bottom: 1px solid #e0e0e0;
-    word-break: break-word;
 }
 
 .feedback-item:last-child {
@@ -99,7 +97,7 @@ header {
 }
 
 .feedback-item strong {
-    display: inline-block;
+    display: block;
     color: #2c3e50;
 }
 
@@ -113,59 +111,99 @@ header {
     color: #34495e;
 }
 
-/* Mobile Styles (max-width: 768px) */
-@media (max-width: 768px) {
-    /* Main layout adjustments */
+/* ===== Tablet & Desktop Styles ===== */
+@media (min-width: 768px) {
+    header {
+        height: 80px;
+        padding: 15px 30px;
+    }
+    
     .content {
-        padding: 10px;
+        margin-top: 80px;
+        padding: 25px;
     }
     
-    /* Large rectangle (top section) */
+    /* Horizontal layout for large rectangle */
     .large-rectangle {
-        flex-direction: column;
+        flex-direction: row;
+        padding: 20px;
     }
     
-    .pie-chart, .stats {
-        width: 100%;
-        margin-bottom: 20px;
+    .pie-chart {
+        flex: 0 0 300px; /* Fixed width */
+        margin-bottom: 0;
+        margin-right: 20px;
     }
     
-    /* Small rectangles (bottom section) */
+    .stats {
+        flex: 1;
+        padding: 20px;
+    }
+    
+    /* Horizontal layout for small rectangles */
     .small-rectangles {
-        flex-direction: column;
+        flex-direction: row;
     }
     
     .small-rectangle {
-        width: 100%;
-        margin-bottom: 20px;
+        flex: 1;
+        padding: 20px;
     }
-    
-    /* Notification items */
-    .feedback-item {
-        padding: 10px;
+}
+
+/* ===== Small Mobile Devices ===== */
+@media (max-width: 480px) {
+    /* Force vertical stacking for all main sections */
+    .main-content {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        height: auto;
+        margin-top: 80px;
+    }
+
+    /* Make tables display as blocks for better scrolling */
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    /* Stack the Recent Activity and Notifications sections */
+    .small-rectangles {
+        flex-direction: column;
+    }
+
+    .small-rectangle {
+        width: 100%;
         margin-bottom: 15px;
     }
-    
-    .feedback-item p {
-        white-space: normal;
-        word-break: break-word;
+
+    /* Ensure feedback items are properly spaced */
+    .feedback-item {
+        margin-bottom: 12px;
+        padding: 12px;
     }
-    
-    /* Sidebar adjustments */
-    .side-menu {
-        width: 180px;
+
+    /* Adjust header spacing */
+    header {
+        height: auto;
+        padding: 10px;
     }
-    
-    .side-menu.active ~ #toggle-sidebar {
-        left: 180px;
+
+    /* Content area adjustments */
+    .content {
+        margin-top: 70px; /* Slightly more space for header */
+        padding: 10px;
     }
-    
-    /* Text sizing */
-    h3 {
-        font-size: 1.2rem;
+
+    /* Make sure pie chart and stats stack vertically */
+    .large-rectangle {
+        flex-direction: column;
     }
-    
-    p, small {
-        font-size: 0.9rem;
+
+    .pie-chart, .stats {
+        width: 100%;
+        margin-bottom: 15px;
     }
 }
