@@ -48,7 +48,7 @@
 
 /* Warning Message */
 .warning-message {
-    color: #e74c3c;
+    color: #c0392b;
     font-size: 18px;
     font-weight: 500;
     margin-bottom: 30px;
@@ -77,7 +77,7 @@
 }
 
 .confirm-delete-btn {
-    background-color: #e74c3c;
+    background-color: #c0392b;
     color: white;
 }
 
@@ -86,7 +86,7 @@
 }
 
 .cancel-btn {
-    background-color: #95a5a6;
+    background-color: #5f6a6a;
     color: white;
 }
 
@@ -99,7 +99,7 @@
     
     .delete-confirm-content {
         padding: 30px 20px;
-        margin-top: 300px;
+        margin-top: 100px;
     }
     
     .delete-actions {
@@ -115,7 +115,7 @@
 @media (max-width: 480px) {
     .delete-confirm-content {
         padding: 25px 15px;
-        margin-top: 300px;
+        margin-top: 80px;
     }
     
     .delete-confirm h1 {

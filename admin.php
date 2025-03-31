@@ -1,35 +1,27 @@
 <?php
-// 1. Define the logout function
-function logout() {
-    session_start();
-    $_SESSION = array();
-    if (ini_get("session.use_cookies")) {
-        $params = session_get_cookie_params();
-        setcookie(session_name(), '', time() - 42000,
-            $params["path"], $params["domain"],
-            $params["secure"], $params["httponly"]
-        );
-    }
-    session_destroy();
+    include 'inc/head.inc.php';
+    include 'inc/adminbar.inc.php';
+    include 'inc/sql.inc.php';
+    include 'inc/footer.inc.php';
+    //require_once __DIR__ . '/inc/cookie_admin.php';  //For y'alls to work on that page without a hassle
     
-    // Clear JWT token
-    setcookie("jwt_token", "", time() - 3600, "/");
-}
-
-// 2. If the logout action is requested, call logout() and redirect to index.php
-if (isset($_GET['action']) && $_GET['action'] === 'logout') {
-    logout();
-    header("Location: index.php");
-    exit();
-}
-
-// 3. Include necessary files (make sure these files exist and work properly)
-include 'inc/head.inc.php';
-include 'inc/adminbar.inc.php';
-include 'inc/sql.inc.php';
-include 'inc/footer.inc.php';
-// require_once __DIR__ . '/inc/cookie_admin.php';  // Uncomment if needed
-// include 'inc/jwt.php'; // Uncomment if needed for authentication
+    // If there is a logout button being implemented the in future
+    // Here is the generic logout function, this will destroy the session cookies, jwt token
+    function logout() {
+        session_start();
+        $_SESSION = array();
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(session_name(), '', time() - 42000,
+                $params["path"], $params["domain"],
+                $params["secure"], $params["httponly"]
+            );
+        }
+        session_destroy();
+        
+        // Clear JWT token
+        setcookie("jwt_token", "", time() - 3600, "/");
+    }
 
 // INCASE I FORGET, TELL ME IF YOU'RE ADDING ANY POST REQUEST(FORMS) BECAUSE I NEED TO ADD IN CSRF
 
@@ -48,6 +40,7 @@ $recentFeedback = $query->get_result()->fetch_all(MYSQLI_ASSOC);
     <title>Cemetery Management System - Admin Page</title>
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/admin.css">
+    <script src = "js/admin.js"></script>
 </head>
 <body>
     <!-- Top Menu / Navbar (with Logout button on the right) -->
@@ -100,7 +93,7 @@ $recentFeedback = $query->get_result()->fetch_all(MYSQLI_ASSOC);
                 <div class="small-rectangle">
                     <h3>Notifications</h3>
                     <?php if (!empty($recentFeedback)): ?>
-                        <div class="feedback-notifications">
+                        <div class="feedback-notifications" tabindex ="0" role = "region" aria-label = "Feedback Notifications">
                             <?php foreach ($recentFeedback as $feedback): ?>
                                 <div class="feedback-item">
                                     <br>

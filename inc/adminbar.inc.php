@@ -1,5 +1,5 @@
+<button id="toggle-sidebar" onclick="toggleSidebar()">☰</button>
 <div class="side-menu" id="side-menu">
-    <button id="toggle-sidebar" onclick="toggleSidebar()">☰</button>
     <a href= "admin.php"><h2>Menu</h2></a>
     <ul>
         <li><a href="addgraves.php">Add Grave</a></li>
@@ -8,6 +8,8 @@
     </ul>
 </div>
 
+<div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
 <style>
     /* Sidebar Styles */
     .side-menu {
@@ -15,16 +17,31 @@
         background-color: #333;
         color: white;
         padding: 20px;
-        height: calc(100vh - 100px); /* Full height minus header height */
+        height: calc(100vh - 100px);
         position: fixed;
-        left: -200px; /* Hide sidebar by default */
-        top: 105px; /* Position below header */
+        left: -220px;
+        top: 105px;
         transition: left 0.3s ease;
         z-index: 1000;
     }
 
     .side-menu.active {
         left: 0; /* Show sidebar */
+    }
+
+    .table-container {
+        overflow-x: auto;
+        width: 100%;
+        transition : all 0.3s ease;
+    }
+
+    .sidebar-open .table-container {
+        width: calc(100% - 220px); /* Adjust width when sidebar is open */
+    }
+
+    .sidebar-open table {
+        width: 100%;
+        min-width: 1000px;
     }
 
     .side-menu h2 {
@@ -69,9 +86,34 @@
         transition: left 0.3s ease; /* Smooth transition */
     }
 
-    /* Adjust the toggle button position when the sidebar is active */
-    .side-menu.active + #toggle-sidebar {
-        left: 200px; /* Move the button to the right of the sidebar */
+    @media (max-width: 768px) {
+        .side-menu {
+            width: 100% !important; /* Full width on mobile */
+            left: -100% !important; /* Hide completely off-screen */
+            height: 100vh !important; /* Full viewport height */
+            z-index: 10000 !important; /* Ensure it's above everything */
+        }
+
+        .side-menu.active {
+            left: 0 !important; /* Slide in from left */
+        }
+        
+        #toggle-sidebar {
+            position: fixed !important;
+            left: 20px !important;
+            top: 20px !important;
+            z-index: 1001 !important;
+            transition: left 0.3s ease !important;
+        }
+
+        .side-menu.active ~ #toggle-sidebar {
+            left: 300px !important; /* Keep button visible */
+        }
+
+        .side-menu.active ~ .sidebar-overlay {
+            display: none !important; 
+        }
     }
+
 </style>
 <script src="js/admin.js"></script>

@@ -37,6 +37,7 @@ if (!$grave) {
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/admin.css">
     <link rel="stylesheet" href="css/deletegraves.css">
+    <script src = "js/admin.js"></script>
 </head>
 <body>
     <section class="delete-confirm">
