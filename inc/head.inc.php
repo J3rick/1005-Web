@@ -4,7 +4,7 @@
     </a>
     <div class="logo-container">
         <h1>MemorialMap</h1>
-        <p style="color:tomato;">by SGCaskets</p>
+        <p style="color:#c12e2a;">by SGCaskets</p>
     </div>
     <nav>
         <ul>

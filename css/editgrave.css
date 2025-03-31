@@ -94,7 +94,7 @@
 .editform-grp small {
     display: block;
     margin-top: 5px;
-    color: #7f8c8d;
+    color: #5d6d7e;
     font-size: 13px;
 }
 
@@ -125,17 +125,21 @@
 }
 
 .save-btn {
-    background-color: #3498db;
-    color: white;
+    background-color: #2277a3;
+    color: #ffffff;
 }
 
 .save-btn:hover {
-    background-color: #2980b9;
+    background-color: #2472a4;
+}
+
+.save-btn:focus {
+    box-shadow: 0 0 0 3px rgba(41,128,185,0.5);
 }
 
 .cancel-btn {
-    background-color: #95a5a6;
-    color: white;
+    background-color: #5a6869;
+    color: #f2f2f2;
     text-decoration: none;
     text-align: center;
     line-height: normal;

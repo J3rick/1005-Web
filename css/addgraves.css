@@ -87,7 +87,7 @@
 }
 
 .addform-grp small {
-    color: #7f8c8d;
+    color: #5d6d7e;
     font-size: 13px;
     margin-top: 5px;
 }
@@ -108,21 +108,29 @@
 }
 
 .add-btn {
-    background-color: #3498db;
-    color: white;
+    background-color: #2471a3;
+    color: #f2f2f2;
 }
 
 .add-btn:hover {
-    background-color: #2980b9;
+    background-color: #2472a4;
+}
+
+.add-btn:focus {
+    box-shadow: 0 0 0 3px rgba(41,128,185,0.5);
 }
 
 .cancel-btn {
-    background-color: #e74c3c;
+    background-color: #c0392b;
     color: white;
 }
 
 .cancel-btn:hover {
-    background-color: #c0392b;
+    background-color: #a53125;
+}
+
+.cancel-btn:focus {
+    box-shadow: 0 0 0 3px rgba(192,57,43,0.5);
 }
 
 /* Special styling for coordinate fields */

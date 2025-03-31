@@ -74,7 +74,7 @@
                 <div class="small-rectangle">
                     <h3>Notifications</h3>
                     <?php if (!empty($recentFeedback)): ?>
-                        <div class="feedback-notifications">
+                        <div class="feedback-notifications" tabindex ="0" role = "region" aria-label = "Feedback Notifications">
                             <?php foreach ($recentFeedback as $feedback): ?>
                                 <div class="feedback-item">
                                     <br><strong>User: </strong> <?= htmlspecialchars($feedback['Feedback_Name']) ?> <strong> Email: </strong> <?= htmlspecialchars($feedback['Feedback_Email']) ?>
