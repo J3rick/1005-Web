@@ -150,7 +150,7 @@
     
     .edit-form-content {
         padding: 30px 20px;
-        margin-top: 200px;
+        margin-top: 100px;
     }
     
     .editform-row {
@@ -170,7 +170,7 @@
 @media (max-width: 480px) {
     .edit-form-content {
         padding: 25px 15px;
-        margin-top: 200px;
+        margin-top: 80px;
     }
     
     .edit-form-content h1 {

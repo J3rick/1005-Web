@@ -37,6 +37,9 @@
 }
 
 @media (max-width: 768px) {
+    .header-container {
+        margin-top: 60px;
+    }
     .graves-table thead {
         display: none;
     }

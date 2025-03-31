@@ -99,7 +99,7 @@
     
     .delete-confirm-content {
         padding: 30px 20px;
-        margin-top: 300px;
+        margin-top: 100px;
     }
     
     .delete-actions {
@@ -115,7 +115,7 @@
 @media (max-width: 480px) {
     .delete-confirm-content {
         padding: 25px 15px;
-        margin-top: 300px;
+        margin-top: 80px;
     }
     
     .delete-confirm h1 {
