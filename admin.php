@@ -12,6 +12,7 @@ include 'inc/adminbar.inc.php';
 include 'inc/sql.inc.php';
 include 'inc/footer.inc.php';
 // require_once __DIR__ . '/inc/cookie_admin.php';  // Uncomment if needed
+// include 'inc/jwt.php'; // Uncomment if used for authentication
 
 // 3. Define the logout function
 function logout() {
@@ -50,24 +51,18 @@ $recentFeedback = $query->get_result()->fetch_all(MYSQLI_ASSOC);
     <script src="js/admin.js"></script>
 </head>
 <body>
-    <!-- Top Menu / Navbar (with Logout button on the right) -->
-    <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px;">
-        <!-- Left side could be your logo, site name, or menu -->
-        <div>
-            <strong>MemorialMap Admin</strong>
-        </div>
-        
-        <!-- Right side: Logout button -->
-        <div>
-            <a 
-                href="admin.php?action=logout" 
-                style="text-decoration: none; background: #c00; color: #fff; padding: 8px 16px; border-radius: 4px;"
-            >
-                Logout
-            </a>
-        </div>
+    <!-- Fixed Logout Button at the Top Right -->
+    <div id="logout-container" style="position: fixed; top: 10px; right: 10px; z-index: 1000;">
+        <a 
+            href="admin.php?action=logout" 
+            style="text-decoration: none; background: #c00; color: #fff; padding: 8px 16px; border-radius: 4px;"
+        >
+            Logout
+        </a>
     </div>
 
+    <!-- The admin bar (and possibly other navigation) from inc/adminbar.inc.php appears here -->
+    
     <div class="content">
         <div class="main-content">
             <!-- Large Rectangle (Top) -->
@@ -107,11 +102,9 @@ $recentFeedback = $query->get_result()->fetch_all(MYSQLI_ASSOC);
                                     <strong>User:</strong> <?= htmlspecialchars($feedback['Feedback_Name']) ?> 
                                     <strong>Email:</strong> <?= htmlspecialchars($feedback['Feedback_Email']) ?>
                                     <br>
-                                    <strong>Received at:</strong>
+                                    <strong>Received at:</strong> 
                                     <small><?= htmlspecialchars($feedback['Submitted_At']) ?></small>
-                                    <p><strong>Feedback message:</strong> 
-                                       <?= htmlspecialchars(substr($feedback['Feedback_Msg'], 0, 50)) ?>...
-                                    </p>
+                                    <p><strong>Feedback message:</strong> <?= htmlspecialchars(substr($feedback['Feedback_Msg'], 0, 50)) ?>...</p>
                                 </div>
                             <?php endforeach; ?>
                         </div>
