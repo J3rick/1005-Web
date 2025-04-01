@@ -48,6 +48,7 @@ function logout() {
 </head>
 
 <body>
+    <main>
     <!-- Fixed Logout Button at the Top Right -->
     <div id="logout-container" style="position: fixed; top: 10px; right: 10px; z-index: 1000;">
         <a 
@@ -142,5 +143,6 @@ function logout() {
             </tbody>
         </table>
     </div>
+    </main>
 </body>
 </html>
