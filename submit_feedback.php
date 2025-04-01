@@ -144,6 +144,7 @@ function saveFeedbackToDB() {
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
     <link rel="stylesheet" href="css/main.css">
     <style>
         .confirmation-container {
@@ -157,14 +158,14 @@ function saveFeedbackToDB() {
         }
         
         .confirmation-header {
-            background-color: #4CAF50;
+            background-color: #2E7D32;
             color: white;
             padding: 20px;
             text-align: center;
         }
         
         .confirmation-error-header {
-            background-color: #F44336;
+            background-color: #D32F2F;
             color: white;
             padding: 20px;
             text-align: center;
@@ -179,7 +180,7 @@ function saveFeedbackToDB() {
             border-radius: 6px;
             padding: 20px;
             margin: 20px 0;
-            border-left: 4px solid #4CAF50;
+            border-left: 4px solid #2E7D32;
         }
         
         .feedback-item {
@@ -208,7 +209,7 @@ function saveFeedbackToDB() {
         
         .redirect-button {
             display: inline-block;
-            background-color: #4CAF50;
+            background-color: #2E7D32;
             color: white;
             padding: 12px 30px;
             text-align: center;
@@ -226,7 +227,7 @@ function saveFeedbackToDB() {
         }
         
         .error-button {
-            background-color: #F44336;
+            background-color: #D32F2F;
         }
         
         .error-button:hover {
@@ -240,7 +241,7 @@ function saveFeedbackToDB() {
         }
         
         .error-message {
-            color: #F44336;
+            color: #D32F2F;
             background-color: #FFEBEE;
             padding: 15px;
             border-radius: 4px;
@@ -258,10 +259,12 @@ function saveFeedbackToDB() {
     ?>
 </head>
 <body>
+    <main>
 
 <div class="confirmation-container">
     <?php if ($success): ?>
         <div class="confirmation-header">
+        <title>Successful Feedback</title>
             <h1>Thank You!</h1>
             <p>Your feedback has been successfully submitted.</p>
         </div>
@@ -313,6 +316,7 @@ function saveFeedbackToDB() {
         
     <?php else: ?>
         <div class="confirmation-error-header">
+        <title>Failed Captcha</title>
             <h1>Oops!</h1>
             <p>There was a problem with your submission.</p>
         </div>
@@ -329,6 +333,6 @@ function saveFeedbackToDB() {
 </div>
 
 <?php include "inc/footer.inc.php"; ?>
-
+    </main>
 </body>
 </html>
