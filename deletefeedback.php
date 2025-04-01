@@ -52,7 +52,7 @@ if (!$feedback) {
         }
         
         .confirmation-header {
-            background-color: #F44336;
+            background-color: #D32F2F;
             color: white;
             padding: 12px;
             text-align: center;
@@ -128,7 +128,7 @@ if (!$feedback) {
         }
         
         .delete-btn {
-            background-color: #F44336;
+            background-color: #D32F2F;
             color: white;
         }
         
@@ -170,6 +170,7 @@ if (!$feedback) {
     </style>
 </head>
 <body>
+    <main>
 
 <div class="confirmation-container">
     <div class="confirmation-header">
@@ -213,6 +214,6 @@ if (!$feedback) {
 </div>
 
 <?php include "inc/footer.inc.php"; ?>
-
+    </main>
 </body>
 </html>
