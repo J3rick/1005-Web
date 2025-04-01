@@ -2,6 +2,8 @@
 
 <?php
 
+
+
     ini_set('session.cookie_secure', 1);  // Enforce HTTPS-only cookies
     ini_set('session.cookie_httponly', 1); // Reduces the risk of cross-site scripting (XSS) attacks, prevent access through client-side scripts
 
@@ -12,15 +14,16 @@
 
     // Add SameSite attribute, for an extra layer of protection against Cross-Site Request Forgery, it limits the scenarios in which cookies are sent to third-party websites.
     ini_set('session.cookie_samesite', 'Lax'); // Allow CSRF protection but permit cross-origin GET requests
+
+
+        // Start the session securely if there is no existing session
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start([
+            ]);
+    }
    
 
-    // Start the session securely if there is no existing session
-    if (session_status() !== PHP_SESSION_ACTIVE) {
-        session_start([
-            'read_and_close' => true // Minimize session locking to prevent DoS attack
-        ]);
-}
-    // session regeneration, to prevent session fixation attacks
+  // session regeneration, to prevent session fixation attacks
     if (!isset($_SESSION['regenerated'])) {
         session_regenerate_id(true);
         $_SESSION['regenerated'] = true;

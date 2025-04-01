@@ -14,7 +14,6 @@
     // Start the session securely if there is no existing session
     if (session_status() !== PHP_SESSION_ACTIVE) {
         session_start([
-            'read_and_close' => true // Minimize session locking to prevent DoS attack
         ]);
     }
 
