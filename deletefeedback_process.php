@@ -76,7 +76,7 @@ try {
         }
         
         .confirmation-header {
-            background-color: #4CAF50;
+            background-color: #2e7d32;
             color: white;
             padding: 12px;
             text-align: center;
@@ -118,7 +118,7 @@ try {
             border-radius: 6px;
             padding: 12px;
             margin: 10px 0;
-            border-left: 4px solid #4CAF50;
+            border-left: 4px solid #388E3C;
         }
         
         .feedback-item {
@@ -150,7 +150,7 @@ try {
         
         .redirect-button {
             display: inline-block;
-            background-color: #4CAF50;
+            background-color: #2e7d32;
             color: white;
             padding: 8px 20px;
             text-align: center;
@@ -217,6 +217,7 @@ try {
     </style>
 </head>
 <body>
+    <main>
 
 <div class="confirmation-container">
     <?php if ($success): ?>
@@ -291,6 +292,6 @@ try {
 </div>
 
 <?php include "inc/footer.inc.php"; ?>
-
+    </main>
 </body>
 </html>
