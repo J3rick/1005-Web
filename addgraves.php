@@ -1,10 +1,35 @@
 <?php
+// 1. Check if logout action is requested before any output
+if (isset($_GET['action']) && $_GET['action'] === 'logout') {
+    logout();
+    header("Location: index.php");
+    exit();
+}
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 include 'inc/head.inc.php';
 include 'inc/adminbar.inc.php';
 require_once __DIR__ . '/inc/cookie_admin.php';
 require_once __DIR__ . '/inc/csrf.php';
+
+// 3. Define the logout function
+function logout() {
+    session_start();
+    $_SESSION = array();
+    if (ini_get("session.use_cookies")) {
+        $params = session_get_cookie_params();
+        setcookie(session_name(), '', time() - 42000,
+            $params["path"], $params["domain"],
+            $params["secure"], $params["httponly"]
+        );
+    }
+    session_destroy();
+    
+    // Clear JWT token
+    setcookie("jwt_token", "", time() - 3600, "/");
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -36,6 +61,15 @@ require_once __DIR__ . '/inc/csrf.php';
     </style>
 </head>
 <body>
+    <!-- Fixed Logout Button at the Top Right -->
+    <div id="logout-container" style="position: fixed; top: 10px; right: 10px; z-index: 1000;">
+        <a 
+            href="admin.php?action=logout" 
+            style="text-decoration: none; background: #c00; color: #fff; padding: 8px 16px; border-radius: 4px;"
+        >
+            Logout
+        </a>
+    </div>
     <section class="addform">
         <div class="addform-content">
             <h1>Add New Grave Record</h1>
