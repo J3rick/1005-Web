@@ -144,14 +144,15 @@ function saveFeedbackToDB() {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
+    <link rel="stylesheet" href="css/main.css">
     <style>
         .confirmation-container {
-            max-width: 800px;
-            margin: 50px auto;
+            max-width: 90%;
+            width: 550px;
+            margin: 185px auto 190px; /* Top margin of 60px, centered horizontally, bottom margin of 20px */
             background-color: #fff;
             border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             overflow: hidden;
         }
         
@@ -252,6 +253,9 @@ function saveFeedbackToDB() {
             margin-top: 20px;
         }
     </style>
+    <?php
+    include "inc/head.inc.php"
+    ?>
 </head>
 <body>
 
