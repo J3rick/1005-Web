@@ -134,7 +134,7 @@ body.dragging-active {
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .flipbook-container {
-        height: 400px;
+        height: 550px;
     }
     
     .flipbook-page {

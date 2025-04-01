@@ -18,8 +18,7 @@ try {
         $config['remote']['dbname']
     );
     $connection_source = "remote";
-} 
-catch (Exception $e) {
+} catch (Exception $e) {
     // If remote fails, try local
     try {
         $conn = new mysqli(
@@ -29,8 +28,7 @@ catch (Exception $e) {
             $config['local']['dbname']
         );
         $connection_source = "local";
-    } 
-    catch (Exception $e) {
+    } catch (Exception $e) {
         // If both connections fail, display simple error
         echo "<div style='color:red; padding:10px;'>";
         echo "<strong>Database Connection Failed</strong><br>";
@@ -51,15 +49,6 @@ require_once __DIR__ . '/inc/cookie_public.php'; // Included public_cookie
 // }
 
 // Function to safely display image
-function displayImage($imageBlob)
-{
-    if (!empty($imageBlob)) {
-        $imgData = base64_encode($imageBlob);
-        return 'data:image/jpeg;base64,' . $imgData;
-    }
-    // Fallback image if no image is available
-    return 'https://randomuser.me/api/portraits/lego/3.jpg';
-}
 
 // Fetch memorial data for carousel
 function getMemorialCards($conn, $limit = 10)
@@ -153,14 +142,31 @@ $memorials = getMemorialCards($conn);
                 </div>
 
                 <div class="form-group">
-                    <label for="resting_type">Resting Type:</label>
-                    <select id="resting_type" name="resting_type">
-                        <option value="">All Types</option>
-                        <option value="Burial">Burial</option>
-                        <option value="Cremation">Cremation</option>
-                        <option value="Mausoleum">Mausoleum</option>
-                        <option value="Other">Other</option>
-                    </select>
+                    <label for="religion">Resting Type:</label>
+                    <div class="checkbox-row">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="resting_type_burial" name="resting_type[]" value="Burial">
+                            <label for="resting_type_burial">Burial</label>
+                        </div>
+                    </div>
+                    <div class="checkbox-row">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="resting_type_cremation" name="resting_type[]" value="Cremation">
+                            <label for="resting_type_cremation">Cremation</label>
+                        </div>
+                    </div>
+                    <div class="checkbox-row">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="resting_type_mausoleum" name="resting_type[]" value="Mausoleum">
+                            <label for="resting_type_mausoleum">Mausoleum</label>
+                        </div>
+                    </div>
+                    <div class="checkbox-row">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="resting_type_other" name="resting_type[]" value="Other">
+                            <label for="resting_type_other">Other</label>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="search-actions">
@@ -217,7 +223,7 @@ $memorials = getMemorialCards($conn);
                                 </form>
                             </div>
                         </div>
-                    <?php
+                        <?php
                     endforeach;
                 else:
                     ?>
@@ -288,12 +294,12 @@ $memorials = getMemorialCards($conn);
             </div>
         </div>
     </section>
-    
+
     //Add reCAPTCHA script
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
     <section class="contact">
-        <h3>Contact Us Now Please!!</h3>
+        <h3>Contact Us Now</h3>
         <form class="contact-form" method="POST" action="submit_feedback.php">
             <div class="form-group">
                 <input type="text" name="name" placeholder="Name" required>

@@ -15,6 +15,20 @@ img {
     max-height: 100%;
 }
 
+.checkbox-row {
+    display: flex;
+    margin-bottom: 5px;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-item input {
+    margin-right: 10px;
+}
+
 /* Header Styles */
 header {
     align-items: center;
@@ -826,18 +840,83 @@ footer {
     position: relative;
     width: 100%;
     overflow: hidden;
+    padding: 0;
+    margin-bottom: 30px;
 }
 
 .memorial-cards {
     display: flex;
     transition: transform 0.5s ease;
-    gap: 30px;
     width: 100%;
 }
 
 .memorial-card {
     flex: 0 0 calc(33.333% - 20px);
     min-width: calc(33.333% - 20px);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    background-color: #fff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin: 0 10px;
+}
+
+.memorial-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.memorial-img-wrapper {
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+}
+
+.memorial-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.5s ease;
+}
+
+.memorial-card:hover .memorial-image {
+    transform: scale(1.05);
+}
+
+.memorial-info {
+    padding: 15px;
+}
+
+.memorial-name {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.memorial-dates, .memorial-location, .memorial-age {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.memorial-card .search-btn {
+    display: block;
+    width: 100%;
+    padding: 8px 10px;
+    background-color: #4a6da7;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+.memorial-card .search-btn:hover {
+    background-color: #3a5d97;
 }
 
 .carousel-controls {
@@ -848,10 +927,11 @@ footer {
     width: 100%;
     transform: translateY(-50%);
     z-index: 2;
+    pointer-events: none;
 }
 
 .carousel-btn {
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.8);
     border: none;
     border-radius: 50%;
     color: #333;
@@ -863,10 +943,18 @@ footer {
     align-items: center;
     justify-content: center;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    pointer-events: auto;
 }
 
 .carousel-btn:hover {
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(255, 255, 255, 1);
+    color: #4a6da7;
+}
+
+.carousel-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 .prev-btn {
@@ -877,12 +965,36 @@ footer {
     margin-right: 10px;
 }
 
-/* Media query adjustment for carousel */
-@media screen and (max-width: 768px) {
+/* Media query adjustments for carousel */
+@media (max-width: 992px) {
     .memorial-card {
-        flex: 0 0 calc(100% - 10px);
-        min-width: calc(100% - 10px);
+        flex: 0 0 calc(50% - 20px);
+        min-width: calc(50% - 20px);
     }
+}
+
+@media (max-width: 768px) {
+    .memorial-card {
+        flex: 0 0 100%;
+        min-width: 100%;
+        margin: 0;
+    }
+    
+    .memorial-img-wrapper {
+        height: 220px;
+    }
+    
+    .carousel-btn {
+        height: 36px;
+        width: 36px;
+        font-size: 16px;
+    }
+    
+    /* Ensure the container provides padding on mobile */
+    .carousel-container {
+        padding: 0 15px;
+    }
+}
 /* Services Section Base */
 .services {
     background-color: #6B705C; /* Soft Olive Green for Section */
@@ -1111,6 +1223,3 @@ footer {
 /* --------------------------------------------------------------------------------------------- */
 /* admin.php css stuff */
 
-
-
-}
