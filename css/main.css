@@ -15,6 +15,20 @@ img {
     max-height: 100%;
 }
 
+.checkbox-row {
+    display: flex;
+    margin-bottom: 5px;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-item input {
+    margin-right: 10px;
+}
+
 /* Header Styles */
 header {
     align-items: center;
