@@ -1,7 +1,6 @@
 <?php
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
-    include 'inc/head.inc.php';
     include 'inc/adminbar.inc.php';
     include 'inc/sql.inc.php';
     include 'inc/footer.inc.php';
@@ -16,6 +15,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cemetery Management System</title>
+    <?php
+    include "inc/head.inc.php"
+    ?>
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/admin.css">
     <link rel="stylesheet" href="css/feedback.css">
