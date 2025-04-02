@@ -993,7 +993,7 @@ footer {
     .carousel-container {
         padding: 0 15px;
     }
-}
+
 /* Services Section Base */
 .services {
     background-color: #6B705C; /* Soft Olive Green for Section */
@@ -1222,3 +1222,4 @@ footer {
 /* --------------------------------------------------------------------------------------------- */
 /* admin.php css stuff */
 
+}
