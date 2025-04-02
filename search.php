@@ -181,7 +181,7 @@ $result = $conn->query($sql);
         }
 
         .result-meta {
-            color: #6c757d;
+            color: #000000;
             font-size: 0.9em;
             margin-bottom: 10px;
         }
@@ -232,17 +232,20 @@ $result = $conn->query($sql);
     <?php
     include "inc/head.inc.php"
         ?>
+        <main>
+
+        
     <div class="container-fluid">
         <div class="row content">
             <!-- Left side - Filters -->
             <div class="col-sm-3 sidenav">
-                <h3>Filter Results</h3>
+                <h2>Filter Results</h2>
 
                 <form action="search.php" method="GET" id="searchForm">
                     <div class="filter-section">
                         <div class="filter-title">Name</div>
                         <div class="filter-group">
-                            <input type="text" class="form-control" name="name" placeholder="Enter name"
+                            <input type="text" class="form-control" name="name" placeholder="John Doe"
                                 value="<?php echo htmlspecialchars($name); ?>">
                         </div>
                     </div>
@@ -251,10 +254,10 @@ $result = $conn->query($sql);
                         <div class="filter-title">Date of Birth</div>
                         <div class="filter-group">
                             <div class="date-range">
-                                <input type="date" class="form-control" name="dob_from"
+                                <input type="date" class="form-control" name="dob_from" aria-label="Date of Birth From"
                                     value="<?php echo htmlspecialchars($dob_from); ?>">
                                 <span>to</span>
-                                <input type="date" class="form-control" name="dob_to"
+                                <input type="date" class="form-control" name="dob_to" aria-label="Date of Birth To"
                                     value="<?php echo htmlspecialchars($dob_to); ?>">
                             </div>
                         </div>
@@ -264,10 +267,10 @@ $result = $conn->query($sql);
                         <div class="filter-title">Date of Death</div>
                         <div class="filter-group">
                             <div class="date-range">
-                                <input type="date" class="form-control" name="dod_from"
+                                <input type="date" class="form-control" name="dod_from" aria-label="Date of Departure From"
                                     value="<?php echo htmlspecialchars($dod_from); ?>">
                                 <span>to</span>
-                                <input type="date" class="form-control" name="dod_to"
+                                <input type="date" class="form-control" name="dod_to" aria-label="Date of Departure To"
                                     value="<?php echo htmlspecialchars($dod_to); ?>">
                             </div>
                         </div>
@@ -276,7 +279,7 @@ $result = $conn->query($sql);
                     <div class="filter-section">
                         <div class="filter-title">Religion</div>
                         <div class="filter-group">
-                            <select class="form-control" name="religion">
+                            <select class="form-control" name="religion" aria-label="Religion">
                                 <option value="" <?php echo $religion == '' ? 'selected' : ''; ?>>All Religions</option>
                                 <option value="Buddhism" <?php echo $religion == 'Buddhism' ? 'selected' : ''; ?>>Buddhism
                                 </option>
@@ -323,7 +326,7 @@ $result = $conn->query($sql);
                     <div class="filter-section">
                         <div class="filter-title">Location</div>
                         <div class="filter-group">
-                            <select class="form-control" name="location">
+                            <select class="form-control" name="location" aria-label="Location">
                                 <option value="">All Locations</option>
                                 <option value="north" <?php echo $location == 'north' ? 'selected' : ''; ?>>North Region
                                 </option>
@@ -357,7 +360,7 @@ $result = $conn->query($sql);
                 <div class="results-header">
                     <h2>Search Results</h2>
                     <div class="form-group">
-                        <select class="form-control" id="sortResults">
+                        <select class="form-control" id="sortResults" aria-label="SortResults">
                             <option value="name_asc" <?php echo $sort == 'name_asc' ? 'selected' : ''; ?>>Sort by: Name
                                 (A-Z)</option>
                             <option value="name_desc" <?php echo $sort == 'name_desc' ? 'selected' : ''; ?>>Name (Z-A)
@@ -506,7 +509,7 @@ $result = $conn->query($sql);
             </div>
         </div>
     </div>
-
+    </main>
     <?php
     include "inc/footer.inc.php"
         ?>
