@@ -1,12 +1,34 @@
 <?php
+// 1. Check if logout action is requested before any output
+if (isset($_GET['action']) && $_GET['action'] === 'logout') {
+    logout();
+    header("Location: index.php");
+    exit();
+}
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
-    include 'inc/head.inc.php';
     include 'inc/adminbar.inc.php';
     include 'inc/sql.inc.php';
     include 'inc/footer.inc.php';
     $conn = getDatabaseConnection();
     //require_once __DIR__ . '/inc/cookie_admin.php'; 
+    
+// 3. Define the logout function
+function logout() {
+    session_start();
+    $_SESSION = array();
+    if (ini_get("session.use_cookies")) {
+        $params = session_get_cookie_params();
+        setcookie(session_name(), '', time() - 42000,
+            $params["path"], $params["domain"],
+            $params["secure"], $params["httponly"]
+        );
+    }
+    session_destroy();
+    
+    // Clear JWT token
+    setcookie("jwt_token", "", time() - 3600, "/");
+}
 
 ?>
 
@@ -16,6 +38,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cemetery Management System</title>
+    <?php
+    include "inc/head.inc.php"
+    ?>
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/admin.css">
     <link rel="stylesheet" href="css/feedback.css">
@@ -23,6 +48,16 @@
 </head>
 
 <body>
+    <main>
+    <!-- Fixed Logout Button at the Top Right -->
+    <div id="logout-container" style="position: fixed; top: 10px; right: 10px; z-index: 1000;">
+        <a 
+            href="admin.php?action=logout" 
+            style="text-decoration: none; background: #c00; color: #fff; padding: 8px 16px; border-radius: 4px;"
+        >
+            Logout
+        </a>
+    </div>
     <div class="content">
         <div class="header-container">
             <h1>View Feedback</h1>
@@ -108,5 +143,6 @@
             </tbody>
         </table>
     </div>
+    </main>
 </body>
 </html>

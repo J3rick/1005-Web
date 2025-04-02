@@ -16,6 +16,14 @@ require_once __DIR__ . '/inc/csrf.php';
 <?php include "inc/head.inc.php"; ?>
 <main class="container">
     <h1>Login</h1>
+
+        <!-- Display an alert if there is an error message -->
+        <?php if (isset($_SESSION['error_msg']) && !empty($_SESSION['error_msg'])): ?>
+        <script>
+            alert("<?php echo htmlspecialchars($_SESSION['error_msg']); ?>");
+        </script>
+        <?php unset($_SESSION['error_msg']); // Clear the error message after displaying it ?>
+    <?php endif; ?>
     
     <form action="process_login.php" method="post" class="login-form">
       <div class="form-group">
@@ -26,11 +34,6 @@ require_once __DIR__ . '/inc/csrf.php';
       <div class="form-group">
         <label for="password">Password:</label>
         <input type="password" id="password" name="pwd" required>
-      </div>
-
-      <div class="form-group">
-        <label for="2fa_code">Google Authenticator Code:</label>
-        <input type="text" id="2fa_code" name="2fa_code" required>
       </div>
 
       <!-- CSRF token -->
@@ -48,7 +51,6 @@ require_once __DIR__ . '/inc/csrf.php';
       <div class="form-group">
         <a href="forgot-password.php">Forgot Password?</a>
       </div>
-
     </form>
 </main>
     

@@ -1,33 +1,48 @@
-<?php
-// Enable error reporting
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+<link rel="stylesheet" href="css/main.css">
 
-// Start session (assumed to be started in inc/cookie_public.php)
+<!-- For error debugging -->
+<?php
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+?>
+
+<?php
 require_once __DIR__ . '/inc/cookie_public.php';
 require_once __DIR__ . '/inc/csrf.php';
-// Include Composer's autoloader for PHPGangsta_GoogleAuthenticator
-require_once __DIR__ . '/vendor/autoload.php';
 
-// For login attempt limiter (if needed)
-define('MAX_LOGIN_ATTEMPTS', 3);
-define('LOCKOUT_DURATION', 900);
+
+// For login attempts limiter
+define('MAX_LOGIN_ATTEMPTS', 3); // Maximum allowed attempts
+define('LOCKOUT_DURATION', 0); // Lockout duration in seconds (15 minutes)
+
 
 $username = $errorMsg = "";
 $success = true;
 
+// Check for lockout status
+
+if (isset($_SESSION['lockout_time']) && time() < $_SESSION['lockout_time']) {
+    $remainingTime = $_SESSION['lockout_time'] - time();
+    $_SESSION['error_msg'] = "You are temporarily locked out due to too many failed login attempts. Please try again in $remainingTime seconds.";
+    header("Location: login.php");
+}
+
 // Validate CSRF Token
+
 if (!isset($_POST['csrf_token']) || !validateCSRFToken($_POST['csrf_token'])) {
     $errorMsg .= "CSRF token validation failed.<br>";
     $success = false;
 }
 
-// reCAPTCHA Validation
+
+// ---------------------------
+// 2. reCAPTCHA Validation
+// ---------------------------
 if (empty($_POST['g-recaptcha-response'])) {
     $errorMsg .= "Please complete the reCAPTCHA.<br>";
     $success = false;
 } else {
-    $recaptcha_secret = '6LeCwQMrAAAAALobYbZlQmuNyjZU7tgaMaFABs4z';
+    $recaptcha_secret = '6LeCwQMrAAAAALobYbZlQmuNyjZU7tgaMaFABs4z'; 
     $recaptcha_response = $_POST['g-recaptcha-response'];
     $verify_url = 'https://www.google.com/recaptcha/api/siteverify';
     $data = [
@@ -51,7 +66,9 @@ if (empty($_POST['g-recaptcha-response'])) {
     }
 }
 
-// Validate Username, Password, and TOTP Code
+// ---------------------------
+// 3. Validate Username and Password
+// ---------------------------
 if (empty($_POST["username"])) {
     $errorMsg .= "Username is required.<br>";
     $success = false;
@@ -63,86 +80,103 @@ if (empty($_POST["pwd"])) {
     $errorMsg .= "Password is required.<br>";
     $success = false;
 } else {
-    $pwd = $_POST["pwd"];
+    $pwd = $_POST["pwd"]; // Don't sanitize passwords
 }
 
-if (empty($_POST["2fa_code"])) {
-    $errorMsg .= "Google Authenticator code is required.<br>";
-    $success = false;
-}
-
-// If validations pass, authenticate user
+// ---------------------------
+// 4. Authenticate User (if all validations pass)
+// ---------------------------
 if ($success) {
     authenticateUser();
 }
 
-// Process login result
+// Process the login result
 if ($success) {
-    // Reset failed attempts
+
+    // Reset failed attempts after successful login
     unset($_SESSION['failed_attempts']);
     unset($_SESSION['lockout_time']);
+
+    // Regenerate session ID for security
     session_regenerate_id(true);
+
+    // Start a session to store user information
+    session_start();
     $_SESSION['username'] = $username;
     $_SESSION['admin'] = true;
     $_SESSION['last_activity'] = time();
+
+    // Redirect to admin.php
     header("Location: admin.php");
     exit();
 } else {
+
+    // Increment failed attempts counter
     if (!isset($_SESSION['failed_attempts'])) {
         $_SESSION['failed_attempts'] = 0;
     }
     $_SESSION['failed_attempts']++;
+
     if ($_SESSION['failed_attempts'] >= MAX_LOGIN_ATTEMPTS) {
+        // Lock out the user
         $_SESSION['lockout_time'] = time() + LOCKOUT_DURATION;
-        unset($_SESSION['failed_attempts']);
-        die("Too many failed login attempts. You are temporarily locked out for " . (LOCKOUT_DURATION / 60) . " minutes.");
+        unset($_SESSION['failed_attempts']); // Reset failed attempts after lockout
+
+        $_SESSION['error_msg'] = "Too many failed login attempts. You are temporarily locked out for " . (LOCKOUT_DURATION / 60) . " minutes.";
+        header("Location: login.php");
+        exit();
     }
+
+    // Store the error message in a session variable
     $_SESSION['error_msg'] = $errorMsg;
+
+    // Redirect back to login.php
     header("Location: login.php");
     exit();
 }
 
-// Helper: Sanitize input
+// Helper function that checks input for malicious or unwanted content.
 function sanitize_input($data) {
-    return htmlspecialchars(stripslashes(trim($data)));
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
 }
 
-// Authenticate user including TOTP verification
+// Function to authenticate user
 function authenticateUser() {
     global $username, $pwd, $errorMsg, $success;
+
+    // Include the database connection file
     require_once "inc/sql.inc.php";
     $conn = getDatabaseConnection();
     if (!$conn) {
         die("Database connection failed: " . mysqli_connect_error());
     }
+
+    // Prepare and execute the query
     $stmt = $conn->prepare("SELECT * FROM Memorial_Map_Admins WHERE Admin_Username=?");
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $result = $stmt->get_result();
+
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         $pwd_hashed = $row["Admin_Password"];
-        if (!password_verify($pwd, $pwd_hashed)) {
+        // Check the password using password_verify
+        if (!password_verify($_POST["pwd"], $pwd_hashed)) {
             $errorMsg = "Username or password is incorrect.";
             $success = false;
-        } else {
-            // Verify TOTP code from Admin_2FA column
-            if (!empty($row['Admin_2FA'])) {
-                $ga = new PHPGangsta_GoogleAuthenticator();
-                $user2fa = trim($_POST['2fa_code']);
-                if (!$ga->verifyCode($row['Admin_2FA'], $user2fa, 2)) {
-                    $errorMsg = "Invalid Google Authenticator code.";
-                    $success = false;
-                }
-            } else {
-                $errorMsg = "Two-Factor Authentication is not set up for this account.";
-                $success = false;
-            }
+            echo "<script>alert('Username or password is incorrect.');</script>";
+            echo "<script>window.location.href = 'login.php';</script>";
         }
     } else {
         $errorMsg = "Username or password is incorrect.";
         $success = false;
+        echo "<script>alert('Username or password is incorrect.');</script>";
+        echo "<script>window.location.href = 'login.php';</script>";
     }
+
     $stmt->close();
     $conn->close();
 }

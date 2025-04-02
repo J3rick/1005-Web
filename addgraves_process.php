@@ -68,13 +68,15 @@ try {
 
         $extension = $allowedTypes[$mimeType];
         $filename = uniqid() . '.' . $extension;
-        $targetPath = 'assets/portraits/' . $filename;
+        $uploadDir = __DIR__ . '/assets/portraits/';
+        $targetPath = $uploadDir . $filename;
+        $imagePath = $filename;
 
         if (!move_uploaded_file($_FILES['image']['tmp_name'], $targetPath)) {
             throw new Exception("Failed to save uploaded file.");
         }
         
-        $imagePath = $targetPath;
+        
     }
 
     // Check plot availability

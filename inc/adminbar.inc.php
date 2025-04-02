@@ -1,5 +1,5 @@
 <button id="toggle-sidebar" onclick="toggleSidebar()">☰</button>
-<div class="side-menu" id="side-menu">
+<div class="side-menu" id="side-menu" aria-label="Sidebar menu">
     <a href= "admin.php"><h2>Menu</h2></a>
     <ul>
         <li><a href="addgraves.php">Add Grave</a></li>

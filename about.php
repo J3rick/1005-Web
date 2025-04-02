@@ -131,6 +131,7 @@ require_once __DIR__ . '/inc/cookie_public.php';
     <script src="js/main.js"></script>
     <script src="js/flipbook.js"></script>
     <script src="js/slideshow.js"></script>
+    </main>
 </body>
 
 </html>
