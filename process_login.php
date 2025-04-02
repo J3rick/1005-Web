@@ -167,10 +167,14 @@ function authenticateUser() {
         if (!password_verify($_POST["pwd"], $pwd_hashed)) {
             $errorMsg = "Username or password is incorrect.";
             $success = false;
+            echo "<script>alert('Username or password is incorrect.');</script>";
+            echo "<script>window.location.href = 'login.php';</script>";
         }
     } else {
         $errorMsg = "Username or password is incorrect.";
         $success = false;
+        echo "<script>alert('Username or password is incorrect.');</script>";
+        echo "<script>window.location.href = 'login.php';</script>";
     }
 
     $stmt->close();
