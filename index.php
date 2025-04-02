@@ -238,8 +238,8 @@ $memorials = getMemorialCards($conn);
                 <?php endif; ?>
             </div>
             <div class="carousel-controls">
-                <button class="carousel-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
-                <button class="carousel-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+                <button class="carousel-btn prev-btn" aria-label="Previous slide"><i class="fas fa-chevron-left"></i></button>
+                <button class="carousel-btn next-btn" aria-label="Next slide"><i class="fas fa-chevron-right"></i></button>
             </div>
         </div>
     </section>
