@@ -51,7 +51,7 @@ require_once __DIR__ . '/inc/cookie_public.php'; // Included public_cookie
 // Function to safely display image
 
 // Fetch memorial data for carousel
-function getMemorialCards($conn, $limit = 10)
+function getMemorialCards($conn, $limit = 5)
 {
     $memorials = [];
 
