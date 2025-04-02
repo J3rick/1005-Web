@@ -32,63 +32,67 @@
                 cardsPerView = 3;
             }
             
-            // Calculate container width to fit exactly one card on mobile
+            // Calculate container width
             const containerWidth = carouselContainer.clientWidth;
             
-            // Apply styles to cards
+            // Set width for the entire card container to ensure proper flow
+            memorialCards.style.width = `${cards.length * containerWidth / cardsPerView}px`;
+            
+            // Apply styles to cards with improved margin handling
             cards.forEach(card => {
-                // Full width for mobile (minus padding/margins)
                 if (cardsPerView === 1) {
                     card.style.flex = '0 0 100%';
-                    card.style.minWidth = '100%';
+                    card.style.width = `${containerWidth}px`;
                     card.style.marginRight = '0';
                 } else if (cardsPerView === 2) {
+                    // For 2 cards, ensure each takes exactly 50% minus a fixed margin
                     card.style.flex = '0 0 calc(50% - 10px)';
-                    card.style.minWidth = 'calc(50% - 10px)';
+                    card.style.width = `${(containerWidth / 2) - 10}px`;
+                    card.style.marginRight = '10px';
                 } else {
-                    card.style.flex = '0 0 calc(33.333% - 20px)';
-                    card.style.minWidth = 'calc(33.333% - 20px)';
+                    // For 3 cards, ensure each takes exactly 33.333% minus a fixed margin
+                    card.style.flex = '0 0 calc(33.333% - 14px)';
+                    card.style.width = `${(containerWidth / 3) - 14}px`;
+                    card.style.marginRight = '10px';
                 }
             });
             
-            // Recalculate card width including margins
+            // Calculate the exact card width including margins for scrolling
             const firstCard = cards[0];
+            const cardRect = firstCard.getBoundingClientRect();
             const cardStyle = window.getComputedStyle(firstCard);
-            const cardMargin = parseFloat(cardStyle.marginRight) + parseFloat(cardStyle.marginLeft);
+            const marginRight = parseFloat(cardStyle.marginRight);
             
-            // For single card view, make card width equal to container
-            if (cardsPerView === 1) {
-                cardWidth = containerWidth;
-            } else {
-                // For multi-card views, include the gap between cards
-                const cardRect = firstCard.getBoundingClientRect();
-                cardWidth = cardRect.width + cardMargin;
+            // Set card width including margin for scroll calculations
+            cardWidth = cardRect.width + marginRight;
+            
+            // Ensure we don't exceed the valid index range
+            const maxIndex = Math.max(0, cards.length - cardsPerView);
+            if (currentIndex > maxIndex) {
+                currentIndex = maxIndex;
             }
             
-            // Reset index and update display
-            if (currentIndex > cards.length - cardsPerView) {
-                currentIndex = Math.max(0, cards.length - cardsPerView);
-            }
             updateCarousel();
         }
         
         // Function to update carousel position
         function updateCarousel() {
-            // Fix: Calculate the true maximum index to show all cards
+            // Calculate the maximum valid index
             const maxIndex = Math.max(0, cards.length - cardsPerView);
             
-            // Make sure we don't scroll beyond the available cards
+            // Ensure current index is within valid range
             if (currentIndex < 0) currentIndex = 0;
             if (currentIndex > maxIndex) currentIndex = maxIndex;
             
-            // Update buttons visibility
+            // Update button states
             prevBtn.style.opacity = currentIndex === 0 ? '0.5' : '1';
             prevBtn.disabled = currentIndex === 0;
             nextBtn.style.opacity = currentIndex >= maxIndex ? '0.5' : '1';
             nextBtn.disabled = currentIndex >= maxIndex;
             
-            // Move the carousel
-            memorialCards.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+            // Calculate precise position to ensure cards are fully visible
+            const scrollPosition = currentIndex * cardWidth;
+            memorialCards.style.transform = `translateX(-${scrollPosition}px)`;
         }
         
         // Button event listeners
@@ -100,7 +104,6 @@
         });
         
         nextBtn.addEventListener('click', function() {
-            // Fix: Only advance if we haven't reached the maximum index
             const maxIndex = Math.max(0, cards.length - cardsPerView);
             if (currentIndex < maxIndex) {
                 currentIndex++;
@@ -111,6 +114,7 @@
         // Touch event listeners for mobile swipe
         memorialCards.addEventListener('touchstart', function(e) {
             touchStartX = e.changedTouches[0].screenX;
+            stopAutoplay(); // Stop autoplay on touch
         });
         
         memorialCards.addEventListener('touchend', function(e) {
@@ -140,9 +144,15 @@
         
         // Initialize carousel and update on window resize
         updateCarouselLayout();
-        window.addEventListener('resize', updateCarouselLayout);
         
-        // Auto-play functionality (optional)
+        // Add debounced resize handler to prevent performance issues
+        let resizeTimer;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(updateCarouselLayout, 250);
+        });
+        
+        // Auto-play functionality
         let autoplayInterval;
         
         function startAutoplay() {
@@ -166,7 +176,6 @@
         
         // Pause autoplay on hover or touch
         carouselContainer.addEventListener('mouseenter', stopAutoplay);
-        carouselContainer.addEventListener('touchstart', stopAutoplay);
         
         // Resume autoplay when mouse leaves
         carouselContainer.addEventListener('mouseleave', startAutoplay);
