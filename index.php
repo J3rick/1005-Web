@@ -102,217 +102,226 @@ $memorials = getMemorialCards($conn);
     <?php
     include "inc/head.inc.php"
         ?>
-    <section class="hero">
-        <div class="hero-content">
-            <h2>Find your loved ones today.</h2>
+    <main>
 
-            <form class="cemetery-search-form" action="search.php" method="GET">
-                <div class="form-group">
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="name" placeholder="Enter name">
-                </div>
 
-                <div class="form-group">
-                    <label for="dob_from">Date of Birth:</label>
-                    <input type="date" id="dob_from" name="dob_from">
-                    <label for="dob_to">to:</label>
-                    <input type="date" id="dob_to" name="dob_to">
-                </div>
+        <section class="hero">
+            <div class="hero-content">
+                <h2>Find your loved ones today.</h2>
 
-                <div class="form-group">
-                    <label for="dop_from">Date of Passing:</label>
-                    <input type="date" id="dop_from" name="dop_from">
-                    <label for="dop_to">to:</label>
-                    <input type="date" id="dop_to" name="dop_to">
-                </div>
+                <form class="cemetery-search-form" action="search.php" method="GET">
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" placeholder="Enter name">
+                    </div>
 
-                <div class="form-group">
-                    <label for="religion">Religion:</label>
-                    <select id="religion" name="religion">
-                        <option value="">All Religions</option>
-                        <option value="Christianity">Christianity</option>
-                        <option value="Judaism">Judaism</option>
-                        <option value="Islam">Islam</option>
-                        <option value="Buddhism">Buddhism</option>
-                        <option value="Hinduism">Hinduism</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
+                    <div class="form-group">
+                        <label for="dob_from">Date of Birth:</label>
+                        <input type="date" id="dob_from" name="dob_from">
+                        <label for="dob_to">to:</label>
+                        <input type="date" id="dob_to" name="dob_to">
+                    </div>
 
-                <div class="form-group">
-                    <label for="religion">Resting Type:</label>
-                    <div class="checkbox-row">
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="resting_type_burial" name="resting_type[]" value="Burial">
-                            <label for="resting_type_burial">Burial</label>
+                    <div class="form-group">
+                        <label for="dop_from">Date of Passing:</label>
+                        <input type="date" id="dop_from" name="dop_from">
+                        <label for="dop_to">to:</label>
+                        <input type="date" id="dop_to" name="dop_to">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="religion">Religion:</label>
+                        <select id="religion" name="religion">
+                            <option value="">All Religions</option>
+                            <option value="Christianity">Christianity</option>
+                            <option value="Judaism">Judaism</option>
+                            <option value="Islam">Islam</option>
+                            <option value="Buddhism">Buddhism</option>
+                            <option value="Hinduism">Hinduism</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="religion">Resting Type:</label>
+                        <div class="checkbox-row">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="resting_type_burial" name="resting_type[]" value="Burial">
+                                <label for="resting_type_burial">Burial</label>
+                            </div>
+                        </div>
+                        <div class="checkbox-row">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="resting_type_cremation" name="resting_type[]"
+                                    value="Cremation">
+                                <label for="resting_type_cremation">Cremation</label>
+                            </div>
+                        </div>
+                        <div class="checkbox-row">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="resting_type_mausoleum" name="resting_type[]"
+                                    value="Mausoleum">
+                                <label for="resting_type_mausoleum">Mausoleum</label>
+                            </div>
+                        </div>
+                        <div class="checkbox-row">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="resting_type_other" name="resting_type[]" value="Other">
+                                <label for="resting_type_other">Other</label>
+                            </div>
                         </div>
                     </div>
-                    <div class="checkbox-row">
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="resting_type_cremation" name="resting_type[]" value="Cremation">
-                            <label for="resting_type_cremation">Cremation</label>
-                        </div>
+
+                    <div class="search-actions">
+                        <button type="submit" class="search-btn">Search Records</button>
+                        <button type="reset" class="reset-btn">Reset</button>
                     </div>
-                    <div class="checkbox-row">
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="resting_type_mausoleum" name="resting_type[]" value="Mausoleum">
-                            <label for="resting_type_mausoleum">Mausoleum</label>
-                        </div>
-                    </div>
-                    <div class="checkbox-row">
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="resting_type_other" name="resting_type[]" value="Other">
-                            <label for="resting_type_other">Other</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="search-actions">
-                    <button type="submit" class="search-btn">Search Records</button>
-                    <button type="reset" class="reset-btn">Reset</button>
-                </div>
-            </form>
-        </div>
-    </section>
+                </form>
+            </div>
+        </section>
 
 
-    <section class="memorials">
-        <div class="section-header">
-            <h3>Latest memorials</h3>
-            <a href="search.php?name=&dob_from=&dob_to=&dop_from=&dop_to=&religion=" style="color: #1a5b92;">Explore more »</a>
-        </div>
-        <div class="carousel-container">
-            <div class="memorial-cards">
-                <?php
-                // Get memorials from database
-                $memorials = getMemorialCards($conn);
+        <section class="memorials">
+            <div class="section-header">
+                <h3>Latest memorials</h3>
+                <a href="search.php?name=&dob_from=&dob_to=&dop_from=&dop_to=&religion=" style="color: #1a5b92;">Explore
+                    more »</a>
+            </div>
+            <div class="carousel-container">
+                <div class="memorial-cards">
+                    <?php
+                    // Get memorials from database
+                    $memorials = getMemorialCards($conn);
 
-                if (count($memorials) > 0):
-                    foreach ($memorials as $memorial):
+                    if (count($memorials) > 0):
+                        foreach ($memorials as $memorial):
+                            ?>
+                            <div class="memorial-card">
+                                <div class="memorial-img-wrapper">
+                                    <?php
+                                    $imagePath = !empty($memorial['Image'])
+                                        ? "assets/portraits/" . $memorial['Image']
+                                        : "https://via.placeholder.com/300x150";
+                                    ?>
+
+                                    <img src="<?php echo htmlspecialchars($imagePath); ?>"
+                                        alt="<?php echo htmlspecialchars($memorial['Name']); ?>" class="memorial-image">
+                                </div>
+                                <div class="memorial-info">
+                                    <div class="memorial-name"><?php echo htmlspecialchars($memorial['Name']); ?></div>
+                                    <div class="memorial-dates">
+                                        <?php echo htmlspecialchars($memorial['DateOfBirth']); ?> -
+                                        <?php echo htmlspecialchars($memorial['DateOfPassing']); ?>
+                                    </div>
+                                    <div class="memorial-location">
+                                        Plot: <?php echo htmlspecialchars($memorial['PlotNumber']); ?>
+                                        <?php if (!empty($memorial['Religion'])): ?>
+                                            <br>Religion: <?php echo htmlspecialchars($memorial['Religion']); ?>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="memorial-age">Age: <?php echo htmlspecialchars($memorial['Age']); ?></div>
+                                    <form action="https://memorialmap.duckdns.org/memorial.php" method="get">
+                                        <input type="hidden" name="id"
+                                            value="<?php echo htmlspecialchars($memorial['Memorial_MapID']); ?>" />
+                                        <button type="submit" class="search-btn">View Memorial</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <?php
+                        endforeach;
+                    else:
                         ?>
+                        <!-- Fallback card if no memorials are found -->
                         <div class="memorial-card">
-                            <div class="memorial-img-wrapper">
-                                <?php
-                                $imagePath = !empty($memorial['Image'])
-                                    ? "assets/portraits/" . $memorial['Image']
-                                    : "https://via.placeholder.com/300x150";
-                                ?>
-
-                                <img src="<?php echo htmlspecialchars($imagePath); ?>"
-                                    alt="<?php echo htmlspecialchars($memorial['Name']); ?>" class="memorial-image">
-                            </div>
+                            <img src="https://randomuser.me/api/portraits/lego/3.jpg" alt="No memorials"
+                                class="memorial-img">
                             <div class="memorial-info">
-                                <div class="memorial-name"><?php echo htmlspecialchars($memorial['Name']); ?></div>
-                                <div class="memorial-dates">
-                                    <?php echo htmlspecialchars($memorial['DateOfBirth']); ?> -
-                                    <?php echo htmlspecialchars($memorial['DateOfPassing']); ?>
-                                </div>
-                                <div class="memorial-location">
-                                    Plot: <?php echo htmlspecialchars($memorial['PlotNumber']); ?>
-                                    <?php if (!empty($memorial['Religion'])): ?>
-                                        <br>Religion: <?php echo htmlspecialchars($memorial['Religion']); ?>
-                                    <?php endif; ?>
-                                </div>
-                                <div class="memorial-age">Age: <?php echo htmlspecialchars($memorial['Age']); ?></div>
-                                <form action="https://memorialmap.duckdns.org/memorial.php" method="get">
-                                    <input type="hidden" name="id"
-                                        value="<?php echo htmlspecialchars($memorial['Memorial_MapID']); ?>" />
-                                    <button type="submit" class="search-btn">View Memorial</button>
-                                </form>
+                                <div class="memorial-name">No memorials found</div>
+                                <div class="memorial-dates">Please check back later</div>
+                                <div class="memorial-location">N/A</div>
+                                <div class="memorial-age">N/A</div>
                             </div>
                         </div>
-                        <?php
-                    endforeach;
-                else:
-                    ?>
-                    <!-- Fallback card if no memorials are found -->
-                    <div class="memorial-card">
-                        <img src="https://randomuser.me/api/portraits/lego/3.jpg" alt="No memorials" class="memorial-img">
-                        <div class="memorial-info">
-                            <div class="memorial-name">No memorials found</div>
-                            <div class="memorial-dates">Please check back later</div>
-                            <div class="memorial-location">N/A</div>
-                            <div class="memorial-age">N/A</div>
-                        </div>
-                    </div>
-                <?php endif; ?>
+                    <?php endif; ?>
+                </div>
+                <div class="carousel-controls">
+                    <button class="carousel-btn prev-btn" aria-label="Previous slide"><i
+                            class="fas fa-chevron-left"></i></button>
+                    <button class="carousel-btn next-btn" aria-label="Next slide"><i
+                            class="fas fa-chevron-right"></i></button>
+                </div>
             </div>
-            <div class="carousel-controls">
-                <button class="carousel-btn prev-btn" aria-label="Previous slide"><i class="fas fa-chevron-left"></i></button>
-                <button class="carousel-btn next-btn" aria-label="Next slide"><i class="fas fa-chevron-right"></i></button>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="faq">
-        <h3>Frequently Asked Questions</h3>
-        <div class="faq-item">
-            <div class="faq-question">
-                What is MemorialMap?
-                <i class="fas fa-plus"></i>
+        <section class="faq">
+            <h3>Frequently Asked Questions</h3>
+            <div class="faq-item">
+                <div class="faq-question">
+                    What is MemorialMap?
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-answer">
+                    MemorialMap is a service that helps users create and manage digital memorials for their loved ones.
+                </div>
             </div>
-            <div class="faq-answer">
-                MemorialMap is a service that helps users create and manage digital memorials for their loved ones.
+            <div class="faq-item">
+                <div class="faq-question">
+                    How do I search for a resting place?
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-answer">
+                    You can search for a resting place via the search boxes located at the top of the page.
+                </div>
             </div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question">
-                How do I search for a resting place?
-                <i class="fas fa-plus"></i>
+            <div class="faq-item">
+                <div class="faq-question">
+                    Is MemorialMap free to use?
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-answer">
+                    Yes. It is free to use. This is a Singapore Government service partnered with LifeSG.
+                </div>
             </div>
-            <div class="faq-answer">
-                You can search for a resting place via the search boxes located at the top of the page.
+            <div class="faq-item">
+                <div class="faq-question">
+                    Can I create a memorial page for a loved one?
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-answer">
+                    Please submit an email to admin@sgcaskets.com for further enquiries.
+                </div>
             </div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question">
-                Is MemorialMap free to use?
-                <i class="fas fa-plus"></i>
+            <div class="faq-item">
+                <div class="faq-question">
+                    Can I report incorrect information on a post?
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-answer">
+                    Please submit an email to admin@sgcaskets.com for further enquiries.
+                </div>
             </div>
-            <div class="faq-answer">
-                Yes. It is free to use. This is a Singapore Government service partnered with LifeSG.
-            </div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question">
-                Can I create a memorial page for a loved one?
-                <i class="fas fa-plus"></i>
-            </div>
-            <div class="faq-answer">
-                Please submit an email to admin@sgcaskets.com for further enquiries.
-            </div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question">
-                Can I report incorrect information on a post?
-                <i class="fas fa-plus"></i>
-            </div>
-            <div class="faq-answer">
-                Please submit an email to admin@sgcaskets.com for further enquiries.
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
-    <section class="contact">
-        <h3>Contact Us Now</h3>
-        <form class="contact-form" method="POST" action="submit_feedback.php">
-            <div class="form-group">
-                <input type="text" name="name" placeholder="Name" required>
-            </div>
-            <div class="form-group">
-                <input type="email" name="email" placeholder="Email" required>
-            </div>
-            <div class="form-group">
-                <textarea class="form-control" id="feedback" name="feedback" placeholder="Message" rows="4"
-                    required></textarea>
-            </div>
-            <div class="g-recaptcha" data-sitekey="6LeCwQMrAAAAAJXDUke3bJ-9MdERoi86AAcPNlMF"></div>
-            <button type="submit" class="submit-btn">Submit</button>
-        </form>
-    </section>
-
+        <section class="contact">
+            <h3>Contact Us Now</h3>
+            <form class="contact-form" method="POST" action="submit_feedback.php">
+                <div class="form-group">
+                    <input type="text" name="name" placeholder="Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" name="email" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control" id="feedback" name="feedback" placeholder="Message" rows="4"
+                        required></textarea>
+                </div>
+                <div class="g-recaptcha" data-sitekey="6LeCwQMrAAAAAJXDUke3bJ-9MdERoi86AAcPNlMF"></div>
+                <button type="submit" class="submit-btn">Submit</button>
+            </form>
+        </section>
+    </main>
     <?php
     include "inc/footer.inc.php"
         ?>
