@@ -179,7 +179,7 @@ $memorials = getMemorialCards($conn);
     <section class="memorials">
         <div class="section-header">
             <h3>Latest memorials</h3>
-            <a href="all-memorials.php">Explore more »</a>
+            <a href="search.php?name=&dob_from=&dob_to=&dop_from=&dop_to=&religion=">Explore more »</a>
         </div>
         <div class="carousel-container">
             <div class="memorial-cards">
