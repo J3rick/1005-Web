@@ -67,13 +67,14 @@
             
             // Reset index and update display
             if (currentIndex > cards.length - cardsPerView) {
-                currentIndex = cards.length - cardsPerView;
+                currentIndex = Math.max(0, cards.length - cardsPerView);
             }
             updateCarousel();
         }
         
         // Function to update carousel position
         function updateCarousel() {
+            // Fix: Calculate the true maximum index to show all cards
             const maxIndex = Math.max(0, cards.length - cardsPerView);
             
             // Make sure we don't scroll beyond the available cards
@@ -99,7 +100,9 @@
         });
         
         nextBtn.addEventListener('click', function() {
-            if (currentIndex < cards.length - cardsPerView) {
+            // Fix: Only advance if we haven't reached the maximum index
+            const maxIndex = Math.max(0, cards.length - cardsPerView);
+            if (currentIndex < maxIndex) {
                 currentIndex++;
                 updateCarousel();
             }
@@ -118,10 +121,11 @@
         // Handle swipe direction
         function handleSwipe() {
             const swipeThreshold = 50; // Minimum distance for a swipe
+            const maxIndex = Math.max(0, cards.length - cardsPerView);
             
             if (touchEndX < touchStartX - swipeThreshold) {
                 // Swipe left (next)
-                if (currentIndex < cards.length - cardsPerView) {
+                if (currentIndex < maxIndex) {
                     currentIndex++;
                     updateCarousel();
                 }
@@ -143,7 +147,8 @@
         
         function startAutoplay() {
             autoplayInterval = setInterval(() => {
-                if (currentIndex < cards.length - cardsPerView) {
+                const maxIndex = Math.max(0, cards.length - cardsPerView);
+                if (currentIndex < maxIndex) {
                     currentIndex++;
                 } else {
                     currentIndex = 0;
