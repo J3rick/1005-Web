@@ -1,5 +1,5 @@
 <?php
-    require_once __DIR__ . '/inc/cookie_public.php';
+require_once __DIR__ . '/inc/cookie_public.php';
 ?>
 
 
@@ -11,15 +11,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MemorialMap</title>
 
-    <?php
-    include "inc/head.inc.php"
-        ?>
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="css/main.css">
 </head>
 
 <body>
+    <?php
+    include "inc/head.inc.php"
+        ?>
     <section class="services">
         <div class="section-header">
             <h3>Our Services</h3>
@@ -27,8 +26,8 @@
         <!-- Row 1 -->
         <div class="row">
             <div class="column-small">
-            <div class="memorial-card">
-                <img src="assets/cemetery_1.jpg" alt="test" style="width: 500px; height: auto;">
+                <div class="memorial-card">
+                    <img src="assets/cemetery_1.jpg" alt="test" style="width: 500px; height: auto;">
                 </div>
             </div>
             <div class="column-large">
@@ -58,8 +57,8 @@
                 </div>
             </div>
             <div class="column-small">
-            <div class="memorial-card">
-                <img src="assets/cemetery_2.jpg" alt="test" style="width: 500px; height: auto;">
+                <div class="memorial-card">
+                    <img src="assets/cemetery_2.jpg" alt="test" style="width: 500px; height: auto;">
                 </div>
             </div>
         </div>
@@ -67,8 +66,8 @@
         <!-- Row 3 -->
         <div class="row">
             <div class="column-small">
-            <div class="memorial-card">
-                <img src="assets/cemetery_3.jpg" alt="test" style="width: 500px; height: auto;">
+                <div class="memorial-card">
+                    <img src="assets/cemetery_3.jpg" alt="test" style="width: 500px; height: auto;">
                 </div>
             </div>
             <div class="column-large">

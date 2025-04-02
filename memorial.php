@@ -65,10 +65,6 @@ if ($result->num_rows > 0) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MemorialMap - Search Results</title>
 
-    <?php
-    include "inc/head.inc.php"
-        ?>
-
     <!-- Mapbox CSS -->
     <link href="https://api.mapbox.com/mapbox-gl-js/v3.10.0/mapbox-gl.css" rel="stylesheet">
 
@@ -93,6 +89,9 @@ if ($result->num_rows > 0) {
 </head>
 
 <body>
+<?php
+    include "inc/head.inc.php"
+        ?>
     <section class="memorial-information">
         <div class="section-header">
             <h3>Memorial Information</h3>

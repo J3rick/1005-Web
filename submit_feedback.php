@@ -140,10 +140,10 @@ function saveFeedbackToDB() {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <?php include "inc/head.inc.php"; ?>
+    
 </head>
 <body>
-
+<?php include "inc/head.inc.php"; ?>
 <div class="container text-center mt-5">
     <?php if ($success): ?>
         <h2 class="text-success">Your feedback has been successfully submitted!</h2>
