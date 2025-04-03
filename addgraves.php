@@ -134,14 +134,14 @@ function logout() {
                     <div class="addform-grp">
                         <label for="latitude">Latitude:*</label>
                         <input type="text" id="latitude" name="latitude" required
-                               pattern="-?\d{1,3}\.\d{1,20}" 
+                               pattern="-?\d{1,3}\.\d{1,255}" 
                                title="Decimal format (e.g. 1.3521 or -12.345678)"
                                placeholder="e.g. 1.3521">
                     </div>
                     <div class="addform-grp">
                         <label for="longitude">Longitude:*</label>
                         <input type="text" id="longitude" name="longitude" required
-                               pattern="-?\d{1,3}\.\d{1,20}"
+                               pattern="-?\d{1,3}\.\d{1,255}"
                                title="Decimal format (e.g. 103.8198 or -120.123456)"
                                placeholder="e.g. 103.8198">
                     </div>

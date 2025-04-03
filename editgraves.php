@@ -110,7 +110,7 @@ if (!$grave) {
                     <label for="latitude">Latitude:*</label>
                     <input type="text" id="latitude" name="latitude" required
                            value="<?= htmlspecialchars($grave['Latitude']) ?>"
-                           pattern="-?\d{1,3}\.\d{1,6}" 
+                           pattern="-?\d{1,3}\.\d{1,255}" 
                            title="Decimal format (e.g. 1.3521 or -12.345678)">
                 </div>
 
@@ -118,7 +118,7 @@ if (!$grave) {
                     <label for="longitude">Longitude:*</label>
                     <input type="text" id="longitude" name="longitude" required
                            value="<?= htmlspecialchars($grave['Longitude']) ?>"
-                           pattern="-?\d{1,3}\.\d{1,6}"
+                           pattern="-?\d{1,3}\.\d{1,255}"
                            title="Decimal format (e.g. 103.8198 or -120.123456)">
                 </div>
 
