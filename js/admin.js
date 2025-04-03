@@ -31,7 +31,6 @@ function toggleSidebar() {
     });
 }
 
-// Initialize with better event handling
 document.addEventListener('DOMContentLoaded', function() {
     const toggleButton = document.getElementById('toggle-sidebar');
     if (toggleButton) {

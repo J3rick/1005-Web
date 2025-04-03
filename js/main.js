@@ -4,167 +4,93 @@
     
     // Carousel functionality
     document.addEventListener('DOMContentLoaded', function() {
-        // Get carousel elements
-        const carouselContainer = document.querySelector('.carousel-container');
-        const memorialCards = document.querySelector('.memorial-cards');
-        const cards = Array.from(document.querySelectorAll('.memorial-card'));
-        const prevBtn = document.querySelector('.prev-btn');
-        const nextBtn = document.querySelector('.next-btn');
+        // Existing FAQ functionality
         
-        // Initialize variables
-        let currentIndex = 0;
-        let cardWidth = 0;
-        let cardsPerView = 3;
-        let touchStartX = 0;
-        let touchEndX = 0;
+        // Mobile menu functionality
         
-        // Function to update carousel display based on screen size
-        function updateCarouselLayout() {
-            // Reset any inline styles that might affect calculation
-            memorialCards.style.width = '';
+        // Carousel functionality
+        const initCarousel = () => {
+            const carouselContainer = document.querySelector('.carousel-container');
+            if (!carouselContainer) return; // Exit if no carousel container
             
-            // Determine cards per view based on screen width
-            if (window.innerWidth < 768) {
-                cardsPerView = 1;
-            } else if (window.innerWidth < 992) {
-                cardsPerView = 2;
-            } else {
-                cardsPerView = 3;
-            }
+            const memorialCards = document.querySelector('.memorial-cards');
+            const cards = document.querySelectorAll('.memorial-card');
+            const prevBtn = document.querySelector('.prev-btn');
+            const nextBtn = document.querySelector('.next-btn');
             
-            // Calculate container width to fit exactly one card on mobile
-            const containerWidth = carouselContainer.clientWidth;
+            if (!memorialCards || !cards.length || !prevBtn || !nextBtn) return;
             
-            // Apply styles to cards
-            cards.forEach(card => {
-                // Full width for mobile (minus padding/margins)
-                if (cardsPerView === 1) {
-                    card.style.flex = '0 0 100%';
-                    card.style.minWidth = '100%';
-                    card.style.marginRight = '0';
-                } else if (cardsPerView === 2) {
-                    card.style.flex = '0 0 calc(50% - 10px)';
-                    card.style.minWidth = 'calc(50% - 10px)';
-                } else {
-                    card.style.flex = '0 0 calc(33.333% - 20px)';
-                    card.style.minWidth = 'calc(33.333% - 20px)';
+            let currentIndex = 0;
+            const totalCards = cards.length;
+            const cardsToShow = window.innerWidth <= 768 ? 1 : 3;
+            
+            // Change this value to control how many cards to move per click
+            const cardsToMove = 1;
+            
+            const maxIndex = totalCards - cardsToShow;
+            
+            // Calculate the width of each card including gap
+            const cardWidth = cards[0].offsetWidth + 30; // 30px is the gap
+            
+            // Function to update carousel position
+            const updateCarousel = () => {
+                const translateX = -currentIndex * cardWidth;
+                memorialCards.style.transform = `translateX(${translateX}px)`;
+                
+                // Update button states
+                prevBtn.disabled = currentIndex === 0;
+                nextBtn.disabled = currentIndex >= maxIndex;
+            };
+            
+            // Add event listeners to buttons
+            prevBtn.addEventListener('click', () => {
+                // Always decrease by cardsToMove as long as we're not at the start
+                if (currentIndex > 0) {
+                    currentIndex = Math.max(0, currentIndex - cardsToMove);
+                    updateCarousel();
+                    
+                    // Debug info
+                    console.log("Previous clicked. Current index:", currentIndex);
                 }
             });
             
-            // Recalculate card width including margins
-            const firstCard = cards[0];
-            const cardStyle = window.getComputedStyle(firstCard);
-            const cardMargin = parseFloat(cardStyle.marginRight) + parseFloat(cardStyle.marginLeft);
+            nextBtn.addEventListener('click', () => {
+                // Always increase by cardsToMove as long as we're not at the end
+                if (currentIndex < maxIndex) {
+                    currentIndex = Math.min(maxIndex, currentIndex + cardsToMove);
+                    updateCarousel();
+                    
+                    // Debug info
+                    console.log("Next clicked. Current index:", currentIndex);
+                }
+            });
             
-            // For single card view, make card width equal to container
-            if (cardsPerView === 1) {
-                cardWidth = containerWidth;
-            } else {
-                // For multi-card views, include the gap between cards
-                const cardRect = firstCard.getBoundingClientRect();
-                cardWidth = cardRect.width + cardMargin;
-            }
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                const newCardsToShow = window.innerWidth <= 768 ? 1 : 3;
+                const newMaxIndex = totalCards - newCardsToShow;
+                
+                // Adjust currentIndex if necessary
+                if (currentIndex > newMaxIndex) {
+                    currentIndex = newMaxIndex;
+                }
+                
+                // Recalculate card width
+                const newCardWidth = cards[0].offsetWidth + 30;
+                
+                // Update carousel
+                memorialCards.style.transform = `translateX(${-currentIndex * newCardWidth}px)`;
+                
+                console.log("Resize. Cards to show:", newCardsToShow, "Max index:", newMaxIndex, "Current index:", currentIndex);
+            });
             
-            // Reset index and update display
-            if (currentIndex > cards.length - cardsPerView) {
-                currentIndex = cards.length - cardsPerView;
-            }
+            // Initialize carousel
             updateCarousel();
-        }
+            console.log("Carousel initialized. Total cards:", totalCards, "Cards to show:", cardsToShow, "Max index:", maxIndex);
+        };
         
-        // Function to update carousel position
-        function updateCarousel() {
-            const maxIndex = Math.max(0, cards.length - cardsPerView);
-            
-            // Make sure we don't scroll beyond the available cards
-            if (currentIndex < 0) currentIndex = 0;
-            if (currentIndex > maxIndex) currentIndex = maxIndex;
-            
-            // Update buttons visibility
-            prevBtn.style.opacity = currentIndex === 0 ? '0.5' : '1';
-            prevBtn.disabled = currentIndex === 0;
-            nextBtn.style.opacity = currentIndex >= maxIndex ? '0.5' : '1';
-            nextBtn.disabled = currentIndex >= maxIndex;
-            
-            // Move the carousel
-            memorialCards.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
-        }
-        
-        // Button event listeners
-        prevBtn.addEventListener('click', function() {
-            if (currentIndex > 0) {
-                currentIndex--;
-                updateCarousel();
-            }
-        });
-        
-        nextBtn.addEventListener('click', function() {
-            if (currentIndex < cards.length - cardsPerView) {
-                currentIndex++;
-                updateCarousel();
-            }
-        });
-        
-        // Touch event listeners for mobile swipe
-        memorialCards.addEventListener('touchstart', function(e) {
-            touchStartX = e.changedTouches[0].screenX;
-        });
-        
-        memorialCards.addEventListener('touchend', function(e) {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        });
-        
-        // Handle swipe direction
-        function handleSwipe() {
-            const swipeThreshold = 50; // Minimum distance for a swipe
-            
-            if (touchEndX < touchStartX - swipeThreshold) {
-                // Swipe left (next)
-                if (currentIndex < cards.length - cardsPerView) {
-                    currentIndex++;
-                    updateCarousel();
-                }
-            } else if (touchEndX > touchStartX + swipeThreshold) {
-                // Swipe right (previous)
-                if (currentIndex > 0) {
-                    currentIndex--;
-                    updateCarousel();
-                }
-            }
-        }
-        
-        // Initialize carousel and update on window resize
-        updateCarouselLayout();
-        window.addEventListener('resize', updateCarouselLayout);
-        
-        // Auto-play functionality (optional)
-        let autoplayInterval;
-        
-        function startAutoplay() {
-            autoplayInterval = setInterval(() => {
-                if (currentIndex < cards.length - cardsPerView) {
-                    currentIndex++;
-                } else {
-                    currentIndex = 0;
-                }
-                updateCarousel();
-            }, 5000); // Change slide every 5 seconds
-        }
-        
-        function stopAutoplay() {
-            clearInterval(autoplayInterval);
-        }
-        
-        // Start autoplay
-        startAutoplay();
-        
-        // Pause autoplay on hover or touch
-        carouselContainer.addEventListener('mouseenter', stopAutoplay);
-        carouselContainer.addEventListener('touchstart', stopAutoplay);
-        
-        // Resume autoplay when mouse leaves
-        carouselContainer.addEventListener('mouseleave', startAutoplay);
+        // Initialize carousel
+        initCarousel();
     });
 
 document.addEventListener('DOMContentLoaded', function() {

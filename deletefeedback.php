@@ -3,6 +3,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 include 'inc/sql.inc.php';
 require_once __DIR__ . '/inc/csrf.php';
+require_once __DIR__ . '/inc/cookie_admin.php';
 
 // Get feedback record to delete
 $conn = getDatabaseConnection();

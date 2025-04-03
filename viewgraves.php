@@ -12,7 +12,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     include 'inc/sql.inc.php';
     include 'inc/footer.inc.php';
     $conn = getDatabaseConnection();
-    //require_once __DIR__ . '/inc/cookie_admin.php'; 
+    require_once __DIR__ . '/inc/cookie_admin.php'; 
 
 // 3. Define the logout function
 function logout() {
