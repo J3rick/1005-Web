@@ -20,7 +20,6 @@ function regenerateCSRFToken() {
     return $_SESSION['csrf_token'];
 }
 
-
 // Validate the CSRF token from the request against the session token.
 
 function validateCSRFToken($token) {

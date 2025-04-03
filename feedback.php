@@ -25,9 +25,6 @@ function logout() {
         );
     }
     session_destroy();
-    
-    // Clear JWT token
-    setcookie("jwt_token", "", time() - 3600, "/");
 }
 
 ?>

@@ -2,8 +2,6 @@
 
 <?php
 
-
-
     ini_set('session.cookie_secure', 1);  // Enforce HTTPS-only cookies
     ini_set('session.cookie_httponly', 1); // Reduces the risk of cross-site scripting (XSS) attacks, prevent access through client-side scripts
 
