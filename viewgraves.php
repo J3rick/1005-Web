@@ -59,7 +59,7 @@ function logout() {
         <div class = "header-container">
             <h1>View Graves</h1>
             <div class="search-container">
-                <form action="" method="GET">
+                <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="GET">
                     <input type="text" name="search" id="search-input" placeholder="Search graves..." 
                            value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
                     <button type="submit" class="search-btn">Search</button>

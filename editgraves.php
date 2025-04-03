@@ -91,6 +91,7 @@ if (!$grave) {
                 <div class="editform-grp">
                     <label for="restingtype">Resting Type:*</label>
                     <select id="restingtype" name="restingtype" required>
+                        <option value="" disabled>Select Resting Type...</option>
                         <option value="Burial" <?= $grave['RestingType'] == 'Burial' ? 'selected' : '' ?>>Burial</option>
                         <option value="Cremation" <?= $grave['RestingType'] == 'Cremation' ? 'selected' : '' ?>>Cremation</option>
                         <option value="Mausoleum" <?= $grave['RestingType'] == 'Mausoleum' ? 'selected' : '' ?>>Mausoleum</option>

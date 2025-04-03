@@ -117,6 +117,7 @@ function logout() {
                 <div class="addform-grp">
                     <label for="restingtype">Resting Type:*</label>
                     <select id="restingtype" name="restingtype" required>
+                        <option value = "" disabled selected>Select Resting Type...</option>
                         <option value="Burial">Burial</option>
                         <option value="Cremation">Cremation</option>
                         <option value="Mausoleum">Mausoleum</option>
