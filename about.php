@@ -19,6 +19,7 @@ require_once __DIR__ . '/inc/cookie_public.php';
 </head>
 
 <body>
+    <main>
     <?php
     include "inc/head.inc.php"
         ?>
@@ -32,7 +33,7 @@ require_once __DIR__ . '/inc/cookie_public.php';
             </div>
         </div>
         <div class="overlay"></div>
-        <h1 class="hero-title">Redefining Farewell</h1>
+        <h2 class="hero-title">Redefining Farewell</h2>
     </section>
 
     <!-- Flipbook Section -->
