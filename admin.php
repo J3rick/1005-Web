@@ -11,8 +11,7 @@ include 'inc/head.inc.php';
 include 'inc/adminbar.inc.php';
 include 'inc/sql.inc.php';
 include 'inc/footer.inc.php';
-// require_once __DIR__ . '/inc/cookie_admin.php';  // Uncomment if needed
-// include 'inc/jwt.php'; // Uncomment if used for authentication
+require_once __DIR__ . '/inc/cookie_admin.php';  // Uncomment if needed
 
 // 3. Define the logout function
 function logout() {
