@@ -26,7 +26,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 include 'inc/sql.inc.php';
 $conn = getDatabaseConnection();
-//require_once __DIR__ . '/inc/cookie_admin.php'; 
+require_once __DIR__ . '/inc/cookie_admin.php'; 
 
 // Buffer the output to manipulate it before sending
 ob_start();
