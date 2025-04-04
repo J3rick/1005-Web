@@ -708,7 +708,7 @@ footer {
 
     /* Header adjustments */
     header {
-        flex-direction: column;
+        flex-direction: row;
         align-items: center;
         text-align: center;
         padding: 10px;
@@ -722,6 +722,7 @@ footer {
         text-align: center;
         margin: 10px 0;
         align-items: center; /* Center items horizontally */
+        margin-right: 48px;
     }
     
     header img {
@@ -732,7 +733,8 @@ footer {
     /* Hero section */
     .hero h2 {
         font-size: 24px;
-    }
+        margin-bottom: 13px;
+      }
     
     /* Section headers */
     .section-header {
