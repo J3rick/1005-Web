@@ -708,7 +708,7 @@ footer {
 
     /* Header adjustments */
     header {
-        flex-direction: row;
+        flex-direction: column;
         align-items: center;
         text-align: center;
         padding: 10px;
@@ -722,7 +722,6 @@ footer {
         text-align: center;
         margin: 10px 0;
         align-items: center; /* Center items horizontally */
-        margin-right: 48px;
     }
     
     header img {
