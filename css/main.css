@@ -915,6 +915,7 @@ footer {
         height: 36px;
         width: 36px;
         font-size: 16px;
+        visibility: hidden;
     }
     
     /* Ensure the container provides padding on mobile */
