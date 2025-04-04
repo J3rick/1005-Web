@@ -317,7 +317,7 @@ $memorials = getMemorialCards($conn);
                     <textarea class="form-control" id="feedback" name="feedback" placeholder="Message" rows="4"
                         required></textarea>
                 </div>
-                <div class="g-recaptcha" data-sitekey="6LeCwQMrAAAAAJXDUke3bJ-9MdERoi86AAcPNlMF"></div>
+                <div class="g-recaptcha" data-sitekey="6LeCwQMrAAAAAJXDUke3bJ-9MdERoi86AAcPNlMF" style="margin-bottom: 30px; margin-top: 30px;"></div>
                 <button type="submit" class="submit-btn">Submit</button>
             </form>
         </section>
